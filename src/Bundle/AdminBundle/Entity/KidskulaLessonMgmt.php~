@@ -1,0 +1,122 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaLessonMgmt
+ *
+ * @ORM\Table(name="kidskula_lesson_mgmt", indexes={@ORM\Index(name="fk_kidskula_owner_id_idx", columns={"owner_id"}), @ORM\Index(name="fk_kidskula_lesson_mgmt_kidskula_lesson_category1_idx", columns={"kidskula_lesson_category_id"})})
+ * @ORM\Entity
+ */
+class KidskulaLessonMgmt
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="bigint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creation_date", type="datetime", nullable=true)
+     */
+    private $creationDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="admin_approved_date", type="datetime", nullable=true)
+     */
+    private $adminApprovedDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="admin_reject_date", type="datetime", nullable=true)
+     */
+    private $adminRejectDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lesson_title", type="string", length=255, nullable=true)
+     */
+    private $lessonTitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lesson_description", type="text", nullable=true)
+     */
+    private $lessonDescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="file_base_name", type="string", length=255, nullable=true)
+     */
+    private $fileBaseName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="file_type", type="string", length=255, nullable=true)
+     */
+    private $fileType;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="file_extension", type="string", length=255, nullable=true)
+     */
+    private $fileExtension;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="admin_approval", type="boolean", nullable=true)
+     */
+    private $adminApproval;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="start_date", type="datetime", nullable=true)
+     */
+    private $startDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="end_date", type="datetime", nullable=true)
+     */
+    private $endDate;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaLessonCategory
+     *
+     * @ORM\OneToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaLessonCategory")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="kidskula_lesson_category_id", referencedColumnName="id", unique=true)
+     * })
+     */
+    private $kidskulaLessonCategory;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaUsers
+     *
+     * @ORM\ManyToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaUsers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     * })
+     */
+    private $owner;
+
+
+}

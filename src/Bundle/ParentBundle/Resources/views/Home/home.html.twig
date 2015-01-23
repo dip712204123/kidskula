@@ -1,0 +1,107 @@
+{% extends 'BundleParentBundle:Layout:social_base.html.twig' %}
+ {% block content %} 
+<div class="container">
+<div class="row parents-social-dashboard">
+<div class="col-md-8 leftpart">
+<div class="myfamilylist_pnl">
+<div class="row"><h2>My Family </h2></div>
+{% for childdetails in childentity %}
+     
+    {% set childprofile= getUserProfileDetails(childdetails.id) %}
+     {% set profileImage = getprofileimage(childdetails.id) %}
+<div class="family-list row">
+        <div class="col-xs-6 col-md-3">
+            {%  if profileImage is defined and profileImage is not null  %} 
+                <img alt="" src="{{asset('upload/profilepicture/')}}{{ profileImage|raw }}" width="100px" height="100px" class="img-circle red-bor2">
+            {% else %}
+                <img src="{{asset('bundles/BundleAdmin/assets')}}/img/admin_profile_no_image.gif" class="img-circle red-bor2" width="100px" height="100px" alt="" />
+            {% endif %}
+                                        </div>
+        <div class="col-xs-6 col-md-6 textpart"><a href="{{ path('childprofile', { 'username': childdetails.username })}}">{{childdetails.firstName}} {{childdetails.lastName}}</a>
+        <br> <p>D:O:B : <span>{{ childprofile.profileDob|date("m/d/Y")}}</span> </p></div>
+       <div class="col-xs-6 col-md-3"><a href="javascript:void(0);"><button type="button" class="btn-success viewpro_btn">Disable from Kidskula</button></a></div>
+</div> <!--family-list ends-->
+{% endfor %}
+</div> <!--myfamilylist_pnl ends-->
+{#
+<div class="calenderapp_pnl">
+<div class="row"><h2>Calender &amp; Appointments </h2></div>
+<div class="row appo_list">
+        <div class="col-xs-6 col-sm-3 inner">
+		<div class="imgcer img-circle pull-left"><i class="glyphicon glyphicon-asterisk"> </i> </div>
+		<div class="text pull-left">8.30 <br>Jogging </div>
+		</div> <!--inner ends-->
+         <div class="col-xs-6 col-sm-3 inner">
+		<div class="imgcer img-circle pull-left"><i class="glyphicon glyphicon-asterisk"> </i> </div>
+		<div class="text pull-left">8.30 <br>Jogging </div>
+		</div> <!--inner ends-->
+
+        <!-- Add the extra clearfix for only the required viewport -->
+        <div class="clearfix visible-xs"></div>
+        <div class="col-xs-6 col-sm-3 inner">
+		<div class="imgcer img-circle pull-left"><i class="glyphicon glyphicon-asterisk"> </i> </div>
+		<div class="text pull-left">8.30 <br>Jogging </div>
+		</div> <!--inner ends-->
+		 <div class="col-xs-6 col-sm-3 inner">
+		<div class="imgcer img-circle pull-left"><i class="glyphicon glyphicon-asterisk"> </i> </div>
+		<div class="text pull-left">8.30 <br>Jogging </div>
+		</div> <!--inner ends-->
+
+</div> <!--appo_list ends-->
+
+<div class="calenderlist row"> 
+<img alt="" src="assets/images/calender_placeholder.png" class="img-responsive">
+</div> <!--calender list ends-->
+
+</div> <!--calenderapp_pnl ends-->
+#}
+</div> <!--leftpart ends Here-->
+
+<div class="col-md-4 rightpart"> 
+
+<!--actionrequest-panel Starts-->
+ {{include('BundleParentBundle:Home:childnetwork.html.twig')}}
+<!--actionrequest-panel ends-->
+
+<div class="row socialnotification_panel">
+<h2> Kid's Activity Panel</h2>
+<div id="scrollbar1">
+<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+<div class="viewport">
+<div class="overview">
+{#**********************ACTIVITY NOTIFICATION SECTION*********************#}
+{{include('BundleParentBundle:Home:child_acitvity_notification.html.twig')}}
+
+{#****************************************************************#}
+</div>
+</div>
+</div>
+</div> <!--socialnotification_panel ends-->
+
+<div class="row chatpnal"><img class="img-responsive"  src="assets/images/chat-placeholder.png" alt=""> </div>
+<!--chatpnal ends-->
+
+</div> <!--rightpart ends Here-->
+
+
+</div> <!--parents-social-dashboard ends-->
+</div>
+<!--container ends-->
+ {# *******************Scripts fetch******************************#}
+{{include('BundleParentBundle:Scripts:homepage_scripts.html.twig')}}
+           
+<script src="{{asset('bundles/KidskulaBundle/assets')}}/js/jquery.tinyscrollbar.min.js"></script>
+    
+    
+    
+    <script type="text/javascript">
+	var jq = jQuery.noConflict();
+		jq(document).ready(function(){ 
+			jq('#scrollbar1').tinyscrollbar();	
+		});
+        
+       </script>
+ {# *******************Scripts end********************************#}
+
+ {% endblock  %}
+

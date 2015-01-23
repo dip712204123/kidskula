@@ -1,0 +1,46 @@
+<div class="col-md-4 rightpart"> 
+            <div class="privacy-panel"> 
+                <h2>Privacy & Other Settings </h2>
+                <div class="inner">
+                    {#<div class="row setting-option">
+                        <h3 class="col-md-12">Who Can see my images : </h3>
+                        <div class="col-xs-6 col-sm-4"><input name="" type="checkbox" value=""> <span> Friends</span></div>
+                        <div class="col-xs-6 col-sm-4"><input name="" type="checkbox" value=""> <span> Anyone</span></div>
+                        <div class="col-xs-6 col-sm-4"><input name="" type="checkbox" value=""> <span> Only Me</span></div>
+                    </div>#} <!--setting-option ends-->
+
+                    <div class="row setting-option">
+                        <h3 class="col-md-12">Who Can see my Post : </h3>
+                        <div class="col-xs-6 col-sm-4"><input name="check_list[]" {% if '1' in visibleto.visibletowhom %} checked {% endif %} value="1" type="checkbox" > <span> Friends</span></div>
+                        
+                        <div class="col-xs-6 col-sm-4"><input name="check_list[]"{% if '0' in visibleto.visibletowhom %} checked {% endif %} value="0" type="checkbox"  > <span> Only me</span></div>
+                    </div> <!--setting-option ends-->
+
+                   {# <div class="row setting-option">
+                        <h3 class="col-md-12">Frequency of Lesson: </h3>
+                        <div class="col-xs-6 col-sm-4"><input name="" type="checkbox" value=""> <span> Daily</span></div>
+                        <div class="col-xs-6 col-sm-4"><input name="" type="checkbox" value=""> <span> Weekly</span></div>
+                    </div> #}<!--setting-option ends-->
+
+                   {# <div class="row setting-option">
+                        <div class="col-xs-12 col-sm-12"><input name="" type="checkbox" value=""> <span> Show games categories</span></div>
+                    </div>#} <!--setting-option ends-->
+
+                   {# <div class="row setting-option">
+                        <div class="col-xs-12 col-sm-12"><input name="" type="checkbox" value=""> <span> Allow Subjects</span></div>
+                    </div>#} <!--setting-option ends-->
+
+                    <div class="row setting-option">
+                        <div class="col-xs-12 col-sm-12 redtext"><input name="" id="deactivate" {% if activation =='0' %} checked {% endif %} type="checkbox" value=""> <span> Hide My Account</span></div>
+                        <div class="col-xs-12 col-sm-12 smltext">This is a general setting, where you can hide or deactive your profile and your profile will be invisible. </div>
+                    </div> <!--setting-option ends-->
+
+                    <div class="row setting-option">
+                        <div class="col-xs-12 col-md-12">
+                            <input class="btn btn-success btn-block btn-lg savesettings_btn" id="save_value" onclick="proSettings();" name="" value="Save my privacy settings" type="submit"> 
+                        </div>
+                    </div>
+                    <div class="succ_alert" id="statmsg"></div>
+                </div> <!--inner ends here-->
+            </div> <!--privacy-panel ends-->
+        </div>

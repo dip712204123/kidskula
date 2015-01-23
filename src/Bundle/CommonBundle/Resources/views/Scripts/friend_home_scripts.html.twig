@@ -1,0 +1,143 @@
+<script>
+    function addfriend()
+    {
+
+
+        var path = "{{path('addfriend')}}";
+        var friendId =$('#friendId').val();
+       // alert (friendId);
+        // alert(deactivate);
+        var form_data = {
+            friendId: friendId
+
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                // alert(response.msg);
+
+                if (response.status != 0) {
+                    $("#addfriendbtn").hide('slow');
+                    $("#addfrienddiv").html(response.msg);
+                    
+                }
+                else
+                {
+                    //$("#addfrienddiv").html('Not saved');
+                    return false
+                    
+
+                }
+
+            }
+        });
+    }
+    
+    function acceptrequest(id)
+    {
+       // alert(id);
+
+
+        var path = "{{path('acceptfriend')}}";
+
+        var friendId = id;
+        //alert (friendId);
+
+        var form_data = {
+            friendId: friendId
+
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                // alert(response.msg);
+
+                if (response.status != 0) {
+                    $("#respondfriendbtn").hide('slow');
+                    $("#unfriendbtn").show('slow');
+                   // $("#addfrienddiv").html(response.msg);
+                    $("#addfrienddiv").html('<button id="unfriendbtn" class="btn col-md-12 addfrnd_btn" onclick="unfriend();" type="button">Unfriend</button>');
+                }
+                else
+                {
+                    $("#addfrienddiv").html('Not saved');
+                    
+
+                }
+
+
+            }
+        });
+    }
+    function cancelfriend()
+    {
+
+        var path = "{{path('cancelfriend')}}";
+        var friendId =$('#friendId').val();
+        //alert (friendId);
+        // alert(deactivate);
+        var form_data = {
+            friendId: friendId
+
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                // alert(response.msg);
+
+                if (response.status != 0) {
+                    $("#cancelfriendbtn").hide('slow');
+                    $("#addfrienddiv").html(response.msg); 
+                }
+                else
+                {
+                    $("#addfrienddiv").html('Not saved');                
+                }
+
+            }
+        });
+    }
+    
+    function unfriend()
+    {
+
+        var path = "{{path('unfriend')}}";
+        var friendId =$('#friendId').val();
+       
+        var form_data = {
+            friendId: friendId
+
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                // alert(response.msg);
+
+                if (response.status != 0) {
+                    $("#unfriendbtn").hide('slow');
+                    $("#addfrienddiv").html(response.msg);
+                    setTimeout(function(){window.location.reload();}, 3000);
+                }
+                else
+                {
+                    $("#addfrienddiv").html('Not saved');
+                    
+
+                }
+
+            }
+        });
+    }
+</script>

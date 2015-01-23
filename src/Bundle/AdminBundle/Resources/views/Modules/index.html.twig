@@ -1,0 +1,95 @@
+{% extends 'BundleAdminBundle:layout:base.html.twig' %}
+
+{% block content %}
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<div class="container-fluid">
+    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title">
+        Modules Management 
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{path('bundle_admin_dashboard')}}">Home</a> 
+            <i class="icon-angle-right"></i>
+        </li>
+
+        <li><a href="#">Modules</a></li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB-->
+    <div class="row-fluid">
+        <div class="span12">
+            <form name="frm" method="post" action="">
+
+
+                <div class="portlet box grey">
+                    <div class="portlet-title">
+                        <div class="caption"><i class="icon-cogs"></i>Modules List</div>
+                        <div class="actions">
+                            
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                    {% for flashSuccessMessage in app.session.flashbag.get('success') %}                
+                        <div class="alert alert-success">
+                            <button class="close" data-dismiss="alert"></button>
+                                {{ flashSuccessMessage }}
+                        </div>
+                        {% endfor %}
+                        {% for flashSuccessMessage in app.session.flashbag.get('error') %}                
+                        <div class="alert alert-error">
+                            <button class="close" data-dismiss="alert"></button>
+                                {{ flashSuccessMessage }}
+                        </div>
+                        {% endfor %}
+                        <table class="table table-striped table-bordered table-hover" id="mytable">
+                            <thead>                                    
+                                <tr>
+                                    <th class="hidden-480">{{ knp_pagination_sortable(entities, 'Module Name', 'a.modulesTitle') }}</th>
+                                    <th class="hidden-480">Details</th>
+                                    <th class="hidden-480">Launch Date</th>
+                                    <th class="hidden-480">Modified Date</th>
+                                    <th >Action</th>
+                                </tr>                                       
+                            </thead>
+                            <tbody>
+                            	{% for entity in entities  %}                
+                                <tr class="odd gradeX">                                
+                                    <td class="hidden-480">{{ entity.modulesTitle }}</td>
+                                    <td class="hidden-480">{{ entity.modulesDescription }}</td>{#{{ entity.modulesDescription|slice(0,80) }}#}
+                                    <td class="hidden-480">{{ entity.modulesPublishDate|date('Y-m-d') }}</td>
+                                    <td class="hidden-480">{{ entity.modulesModifiedDate|date('Y-m-d')  }}</td>
+                                    <td class="hidden-480"> {% if entity.modulesStatus == '0' %} <button class="btn" type="button">Inactive</button> {% else %} <button class="btn green" type="button">Active</button> {% endif %}</td>
+                                    
+                                    <td>
+                                        {% if entity.modulesStatus==0 %}
+                                        <a href="{{ path('modules_status', { 'id': entity.id }) }}" title="To Active"><i class="fa fa-lock"></i></a>
+                                        {% endif %}
+                                        {% if entity.modulesStatus==1 %}
+                                        <a href="{{ path('modules_status', { 'id': entity.id }) }}" title="To Inactive"><i class="fa fa-unlock"></i></a>
+                                        {% endif %}
+                                        {#<a class="btn mini purple" title="Delete" onclick="return confirm('Are you sure to delete?');" href="{{path('avatar_delete', { 'id': entity.id })}}">
+                                            <i class="icon-trash"></i></a>
+                                        <a class="btn mini purple" href="{{path('static_page_edit', { 'id': entity.id })}}">
+                                            <i class="icon-edit"></i></a>#}
+                                    </td>
+                                </tr>
+                                
+                            	{% endfor %}
+                            </tbody>                                    
+                        </table>
+                        {# display navigation #}
+        			<div class="navigation">
+                    	{{ knp_pagination_render(entities) }}
+                    </div>
+                </div>
+            </form>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+    </div>
+    
+{% endblock %}
+
+{#{% block sidebar %} 
+{% endblock %}#}

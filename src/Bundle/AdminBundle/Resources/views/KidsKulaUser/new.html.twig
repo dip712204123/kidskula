@@ -1,0 +1,103 @@
+{% extends 'BundleAdminBundle:layout:base.html.twig' %}
+{% block content %}
+<div class="container-fluid">
+<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title">
+        Add New User
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{path('bundle_admin_dashboard')}}">Home</a> 
+            <i class="icon-angle-right"></i>
+        </li>
+        <li>
+		<a href="{{path('static_page_list')}}">Users</a>
+		 <i class="icon-angle-right"></i>
+		</li>
+        <li><a href="{{path('static_page_add')}}">Add New User</a></li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB-->
+
+    <div class="row-fluid">
+        <div class="span12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="tools">
+                        <a href="{{path('static_page_list')}}" class="btn icn-only"  title="Back">
+                        <i class="m-icon-swapleft"></i></a>									
+                    </div>
+                </div>                            
+                
+                <div class="portlet-body form">
+                	<form class="form-horizontal">
+                    	{% for flashSuccessMessage in app.session.flashbag.get('success_message') %}                
+                            <div class="alert alert-success">
+                                <button class="close" data-dismiss="alert"></button>
+                                {{ flashSuccessMessage }}
+                            </div>
+                        {% endfor %}
+                        
+                        {% for flashErrorMessage in app.session.flashbag.get('error_message') %}                
+                            <div class="alert alert-error">
+                                <button class="close" data-dismiss="alert"></button>
+                                {{ flashErrorMessage }}
+                            </div>
+                        {% endfor %}
+                    </form>
+                    <!-- BEGIN FORM-->
+                    {% form_theme form 'BundleAdminBundle:Form:fields.html.twig' %}
+                    {{ form_start(form) }}
+                    {{form_widget(form)}}
+                    {{ form_end(form) }}
+                    <!-- END FORM-->
+                </div>
+            </div>
+            <!-- END VALIDATION STATES-->
+        </div>
+    </div>
+
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/select2/select2.min.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/data-tables/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/data-tables/DT_bootstrap.js"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/admin/scripts/common.js"></script>
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/table-managed.js"></script>
+      
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/form-validation.js"></script> 
+	<!-- END PAGE LEVEL STYLES -->    
+	<script>
+		jQuery(document).ready(function() {   
+		   // initiate layout and plugins
+		   FormValidation.init();
+		   $("#page_frm").validate();
+		});
+	</script>
+	<!-- END JAVASCRIPTS -->
+    
+</div>                
+     
+{% endblock content %}
+
+
+
+{#{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>User creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('user-post') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}#}

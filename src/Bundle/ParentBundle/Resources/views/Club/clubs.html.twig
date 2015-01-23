@@ -1,0 +1,111 @@
+{% extends 'BundleParentBundle:Layout:social_base.html.twig' %}
+{% block content %}
+<div class="container"> 
+
+<div class="row club-dashboard-main">
+
+
+<div class="col-md-9">
+
+<h2>Club Message Board 
+<div class="btn-group btn-group-primary pull-right">
+	  <button type="button" class="btn btn-primary newclubinfo">New Club Entries</button>
+	  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu">
+      {% for newclub in newclubsarray %}
+		  <li><a href="{{path('myclub-details', { 'id': newclub.id })}}">{{newclub.title}}</a></li>
+          <li class="divider"></li>
+		  
+          {%endfor %}
+	  </ul>
+  </div>
+
+</h2> 
+
+
+<div id="scrollbar1">
+<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+<div class="viewport">
+<div class="overview col-md-12">
+
+<div style="display: block;" class="odd-even ">
+{% for Notifications in clubNotification %}
+{# function call from twig file to see notification already view or not #}
+{% set viewed = getClubNotifications(Notifications.recieverStatus) %}
+{# ********************************************************************** #}
+{%  if viewed == 0  %}
+<div class="alert alert-warning-alt alert-dismissable">
+<span class="glyphicon glyphicon-certificate"></span>
+<button type="button" onclick="delNotiFunc({{Notifications.id}})" class="close" data-dismiss="alert" aria-hidden="true">
+×</button>{{Notifications.texttoshow}}</div>
+{% endif %}
+{% endfor %}
+</div> <!--odd-even ends-->
+</div>
+</div>
+</div>
+
+</div>
+    
+
+
+<div class="col-md-3 rightpart"> 
+<ul>
+<li><a href="{{path('myclub_list')}}"><img src="{{asset('bundles/KidskulaBundle/assets')}}/images/club_ico.png" alt=""><br/>My Clubs </a></li>
+<li class="oddcolor"><a href="{{path('allclub_list')}}"><img src="{{asset('bundles/KidskulaBundle/assets')}}/images/club2_ico.png" alt=""><br/>All Clubs </a></li>
+</ul>
+</div>
+
+
+</div> <!--/*club-dashboard-main ends*/-->
+
+
+
+
+</div>
+
+<script>
+function delNotiFunc(id)
+{
+    
+     var path = "{{path('view-notification')}}";
+        var form_data = {
+            notifId: id
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                //alert(response.msg);
+                if (response.status != 0) {
+                   
+                } else {
+                    return false;
+                }
+            }
+        });
+}
+
+</script>
+
+    <script src="{{asset('bundles/KidskulaBundle/assets')}}/js/jquery.tinyscrollbar.min.js"></script>
+	<script type="text/javascript">
+	var jq = $.noConflict();
+		jq(document).ready(function(){ 
+			jq('#scrollbar1').tinyscrollbar();
+		});
+	</script>
+
+	
+	
+
+
+
+{% endblock %}
+
+
+
+

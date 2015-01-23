@@ -1,0 +1,118 @@
+{# Block row #}
+
+{% block form_row %}
+{% spaceless %}
+
+<div class="control-group">
+     {{ form_label(form) }}
+     {% set type = type|default('text') %}
+        {% if type  !=  'hidden' %}        
+            <div class="controls {% if errors|length > 0 %} has-error {% endif %}">
+        {% endif%}
+ 	{{ form_widget(form) }}
+	{{ form_errors(form) }}
+    {% set type = type|default('text') %}
+        {% if type  !=  'hidden' %}
+            {% if label_attr.datahelp is defined %}
+                <span class="help-inline">{{label_attr.datahelp|default('sdfdsfds')}}</span>
+            {% endif %}
+         	</div>
+        {% endif%}  
+</div>
+    
+{% endspaceless %}
+{% endblock form_row %}
+
+
+{# Widgets #}
+
+{% block form_widget_simple %}
+{% set type = type|default('text') %}
+{% spaceless %}
+   		<input type="{{ type }}" {{ block('widget_attributes') }} class="span6 m-wrap required"  {% if value is not empty %} value="{{ value }}" {% endif %}/>
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
+{% block textarea_widget %}
+{% spaceless %}
+		<textarea {{ block('widget_attributes') }} class="span12 ckeditor m-wrap" >{{ value }}</textarea>
+{% endspaceless %}
+{% endblock textarea_widget %}
+
+{# Button #}
+
+{% block button_widget %}
+{% spaceless %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <div class="form-actions">
+    	<button type="{{ type|default('button') }}" {{ block('button_attributes') }} class="btn red" {{ label|trans({}, translation_domain) }} value="add_page">{{ label|trans({}, translation_domain) }}</button>
+        
+    </div>
+{% endspaceless %}
+{% endblock button_widget %}
+
+{% block submit_widget %}
+{% spaceless %}
+    {% set type = type|default('submit') %}
+    
+    {{ block('button_widget') }}
+    
+{% endspaceless %}
+{% endblock submit_widget %}
+
+
+
+{# Form #}
+
+{% block form_start %}
+{% spaceless %}
+    {% set method = method|upper %}
+    {% if method in ["GET", "POST"] %}
+        {% set form_method = method %}
+    {% else %}
+        {% set form_method = "POST" %}
+    {% endif %}
+<form name="{{ form.vars.name }}" class="form-horizontal"  method="{{ form_method|upper }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+    {% if form_method != method %}
+    <input type="hidden" name="_method" value="{{ method }}" />
+    {% endif %}
+{% endspaceless %}
+{% endblock form_start %}
+
+
+
+{# Labels #}
+
+{% block form_label %}
+{% spaceless %}
+    {% if label is not sameas(false) %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+		<label{% for attrname, attrvalue in label_attr %}  {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans|uppercase_first_letter ({}, translation_domain) }}
+    		{% if required is defined and required==1 %} <span style="color:red">*</span> {% endif %}
+        </label>    
+     	{% endif %}
+{% endspaceless %}
+{% endblock form_label %}
+
+
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+<p class="has-error help-block">
+        {% for error in errors %}
+    {{ error.message }}</li>
+        {% endfor %}
+</p>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}

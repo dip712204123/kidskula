@@ -1,0 +1,65 @@
+<div class="row timeline-movement">
+<div class="col-md-12">    
+    
+   {% for replymessages in replymessage %}  
+    
+
+
+    <div class="col-sm-6  {% if loop.index%2 != 0 %} col-sm-offset-6 {% endif %}  timeline-item">
+        <div class="row">
+            <div class=" {% if loop.index%2 != 0 %} col-sm-offset-1 {% endif %} col-sm-11">
+                <div class="timeline-panel {% if loop.index%2 == 0 %} credits {% else %} debits {% endif %}">
+                   <div class="message-item" id="m2"> 
+                    <div class="message-inner">
+                    
+                <div class="message-head clearfix">
+
+                    <div class="avatar pull-left"><a href="./index.php?qa=user&amp;qa_1=Fynn">
+
+                            <img class="img-circle yolo-bor2" src="{{asset('upload/profilepicture/chatimages/')}}{{replymessages.fromuser.profileimage}}" alt="">
+                        </a></div>
+
+                    <div class="user-detail">
+                        <h5 class="handle">{{replymessages.fromuser.firstName}} {{replymessages.fromuser.lastName}}
+                            <span style="float: right;">
+
+                                <a style="display: none;" class="btn-small btn-danger btn dis_reply">Delete</a>
+                            </span>
+                        </h5>
+                        <div class="post-meta">
+                            <div class="asker-meta">
+                                <span class="qa-message-what"></span>
+                                <span class="qa-message-when">
+                                    <span class="qa-message-when-data"> &nbsp;{{ replymessages.createddate|date('F j, Y, g:i a') }}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="qa-message-content">
+                    <p>{{replymessages.texttoshow}}</p>
+                </div>
+
+
+
+
+            </div>
+            </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+
+ 
+
+    
+    
+   {% endfor %} 
+    
+</div>
+</div>    
+                                                            
+</div>

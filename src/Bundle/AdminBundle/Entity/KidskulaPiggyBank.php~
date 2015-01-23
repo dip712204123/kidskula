@@ -1,0 +1,49 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaPiggyBank
+ *
+ * @ORM\Table(name="kidskula_piggy_bank", indexes={@ORM\Index(name="fk_kidskula_piggy_bank_kidskula_users1_idx", columns={"kidskula_users_user_id"})})
+ * @ORM\Entity
+ */
+class KidskulaPiggyBank
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="amount", type="decimal", precision=20, scale=2, nullable=true)
+     */
+    private $amount;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="last_transaction_date", type="string", length=45, nullable=true)
+     */
+    private $lastTransactionDate;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaUsers
+     *
+     * @ORM\OneToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaUsers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="kidskula_users_user_id", referencedColumnName="id", unique=true)
+     * })
+     */
+    private $kidskulaUsersUser;
+
+
+}

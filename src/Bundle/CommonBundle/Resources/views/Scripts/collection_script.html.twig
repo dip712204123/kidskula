@@ -1,0 +1,112 @@
+<script>
+    function tradeIcon(id)
+    {
+        
+
+        var colid = id;
+        var path = "{{path('mycollection_hometrade_button')}}";
+
+       // alert(id);
+        
+
+            var form_data = {
+                newstatus: colid
+
+            };
+			//$("#returnmsg"+id).html("Loading...");
+            $.ajax({
+                type: "POST",
+                url: path,
+                data: form_data,
+                success: function(response) {
+                    //alert(response.msg);
+
+                    if (response.status != 0) {
+                        if(response.status==1)
+                        {
+                        $("#allowedTrade"+id).css("display","none");
+                        
+                        setTimeout(function() {
+                              $("#returnmsg"+id).html(response.msg);
+                        }, 1000);
+                        }
+                        if(response.status==2)
+                        {
+                        $("#wantTrade"+id).css("display","none");
+                        
+                        setTimeout(function() {
+                              $("#returnmsg"+id).html(response.msg);
+                        }, 1000);
+                        }
+                       
+                    }
+                    else
+                    {
+                        return false;
+
+                    }
+
+                }
+            });
+
+
+        
+
+    }
+    
+    function tradeIconDetails(id)
+    {
+        
+        $(".btn.btn-lg.btn-success.joinnow_btn.id-" + id).html('Loading...');
+        var colid = id;
+        var path = "{{path('mycollection_hometrade_button')}}";
+
+       // alert(id);
+        
+
+            var form_data = {
+                newstatus: colid
+
+            };
+
+            $.ajax({
+                type: "POST",
+                url: path,
+                data: form_data,
+                success: function(response) {
+                    //alert(response.status);
+
+                    if (response.status != 0) {
+                        if(response.status==1)
+                        {
+                        $(".btn.btn-lg.btn-success.joinnow_btn.id-" + id).html('Available');
+                        $(".img-circle.collection-green-border.img-responsive.id-" + id).removeClass('collection-green-border');
+                        $(".img-circle.img-responsive.id-" + id).addClass('collection-ass-border');
+                        $("#wantTrade"+id).css("display","block");
+                        $("#allowedTrade"+id).css("display","none");
+                        }
+                        if(response.status==2)
+                        {
+                        $(".btn.btn-lg.btn-success.joinnow_btn.id-" + id).html('Exchange');
+                        $(".img-circle.collection-ass-border.img-responsive.id-" + id).removeClass('collection-ass-border');
+                        $(".img-circle.img-responsive.id-" + id).addClass('collection-green-border');
+                        $("#wantTrade"+id).css("display","none");
+                        $("#allowedTrade"+id).css("display","block");
+                        }
+                       
+                    }
+                    else
+                    {
+                        return false;
+
+                    }
+
+                }
+            });
+
+
+        
+
+    }
+    
+</script>

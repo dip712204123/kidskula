@@ -1,0 +1,30 @@
+profile:
+    pattern:  /
+    defaults: { _controller: BundleParentBundle:Profilesetting:profile }
+
+parent_profilesetting:
+    pattern:  /settings
+    defaults: { _controller: BundleParentBundle:Profilesetting:index } 
+    
+parent_profilesidesetting:
+    pattern:  /proset
+    defaults: { _controller: BundleParentBundle:Profilesetting:setting }
+    
+parent_profilechangepicture:
+    pattern:  /changepicture
+    defaults: { _controller: "BundleParentBundle:Profilesetting:changepicture" } 
+    
+parent_profilecroppicture:
+    pattern:  /image-crop
+    defaults: { _controller: "BundleParentBundle:Profilesetting:imagecrop" }
+    
+parent_profileavatar:
+    pattern:  /profileavatar
+    defaults: { _controller: "BundleParentBundle:Profilesetting:avatarselect" }
+parent_profilestatus:
+    pattern:  /savestatus
+    defaults: { _controller: BundleParentBundle:Profilesetting:profilestatus } 
+parentallfriendlisting:
+    pattern:  /allfriendlisting
+    defaults: { _controller: BundleParentBundle:Profilesetting:allfriendlisting }    
+   

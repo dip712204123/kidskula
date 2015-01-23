@@ -1,0 +1,65 @@
+{% if collectionarray is not empty %}
+{% for allfriends in myfrnds %}
+<div class="friendlist-inner col-md-3">
+<p class="frnd-img">
+{%  if allfriends.profileimage is defined and allfriends.profileimage is not null  %}
+ 
+<img alt="" src="{{asset('upload/profilepicture/chatimages/')}}{{ allfriends.profileimage }}" width="100px" height="100px" class="img-circle red-bor2">
+ {% else %}
+ <img src="{{asset('bundles/BundleAdmin/assets')}}/img/admin_profile_no_image.gif" class="img-circle red-bor2" width="100px" height="100px" alt="" />
+ {% endif %}
+
+<ul class="info-icons">
+<a class="md-trigger" data-modal="modal-{{allfriends.id}}" href="#" onclick="showChildmessages({{allfriends.id}},{{childId}})"><li ><span class="glyphicon glyphicon-envelope"></span> </li></a>
+
+
+		<div class="md-modal md-effect-1 friend-chat-pop" id="modal-{{allfriends.id}}">
+			<div class="md-content">
+				
+                <span class="glyphicon glyphicon-remove md-close pull-right"></span>
+               
+				<div id="my_child_all_message_{{allfriends.id}}">
+                
+ 				
+                
+                </div>
+  				                           
+                
+			</div>
+		</div>
+        <div class="md-overlay"></div>
+<!-- the overlay element -->
+<a href="#"><li ><span class="glyphicon glyphicon-comment"></span> </li></a>
+</ul>
+<h2>{{allfriends.firstName}} {{allfriends.lastName}} </h2>
+</div>
+{% endfor %}
+{% else %}
+<div class="col-md-12 col-sm-9 noresultfound">
+ <img src="/~kidskula/web/bundles/KidskulaBundle/assets/images/error.png" alt="" height="25"> {{personal.firstName}} is not connected with any friends !!!
+ </div>
+{% endif %}
+
+<script>
+function showChildmessages(frnd_id,child_id)
+    {
+        var form_data = {
+            frnd_id: frnd_id,
+            child_id: child_id
+        };
+        //$("#my_child_all_message_"+frnd_id).html('');
+        $.ajax({
+            type: "POST",
+            url: "{{path('showchildmessage')}}",
+            data: form_data,
+            beforeSend: function(){
+                var beforetxt = '<div class="row inner"><div class="col-md-9"><h4>Fetching all messages...</h4></div></div>';
+                $("#my_child_all_message_"+frnd_id).html(beforetxt);
+            },
+            success: function(response) {
+                //alert(response);
+                $("#my_child_all_message_"+frnd_id).html(response);
+            }
+        });
+    }
+</script>

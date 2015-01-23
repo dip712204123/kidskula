@@ -1,0 +1,27 @@
+{% for message in replymessage %}
+
+<div class="row inner">
+	<div class="col-md-2">
+    
+    {%  if message.profileimage is defined and message.profileimage is not null  %}
+    <img alt="" src="{{asset('upload/profilepicture/chatimages/')}}{{ message.profileimage }}" class="img-circle red-bor2" width="70px" height="70px" >
+    {% else %}
+    <img src="{{asset('bundles/BundleAdmin/assets')}}/img/admin_profile_no_image.gif" class="img-circle red-bor2" width="70px" height="70px" alt="" />
+    {% endif %}
+    </div>
+    <div class="col-md-9">
+    <h4> {{message.username}} <span>Date : {{ message.createddate|date("M j,Y, g:i a")}} </span></h4>
+    <p>{{message.texttoshow}}</p>
+    </div>					
+</div>
+
+{% endfor %}
+{% if replymessage is empty %}
+
+<div class="row inner">
+    <div class="col-md-9">
+        <h4><img height="25" alt="" src="/~kidskula/web/bundles/KidskulaBundle/assets/images/error.png"> No Message Found! </h4>
+    </div>					
+</div>
+
+{% endif %}

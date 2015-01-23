@@ -1,0 +1,7 @@
+allmodules:
+    path:     /
+    defaults: { _controller: BundleAdminBundle:Modules:index }
+     
+modules_status:
+    pattern:  /{id}/status
+    defaults: { _controller: "BundleAdminBundle:Modules:status" }

@@ -1,0 +1,18 @@
+profile_details:
+    pattern:  /
+    defaults: { _controller: BundleAdminBundle:Profile:index }
+profile_details_edit:
+    pattern:  /edit
+    defaults: { _controller: BundleAdminBundle:Profile:edit }
+profile_changepass:
+    pattern:  /changepassword
+    defaults: { _controller: "BundleAdminBundle:Profile:changepass" }
+profile_changepicture:
+    pattern:  /changepicture
+    defaults: { _controller: "BundleAdminBundle:Profile:changepicture" } 
+profile_croppicture:
+    pattern:  /image-crop
+    defaults: { _controller: "BundleAdminBundle:Profile:imagecrop" }  
+profile_activetab:
+    pattern:  /activetab
+    defaults: { _controller: "BundleAdminBundle:Profile:activetab" }

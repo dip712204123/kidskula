@@ -1,0 +1,3 @@
+registration:
+    pattern:  /student-registration
+    defaults: { _controller: BundleCommonBundle:Webservice:index }

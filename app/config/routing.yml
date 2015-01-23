@@ -1,0 +1,43 @@
+#bundle_front_login:
+#    path:     /login
+#    defaults: { _controller: BundleAdminBundle:User:login } BundleKidskulaBundle
+
+bundle_frontend:
+    resource: "@BundleKidskulaBundle/Resources/config/routing.yml"
+    prefix:   /student
+bundle_common:
+    resource: "@BundleCommonBundle/Resources/config/routing.yml"
+    prefix:   /  
+bundle_parent:
+    resource: "@BundleParentBundle/Resources/config/routing.yml"
+    prefix:   /parent
+    
+bundle_kidskula:
+    path:     /students
+    defaults: { _controller: BundleKidskulaBundle:Landing:index }   
+    
+kidskula_bundle_parents:
+    path:     /parents
+    defaults: { _controller: BundleParentBundle:ParentLogin:index }     
+# redirecting the root
+
+        
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_group:
+    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
+    prefix: /group
+
+bundle_admin:
+    resource: "@BundleAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin   
+    
+
+
+    

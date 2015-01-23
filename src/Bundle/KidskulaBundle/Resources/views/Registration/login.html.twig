@@ -1,0 +1,98 @@
+{% extends 'BundleKidskulaBundle:Layout:base.html.twig' %}
+ {% block content %} 
+<div class="landingheading-top"> 
+    Log In
+</div>
+
+<div class="container">
+
+        {% block flash %}
+
+    <div class="col-md-12">  
+<div class="row" style="padding-top: 10px;">	
+   {% for flashSuccessMessage in app.session.flashbag.get('success') %} 
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ flashSuccessMessage }}
+        </div>
+            {% endfor %}
+            {% for flashErrorMessage in app.session.flashbag.get('error') %}  
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ flashErrorMessage }}
+        </div>
+            {% endfor %} 
+    </div>
+</div>
+        {% endblock %}
+    <div class="row" id="loginform" >
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <form role="form" method="post" class="registrationform-main" id="form" action="{{path('fornt_login')}}">
+
+                <div class="reg-frm-space"> </div>
+				<p class="reg-info-text"><em><strong>Enter username</strong></em></p>
+                <div class="form-group">
+                    <input type="text"  name="_username" id="_username" class="form-control input-lg" placeholder="User Name" tabindex="3" required >
+                </div>
+                
+				<p class="reg-info-text"><em><strong>Enter password</strong></em></p>
+                <div class="form-group">
+                    <input type="password" name="_password" id="_password" class="form-control input-lg" placeholder="Password" tabindex="5" required >
+                </div>
+
+                <div class="row"> 
+                    <div class="col-xs-6"> 
+                        <p class="reg-info-text"><a href="{{path('fornt_forgotpassword')}}">Forget Password?</a> </p>
+                    </div>
+                    <div class="col-xs-6" style="text-align: right; margin: -4px 0px 0px;"> 
+
+                        <p class="reg-info-text"><input name="_rememberme" type="checkbox" value="1"> Remember Password?  </p>
+                    </div>
+
+                </div>
+
+
+                <div class="reg-frm-space"> </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-12"><input type="submit" class="btn btn-success btn-block btn-lg searchfriendbtn" value="Log In"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+   {# Form for forget Password start here#}
+    <div class="row" id="forgetpass" style="display: none;">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <form role="form" method="post" class="registrationform-main" action="{{path('fornt_forgotpassword')}}">
+
+                <div class="reg-frm-space"> </div>
+
+                <div class="form-group">
+                    <input type="text" name="_username" id="_username" class="form-control input-lg" placeholder="Email Id" tabindex="3" required >
+                </div>
+
+                
+
+                <div class="row"> 
+                    <div class="col-xs-6"> 
+                        <p class="reg-info-text"><a href="javascript:void(0);" onclick="loginfunc();"><strong>Click for login</strong></a> </p>
+                    </div>
+                  
+
+                </div>
+
+
+                <div class="reg-frm-space"> </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-12"><input type="submit" class="btn btn-success btn-block btn-lg searchfriendbtn" value="Recover Password"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {# Form for forget Password end  here#}
+</div>
+
+<!--container ends-->
+ {% endblock  %}

@@ -1,0 +1,23 @@
+allavatar:
+    path:     /
+    defaults: { _controller: BundleAdminBundle:Avatar:index }
+
+avatar_add:
+    pattern:  /add
+    defaults: { _controller: BundleAdminBundle:Avatar:new }
+avatar_upload:
+    pattern:  /upload
+    defaults: { _controller: "BundleAdminBundle:Avatar:upload" }
+avatar_save:
+    pattern:  /save
+    defaults: { _controller: "BundleAdminBundle:Avatar:save" }
+    requirements: { _method: post|put }
+avatar_status:
+    pattern:  /{id}/status
+    defaults: { _controller: "BundleAdminBundle:Avatar:status" }
+    
+avatar_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BundleAdminBundle:Avatar:delete" }
+    
+     

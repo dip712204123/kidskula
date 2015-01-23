@@ -1,0 +1,179 @@
+{% extends 'BundleAdminBundle:layout:base.html.twig' %}
+{% block content %}
+<div class="container-fluid">
+<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title">
+        {% if heading is defined %}{{heading}} {% endif%}
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{path('bundle_admin_dashboard')}}">Home</a> 
+            <i class="icon-angle-right"></i>
+        </li>
+
+        <li><a href="#">{% if heading is defined %}{{heading}} {% endif%}</a></li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB-->
+
+    <div class="row-fluid">
+        <div class="span12">
+            <form name="frm" method="post" action="">
+            
+            {% for flashSuccessMessage in app.session.flashbag.get('success_message') %}                
+  				<div class="alert alert-success">
+                    <button class="close" data-dismiss="alert"></button>
+                    {{ flashSuccessMessage }}
+                </div>
+            {% endfor %}
+            
+            {% for flashErrorMessage in app.session.flashbag.get('error_message') %}                
+  				<div class="alert alert-error">
+                    <button class="close" data-dismiss="alert"></button>
+                    {{ flashErrorMessage }}
+                </div>
+            {% endfor %}
+            
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-cogs"></i>{% if title is defined %}{{title}} {% endif%}</div>
+                    <!--<div class="actions">
+                        <a href="{{ path('kidskulaemailnotification_new') }}" class="btn blue" title="Add Email Notification"><i class="icon-plus"></i> Add</a>
+                    </div>-->
+                </div>
+                <div class="portlet-body" >
+                    
+                        <table class="table table-striped table-bordered table-hover" id="mytable">
+                            <thead>                                    
+                                <tr>
+                                    <th class="hidden-480">{{ knp_pagination_sortable(entities, 'Email Code', 'a.emailCode') }}</th>
+                                    <th class="hidden-480">Subject</th>
+                                    <th >Action</th>
+                                </tr>                                       
+                            </thead>
+                            <tbody>
+                            	{% for entity in entities %}                
+                                <tr class="odd gradeX">                                
+                                    <td class="hidden-480">{{ entity.emailCode }}</td>
+                                    <td class="hidden-480">{{ entity.subject }}</td>
+                                    <td>
+                                        <a class="btn mini purple" href="{{ path('kidskulaemailnotification_edit', { 'id': entity.id }) }}">
+                                        <i class="icon-edit"></i></a>
+                                        <!--<a class="btn mini red" href="{{ path('kidskulaemailnotification_delete', { 'id': entity.id }) }}" onclick="return confirm('Are you sure to delete?');">
+                                            <i class="icon-trash"></i>
+                                        </a>-->
+                                    </td>
+                                </tr>
+                            	{% endfor %}
+                            </tbody>                                    
+                        </table>
+                    <!--<?php } else { ?>
+                        <div class="no_record">No record found</div>
+                    <?php } ?> -->
+                    {# display navigation #}
+        			<div class="navigation">
+                    	{{ knp_pagination_render(entities) }}
+                    </div>
+                    
+                </div>
+             </div>
+            </form>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/select2/select2.min.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/data-tables/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/data-tables/DT_bootstrap.js"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<!--<script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/table-managed.js"></script>
+      
+	<script>
+		jQuery(document).ready(function() {   
+		  // $("#mytable").dataTable();
+		   
+		   $('#mytable').dataTable({
+                "aoColumns": [
+                  { "bSortable": true },
+                  null, 
+				  { "bSortable": false }
+                ],
+                "aLengthMenu": [
+                    [5, 15, 20, -1],
+                    [5, 15, 20, "All"] // change per page values here
+                ],
+                // set the initial value
+                "iDisplayLength": 5,
+                "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ records per page",
+                    "oPaginate": {
+                        "sPrevious": "Prev",
+                        "sNext": "Next"
+                    }
+                },
+                "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [0]
+                    }
+                ]
+            });
+			
+			jQuery('#mytable .group-checkable').change(function () {
+                var set = jQuery(this).attr("data-set");
+                var checked = jQuery(this).is(":checked");
+                jQuery(set).each(function () {
+                    if (checked) {
+                        $(this).attr("checked", true);
+                    } else {
+                        $(this).attr("checked", false);
+                    }
+                });
+                jQuery.uniform.update(set);
+            });
+			
+		});
+	</script>-->
+
+	<!--<script language="javascript">
+        $(document).ready(function() { 
+            
+            $("#confirm_opener_2").click(function(){
+                var chked=document.getElementsByName("select[]");
+                var flag=0,valid='';
+                for(var i=0;i<chked.length;i++)
+                {
+                    var cond=document.getElementsByName("select[]").item(i).checked;
+                    var val=document.getElementsByName("select[]").item(i).value;
+                    if(cond==true){
+                        if(valid==''){
+                            valid=val;
+                        }else{
+                            valid=valid+','+val;
+                        }
+                        flag++; 
+                    }		
+                }
+                
+                if(flag==0)
+                {
+                    alert("Please select atleast one page");
+                    return false; 
+                }
+                else
+                {
+                    $( "#dialog_confirm_2" ).dialog( "open" );
+                    $('.ui-dialog button').blur();// avoid button autofocus
+                    $('#ids').val(valid);
+                    return false;
+                }
+                            
+            });
+        });
+    </script>-->
+</div>                
+     
+{% endblock content %}

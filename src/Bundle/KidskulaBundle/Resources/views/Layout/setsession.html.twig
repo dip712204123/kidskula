@@ -1,0 +1,37 @@
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+{#<script type="text/javascript" src="/~kidskula/mychat/includes/js/jquery.js"></script>#}
+
+<script>
+$( document ).ready(function() {
+    //$('#loader').show();
+	//alert({{app.security.getToken().getUser().getId()}});
+	var path = "/~kidskula/mychat/test.php";					
+	var form_data = {
+		userid:'{{app.security.getToken().getUser().getId()}}'
+	};
+	$.ajax({
+		type: "POST",
+		url: path,
+		data: form_data,
+		success: function(response) {
+			//alert(response);
+			window.location = "{{path('home')}}";
+		}
+	});
+});
+</script>
+ {% block css %}
+ <link href="{{asset('bundles/KidskulaBundle/assets')}}/css/bootstrap.css" rel="stylesheet">
+<link href="{{asset('bundles/KidskulaBundle/assets')}}/css/styles.css" rel="stylesheet">
+ {% endblock %} 
+ <body>
+<div style="width:100%; text-align:center;"> 
+<h1 style="font-size:55px; font-weight:bold; padding:0px; margin:30px 0px 0px 0px; color:#ed1f24; font-family:PristinaRegular;"> Welcome to</h1><br> 
+<img src="{{asset('bundles/KidskulaBundle/assets')}}/images/logo.png" />
+<br> <br> 
+<img src="{{asset('bundles/KidskulaBundle/assets')}}/images/ajax-loader.gif" />
+
+</div>
+</body>

@@ -1,0 +1,95 @@
+<div class="page-sidebar nav-collapse collapse">
+    <!-- BEGIN SIDEBAR MENU -->        
+    <ul class="page-sidebar-menu">
+        <li>
+            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+            <div class="sidebar-toggler hidden-phone"></div>
+            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+        </li>
+        <li>
+            <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+					{#<form class="sidebar-search">
+						<div class="input-box">
+							<a href="javascript:;" class="remove"></a>
+							<input type="text" placeholder="Search..." />
+							<input type="button" class="submit" value=" " />
+						</div>
+					</form>#}
+            <!-- END RESPONSIVE QUICK SEARCH FORM -->
+        </li>
+        <li class="start ">
+            <a href="{{path('bundle_admin_dashboard')}}">
+                <i class="icon-home"></i> 
+                <span class="title">Dashboard</span>
+            </a>
+        </li>
+        <li >
+            <a href="{{path('bundle_admin_user')}}">
+                <i class="icon-user"></i> 
+                <span class="title">Users</span>
+            </a>
+        </li>
+        <li class="{% if active_page is defined and (active_page == 'All Email Notifications' or active_page == 'Add Email Notification' or active_page == 'Edit Email Notification') %}active{% endif %}"> <a href="javascript:;"> <i class="icon-cogs"></i> <span class="title">Email Notifications List</span> <span class="selected"></span> 
+                <span class="arrow {% if active_page is defined and (active_page == 'All Email Notifications' or active_page == 'Add Email Notification' or active_page == 'Edit Email Notification') %}open{% endif %}"></span> </a>
+            <ul class="sub-menu">
+                <li {% if active_page is defined and (active_page == 'All Email Notifications' or active_page == 'Edit Email Notification') %}class="active"{% endif %} > <a href="{{path('kidskulaemailnotification')}}">Email Notifications List</a></li>
+            </ul>
+        </li>
+        <li class=""> <a href="javascript:;"> <i class="icon-cogs"></i> <span class="title">CMS Settings</span> <span class="selected"></span> 
+                <span class="arrow"></span> </a>
+            <ul class="sub-menu">
+                <li> <a href="{{path('static_page_list')}}">Static pages</a></li>
+            </ul>
+        </li>
+        <li >
+            <a href="{{path('contact_us')}}">
+                <i class="icon-cogs"></i> 
+                <span class="title">User contact Messages</span>
+            </a>
+        </li>
+        
+        <li class="{% if active_page is defined and (active_page == 'All Student Grades' or active_page == 'Add Student Grade' or active_page == 'Edit Student Grade') %}active{% endif %}"> <a href="javascript:;"> <i class="icon-cogs"></i> <span class="title">Student Grades</span> <span class="selected"></span> 
+                <span class="arrow {% if active_page is defined and (active_page == 'All Student Grades' or active_page == 'Add Student Grade' or active_page == 'Edit Student Grade') %}open{% endif %}"></span> </a>
+            <ul class="sub-menu">
+                <li {% if active_page is defined and (active_page == 'All Student Grades' or active_page == 'Edit Student Grade') %}class="active"{% endif %}> <a href="{{path('student_grade')}}">Student Grades</a></li>
+                <li {% if active_page is defined and active_page == 'Add Student Grade' %}class="active"{% endif %}> <a href="{{path('student_grade_new')}}">Add Student Grade</a></li>
+            </ul>
+        </li>
+        
+        <li class="{% if active_page is defined and (active_page == 'All Schools' or active_page == 'Add School' or active_page == 'Edit School') %}active{% endif %}"> <a href="javascript:;"> <i class="icon-cogs"></i> <span class="title">Schools </span> <span class="selected"></span> 
+                <span class="arrow {% if active_page is defined and (active_page == 'All Schools' or active_page == 'Add School' or active_page == 'Edit School') %}open{% endif %}"></span> </a>
+            <ul class="sub-menu">
+                <li {% if active_page is defined and (active_page == 'All Schools' or active_page == 'Edit School') %}class="active"{% endif %} > <a href="{{path('school')}}">Schools</a></li>
+                <li {% if active_page is defined and active_page == 'Add School' %}class="active"{% endif %}> <a href="{{path('school_new')}}">Add School</a></li>
+            </ul>
+        </li>
+        <li {% if app.request.attributes.get('_route') == 'allcollection' or app.request.attributes.get('_route') == 'collection_add' or app.request.attributes.get('_route') == 'collection_category' or app.request.attributes.get('_route') == 'category_add' or app.request.attributes.get('_route') == 'collection_subcategory' %}class="active" {% endif %}> <a href="javascript:void(0);"> <i class="icon-cogs"></i> <span class="title">collection </span> <span class="selected"></span> 
+                <span class="arrow open"></span> </a>
+            <ul class="sub-menu">
+                <li {% if app.request.attributes.get('_route') == 'allcollection'%}class="active" {% endif %}> <a href="{{path('allcollection')}}">collections</a></li>
+                <li {% if app.request.attributes.get('_route') == 'collection_add'%}class="active" {% endif %}> <a href="{{path('collection_add')}}">Add Collection</a></li>
+                <li {% if app.request.attributes.get('_route') == 'collection_category'%}class="active" {% endif %}> <a href="{{path('collection_category')}}">Collection Category</a></li>
+                <li {% if app.request.attributes.get('_route') == 'collection_subcategory'%}class="active" {% endif %}> <a href="{{path('collection_subcategory')}}">Collection Sub Category</a></li>
+            </ul>
+        </li>
+        <li {% if app.request.attributes.get('_route') == 'allavatar' or app.request.attributes.get('_route') == 'avatar_add'  %}class="active" {% endif %}> <a href="javascript:void(0);"> <i class="icon-cogs"></i> <span class="title">Avatar</span> <span class="selected"></span> 
+                <span class="arrow open"></span> </a>
+            <ul class="sub-menu">
+                <li {% if app.request.attributes.get('_route') == 'allavatar'%}class="active" {% endif %}> <a href="{{path('allavatar')}}">Avatars</a></li>
+                <li {% if app.request.attributes.get('_route') == 'avatar_add'%}class="active" {% endif %}> <a href="{{path('avatar_add')}}">Add Avatars</a></li>
+            </ul>
+        </li>
+        <li class="{% if active_page is defined and (active_page == 'All Contact Questions' or active_page == 'Add Contact Question' or active_page == 'Edit Contact Question') %}active{% endif %}"> <a href="javascript:;"> <i class="icon-cogs"></i> <span class="title">Contact Questions </span> <span class="selected"></span> 
+                <span class="arrow {% if active_page is defined and (active_page == 'All Contact Questions' or active_page == 'Add Contact Question' or active_page == 'Edit Contact Question') %}open{% endif %}"></span> </a>
+            <ul class="sub-menu">
+                <li {% if active_page is defined and (active_page == 'All Contact Questions' or active_page == 'Edit Contact Question') %}class="active"{% endif %} > <a href="{{path('contact_question')}}">Contact Questions</a></li>
+                <li {% if active_page is defined and active_page == 'Add Contact Question' %}class="active"{% endif %}> <a href="{{path('contact_question_new')}}">Add Contact Questions</a></li>
+            </ul>
+        </li>
+		<li {% if app.request.attributes.get('_route') == 'allmodules' %}class="active" {% endif %}> <a href="javascript:;"> <i class="icon-cogs"></i> <span class="title">Modules Management </span> <span class="selected"></span> <span class="arrow open"></span></a>
+            <ul class="sub-menu">
+                <li {% if app.request.attributes.get('_route') == 'allmodules' %}class="active" {% endif %}> <a href="{{path('allmodules')}}">Modules</a></li>
+            </ul>
+        </li>
+        <!-- END SIDEBAR MENU -->
+</div>

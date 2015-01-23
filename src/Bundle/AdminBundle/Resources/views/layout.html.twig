@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Kidskula | Admin Login</title>
+        <meta charset="UTF-8" />
+        <!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<link href="{{asset('bundles/BundleAdmin/assets')}}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="{{asset('bundles/BundleAdmin/assets')}}/plugins/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+	<link href="{{asset('bundles/BundleAdmin/assets')}}/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="{{asset('bundles/BundleAdmin/assets')}}/css/style-metro.css" rel="stylesheet" type="text/css"/>
+	<link href="{{asset('bundles/BundleAdmin/assets')}}/css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="{{asset('bundles/BundleAdmin/assets')}}/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+	<link href="{{asset('bundles/BundleAdmin/assets')}}/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="{{asset('bundles/BundleAdmin/assets')}}/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" href="{{asset('bundles/BundleAdmin/assets')}}/plugins/select2/select2_metro.css" />
+	<!-- END GLOBAL MANDATORY STYLES -->
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link href="{{asset('bundles/BundleAdmin/assets')}}/css/pages/login-soft.css" rel="stylesheet" type="text/css"/>
+	<!-- END PAGE LEVEL STYLES -->
+	<link rel="shortcut icon" href="favicon.ico" />
+        <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+	<!-- BEGIN CORE PLUGINS -->   <script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/jquery-1.10.1.min.js" type="text/javascript"></script>
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+	<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>      
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
+	<!--[if lt IE 9]>
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/excanvas.min.js"></script>
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/respond.min.js"></script>  
+	<![endif]-->   
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/jquery.blockui.min.js" type="text/javascript"></script>  
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
+	<!-- END CORE PLUGINS -->
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/backstretch/jquery.backstretch.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/select2/select2.min.js"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/app.js" type="text/javascript"></script>
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/login-soft.js" type="text/javascript"></script>      
+	<!-- END PAGE LEVEL SCRIPTS --> 
+	<script>
+		jQuery(document).ready(function() {     
+		  App.init();
+		  Login.init();
+		});
+	</script>
+	<!-- END JAVASCRIPTS -->
+    </head>
+    
+    <body>
+       {# <div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>#}
+
+        
+
+        <div>
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+        </div>
+    </body>
+</html>

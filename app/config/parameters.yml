@@ -1,0 +1,37 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: localhost
+    database_port: null
+    database_name: kidskula
+    database_user: root
+    database_password: 
+    #mailer_transport: smtp
+    #mailer_host: 127.0.0.1
+    #mailer_user: null
+    #mailer_password: null
+    locale: en
+    secret: ThisTokenIsNotSoSecretChangeIt
+    debug_toolbar: false
+    debug_redirects: false
+    use_assetic_controller: true
+    per_page : 20 
+    root_path : '/../../../../web/'
+    upload_image_path : 'upload/'
+    profile_image_path : 'profilepicture/'
+    profile_resize_image_path: 'resizedimages/'
+    profile_crop_image_path: 'cropedimages/'
+    club_image_path: 'upload/clubimages'
+    collection_image_path : '/../web/upload/collections/'
+    collection_crop_image_path: 'cropedimages/'
+    avatar_image_path : '/../web/upload/avatar'
+    #mailer_transport: gmail
+    #mailer_host: smtp.gmail.com
+    #mailer_user: rahi.wgt@gmail.com
+    #mailer_password: rahi@wgt
+    #from_email: info@kidskula.com
+    mailer_transport: gmail
+    mailer_host: tls://smtp.gmail.com
+    mailer_user: careers@webgentechnologies.com
+    mailer_password: abc@1234
+    from_email: info@kidskula.com

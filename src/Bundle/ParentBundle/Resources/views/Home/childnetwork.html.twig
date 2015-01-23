@@ -1,0 +1,27 @@
+<div class="row actionrequest-panel">
+<h2> My Action Request</h2>
+<ul class="action-list">
+<div class="action-main-heading">Kid's Network </div>
+<h3>Friends Requests </h3>
+{% for childdetails in childentity %}
+{% set childprofile= getUserProfileDetails(childdetails.id) %}
+ {% set profileImage = getprofileimage(childdetails.id) %}
+
+<a href="javascript:void(0);" style="cursor: pointer;" onclick="childnetworkFunc({{childdetails.id}});"><li>{{childdetails.username}} Network</li></a>
+<span id="kidsnetwork{{childdetails.id}}" style="display: none;" class="frndinvitespan">
+ <input type="hidden" id="frndreqstnotification{{childdetails.id}}" value="{{ path('frndrequestcheck')}}"/>
+
+<span style="margin-left: 25px;" id="request-list{{childdetails.id}}">
+
+{{ render(url('frndrequestcheck')) }}
+</span>
+
+
+</span>
+{% endfor %}
+<h3>Clubs Requests </h3>
+<li>Movie Club</li>
+<li>Chess Club</li>
+</ul>
+
+</div>

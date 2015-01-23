@@ -1,0 +1,6 @@
+club_article_list:
+    pattern:  /
+    defaults: { _controller: BundleAdminBundle:Article:index }
+club_article_status:
+    pattern:  /{id}/status
+    defaults: { _controller: "BundleAdminBundle:Article:status" }

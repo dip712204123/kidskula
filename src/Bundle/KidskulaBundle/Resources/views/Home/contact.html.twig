@@ -1,0 +1,208 @@
+{% extends 'BundleKidskulaBundle:Layout:base.html.twig' %}
+ {% block content %}  
+<div class="landingheading-top"> 
+    Contact Us
+</div>
+<div class="container">
+        {% block flash %}        
+
+    <div class="col-md-12">  
+<div class="row" style="padding-top: 10px;">	
+   {% for flashSuccessMessage in app.session.flashbag.get('success') %} 
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ flashSuccessMessage }}
+        </div>
+            {% endfor %}
+            {% for flashErrorMessage in app.session.flashbag.get('error') %}  
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ flashErrorMessage }}
+        </div>
+            {% endfor %} 
+    </div>
+</div>
+        {% endblock %}
+       
+    <div class="row contact-main">
+        <div class="col-md-8 leftpart"> 
+            <h2>Contact Us </h2>
+            <p class="con-main-text">
+                To provide feedback, please click <a href="#">Here</a><br>
+                If you are looking for commonly asked question, please look at the frequently asked
+                question <a href="#">Here</a>.<br>
+                Are you a registered user? If yes, please login and contact us so that we can respond to you quickly. If you are not registered user, please complete the form below.
+            </p>
+            <form class="form-horizontal landinglogin-frm" role="form" method='post' id="form" action="{{path('mycontacts')}}">
+                <fieldset>
+                    <!-- Form Name -->
+                      <div class="form-group">
+
+                        <div class="col-sm-12">
+                             {{ form_widget(form.questionregarding) }}
+                             {{ form_errors(form.questionregarding) }}              
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                        	<div class="hide" id="category_loader_span" align="center"><img src="{{asset('bundles/KidskulaBundle/assets/images/')}}input-spinner.gif" alt="Loading.." title="Loading.."> Loading.....</div> 
+                            {{ form_widget(form.categoryid) }}
+                            {{ form_errors(form.categoryid) }} 
+                        </div>
+                        <input type="hidden" name="hidden_categoryid" id="hidden_categoryid" value=""/>
+                    </div>
+                    
+                   <div class="form-group">
+                        <div class="col-sm-12">
+                        	<div class="hide" id="question_loader_span" align="center"><img src="{{asset('bundles/KidskulaBundle/assets/images/')}}input-spinner.gif" alt="Loading.." title="Loading.."> Loading.....</div> 
+                            {{ form_widget(form.questionid) }}
+                            {{ form_errors(form.questionid) }}                                                     
+                        </div>
+                        <input type="hidden" name="hidden_questionid" id="hidden_questionid" value=""/>
+                    </div>
+                    
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            {{ form_widget(form.firstName) }}
+			    {{ form_errors(form.firstName) }}
+                        </div>
+
+
+                        <div class="col-sm-6" >
+                           {{ form_widget(form.lastName) }}
+			   {{ form_errors(form.lastName) }}
+                        </div>
+                    </div>
+                  
+
+                    <!-- Text input-->
+       
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            {{ form_widget(form.senderemail) }}
+			    {{ form_errors(form.senderemail) }}
+                            <p class="reg-info-text"> 
+                            {{ form_widget(form.contactmebymail) }}
+			    {{ form_errors(form.contactmebymail) }} It is okay to contact me by email. 
+                            </p>
+                        </div>
+                        
+                    </div>
+
+                  <div class="form-group">
+                        <div class="col-sm-12">
+                            {{ form_widget(form.comment) }}
+			    {{ form_errors(form.comment) }}
+                           
+                        </div>
+                         {{ form_widget(form._token) }}
+                    </div>
+                  
+
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12"> <button type="submit" class="btn btn-primary col-md-12 searchfriendbtn">Click here to submit your comments</button></div>
+                        
+                       {# <div class="col-xs-12 col-md-12"><a class="btn btn-success btn-block btn-lg contactdbtn" href="#">Click here to submit your comments</a></div>#}
+                    </div>
+                    <br><br>
+                </fieldset>
+            </form>
+        </div> <!--leftpart ends here-->
+        <div class="col-md-4 rightpart"> 
+            <div class="quickcontact-panel"> 
+                <h2>Quick Contact </h2>
+                <div class="inner">
+                    <p> You could also reach us via <a href="#">Email</a>, <a href="#">Phone</a> or <a href="#">Fax</a></p>
+                    <div class="row con-icotabs">
+                        <div class="col-md-2 pull-left"><img src="{{asset('bundles/KidskulaBundle/assets')}}/images/con_ph_ico.png" alt=""> </div>
+                        <div class="col-md-8 pull-right">+1-408-555-1212 </div>
+                    </div> <!--con-icotabs ends-->
+
+                    <div class="row con-icotabs">
+                        <div class="col-md-2 pull-left"><img src="{{asset('bundles/KidskulaBundle/assets')}}/images/con_mail_ico.png" alt=""> </div>
+                        <div class="col-md-8 pull-right">info@KidsKula.com </div>
+                    </div> <!--con-icotabs ends-->
+
+                    <div class="row con-icotabs">
+                        <div class="col-md-2 pull-left"><img src="{{asset('bundles/KidskulaBundle/assets')}}/images/con_print_ico.png" alt=""> </div>
+                        <div class="col-md-8 pull-right">+1-408-555-1212 </div>
+                    </div> <!--con-icotabs ends-->
+
+                </div> <!--inner ends here-->
+            </div> <!--quickcontact-panel ends-->
+        </div> <!--rightpart ends here-->
+    </div> <!--contact-main ends--> 
+</div> <!--container ends-->
+
+<script>
+	function showMyParameters(cat)
+		{
+		   if(cat !='')
+		   {
+			   var path = "{{path('get_question_font_category')}}";
+			   $("#category_loader_span").removeClass('hide');	   
+					
+			   $.ajax({
+					type: 'POST',
+					url: path ,
+					data: 'parent_cat=' + cat,
+					dataType: "json",
+					success: function(res)
+					{
+						$("#category_loader_span").addClass('hide');
+						
+						if (res.msg != '') {
+							$("#bundle_adminbundle_contactus_categoryid").html(res.msg);	
+							$("#bundle_adminbundle_contactus_questionid").html('<option value="">My Question or Comment is</option>');							
+						}
+						else
+						{
+						   $("#bundle_adminbundle_contactus_categoryid").html('<option value="">Something went wrong</option>');
+						   $("#bundle_adminbundle_contactus_questionid").html('<option value="">My Question or Comment is</option>');
+						}
+					}
+				});
+		   }
+		}
+		
+	function showMyQuestion(cat)
+		{
+		   if(cat !='')
+		   {
+			   var usertype = $("#bundle_adminbundle_contactus_questionregarding").val();			   
+			   var path = "{{path('get_question_font_sub_category')}}";
+			   $("#question_loader_span").removeClass('hide');			   
+					
+			   $('#hidden_categoryid').val(cat);
+			   $.ajax({
+					type: 'POST',
+					url: path ,
+					data: 'usertype=' + usertype+'&parent_cat=' + cat,
+					dataType: "json",
+					success: function(res)
+					{
+						$("#question_loader_span").addClass('hide');
+						if (res.msg != '') {
+							$("#bundle_adminbundle_contactus_questionid").html(res.msg);							
+						}
+						else
+						{
+						   $("#bundle_adminbundle_contactus_questionid").html('<option value="">Something went wrong</option>');
+						}
+					}
+				});
+		   }
+		}
+	function getMyQuestion(cat)
+	{
+	   if(cat !='')
+	   {
+			$('#hidden_questionid').val(cat);
+	   }
+	 }
+		
+</script>
+{% endblock%}

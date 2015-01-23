@@ -1,0 +1,207 @@
+{% extends 'BundleAdminBundle:layout:base.html.twig' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title">
+        User Profile Settings 
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{path('bundle_admin_dashboard')}}">Home</a> 
+            <i class="icon-angle-right"></i>
+        </li>
+		<li>
+            
+            <a href="{{path('bundle_admin_user')}}">Users</a> 
+            <i class="icon-angle-right"></i>
+        </li>
+        <li><a href="#">Settings</a></li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB-->
+    <div id="alertdiv" class="alert alert-error" style="display:none;">
+    <!--button class="close" data-dismiss="alert"></button-->
+      At least 1 checkbox must be checked from this div!                          
+    </div>
+    {% for flashSuccessMessage in app.session.flashbag.get('success') %}                
+                        <div class="alert alert-success">
+                            <button class="close" data-dismiss="alert"></button>
+                                {{ flashSuccessMessage }}
+                        </div>
+    {% endfor %}
+    <div id="tab_4-4" class="tab-pane">
+        <div style="height: auto;" id="accordion4-4" class="accordion collapse">
+            <form action="{{path('user_settings_edit',{ 'id': userid })}}" method="post"  id="user_setting_form">
+                <div class="profile-settings row-fluid">
+                    <div class="span9">
+                        <p>Is profile activated</p>
+                    </div>
+                  
+                    <div class="control-group span3">
+                        <div class="controls">
+                            <label class="radio">
+                                <input type="radio" name="activated" {% if  entities.profileStatus =='0' %} checked {% endif %} value="0"  />
+                                Yes 
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="activated" {% if  entities.profileStatus =='1' %} checked {% endif %} value="1"  />
+                                No
+                            </label>  
+                        </div>
+                    </div>
+                </div>
+                <!--end profile-settings-->
+                <div class="profile-settings row-fluid">
+                    <div class="span9">
+                        <p>Profile visible to whom</p>
+                    </div>
+                    
+                    <div class="control-group span3">
+                        <div class="controls">
+                            <label class="checkbox"> 
+                                <input type="checkbox" id="checkbox1" name="check_list[]" {% if '0' in entities.visibletowhom %} checked {% endif %} value="0"  /> Only Me
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" id="checkbox2" name="check_list[]" {% if '1' in entities.visibletowhom %} checked {% endif %} value="1"  /> Friends
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" id="checkbox3" name="check_list[]" {% if '2' in entities.visibletowhom %} checked {% endif %} value="2"  /> Parents
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!--end profile-settings-->
+                <!--start profile-settings-->
+                 <div class="profile-settings row-fluid">
+                    <div class="span9">
+                        <p>Network updates from friends</p>
+                    </div>
+                    <div class="control-group span3">
+                        <div class="controls">
+                            <label class="radio">
+                                <input type="radio" name="netupdate" {% if  entities.networkUpdates =='0' %} checked {% endif %} name="networkupdates" value="0"  />
+                                Yes
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="netupdate" {% if  entities.networkUpdates =='1' %} checked {% endif %} name="networkupdates" value="1"  />
+                                No
+                            </label>  
+                        </div>
+                    </div>
+                </div>
+                <!--end profile-settings-->
+                <!--start profile-settings-->
+                 <div class="profile-settings row-fluid">
+                    <div class="span9">
+                        <p>Notifictions</p>
+                    </div>
+                    <div class="control-group span3">
+                        <div class="controls">
+                            <label class="radio">
+                                <input type="radio" name="notification" {% if  entities.networkUpdates =='0' %} checked {% endif %} name="Notifictions" value="0"  />
+                                Yes
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="notification" {% if  entities.networkUpdates =='1' %} checked {% endif %} name="Notifictions" value="1"  />
+                                No
+                            </label>  
+                        </div>
+                    </div>
+                </div>
+                <!--end profile-settings-->
+                <!--start profile-settings-->
+                 <div class="profile-settings row-fluid">
+                    <div class="span9">
+                        <p>Ability to send trade virtual gifts</p>
+                    </div>
+                    <div class="control-group span3">
+                        <div class="controls">
+                            <label class="radio">
+                                <input type="radio" name="virtualgifts" {% if  entities.tradeVirtualGifts =='0' %} checked {% endif %} name="virtualgifts" value="0"  />
+                                Yes
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="virtualgifts" {% if  entities.tradeVirtualGifts =='1' %} checked {% endif %} name="virtualgifts" value="1"  />
+                                No
+                            </label>  
+                        </div>
+                    </div>
+                </div>
+                <!--end profile-settings-->
+                <!--start profile-settings-->
+                 <div class="profile-settings row-fluid">
+                    <div class="span9">
+                        <p>Ability to send messages</p>
+                    </div>
+                    <div class="control-group span3">
+                        <div class="controls">
+                            <label class="radio">
+                                <input type="radio" name="sendmsg" {% if  entities.sendMessages =='0' %} checked {% endif %} name="sendmsgs" value="0"  />
+                                Yes
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="sendmsg" {% if  entities.sendMessages =='1' %} checked {% endif %} name="sendmsgs" value="1"  />
+                                No
+                            </label>  
+                        </div>
+                    </div>
+                </div>
+                <!--end profile-settings-->
+                 <!--start profile-settings-->
+                 <div class="profile-settings row-fluid">
+                    <div class="span9">
+                        <p>Ability to chat</p>
+                    </div>
+                    <div class="control-group span3">
+                        <div class="controls">
+                            <label class="radio">
+                                <input type="radio" name="chat" {% if  entities.isChat =='0' %} checked {% endif %} name="ischat" value="0"  />
+                                Yes
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="chat" {% if  entities.isChat =='1' %} checked {% endif %} name="ischat" value="1" />
+                                No
+                            </label>  
+                        </div>
+                    </div>
+                </div>
+                <!--end profile-settings-->
+                <div class="space5"></div>
+                <div class="submit-btn">
+                    {#<a href="#" class="btn green">Save Changes</a>#}
+                    <input type="submit" class="btn green" value="Save Changes">
+                    <a href="{{path('bundle_admin_user')}}" class="btn">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    
+    <script>
+    $(document).ready(function(){
+        
+        $('.controls  input:checkbox').change(function(){
+       
+            if ($('.controls').filter(function(){  
+                return $(this).find(':checked').length === 0 }).length > 0 ) {
+                $('#alertdiv').show();
+                //alert('At least 1 checkbox must be checked from Profile visible section !');
+                //$("#checkbox1").parent().addClass('checked');
+                
+                $("input[type=submit]").attr('disabled','disabled');
+            }else{
+                $("input[type=submit]").removeAttr('disabled');
+                $('#alertdiv').hide();
+            }
+                
+         });
+         
+    }); 
+     
+    </script>
+    {% endblock %}
+
+{#{% block sidebar %} 
+{% endblock %}#}

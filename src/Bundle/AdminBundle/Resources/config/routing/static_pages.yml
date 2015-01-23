@@ -1,0 +1,22 @@
+static_page_list:
+    pattern:  /
+    defaults: { _controller: BundleAdminBundle:KidsKulaStaticMenus:index }
+static_page_add:
+    pattern:  /add
+    defaults: { _controller: BundleAdminBundle:KidsKulaStaticMenus:new }
+static_page_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BundleAdminBundle:KidsKulaStaticMenus:edit" }
+static_page_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BundleAdminBundle:KidsKulaStaticMenus:update" }
+    requirements: { _method: post|put }
+static_page_status:
+    pattern:  /{id}/status
+    defaults: { _controller: "BundleAdminBundle:KidsKulaStaticMenus:status" }
+     
+static_page_form_create:
+    pattern:  /static_page_form_create
+    defaults: { _controller: "BundleAdminBundle:KidsKulaStaticMenus:create" }
+    requirements: { _method: post }
+    

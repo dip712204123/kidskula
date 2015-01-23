@@ -1,0 +1,28 @@
+contact_category:
+    pattern:  /
+    defaults: { _controller: "BundleAdminBundle:ContactCategory:index" }
+    
+contact_category_status:
+    pattern:  /{id}/contact_category_status
+    defaults: { _controller: "BundleAdminBundle:ContactCategory:status" } 
+   
+contact_category_new:
+   pattern:  /new
+   defaults: { _controller: "BundleAdminBundle:ContactCategory:new" }  
+   
+contact_category_form_create:
+    pattern:  /newcontactcategory_form_create
+    defaults: { _controller: "BundleAdminBundle:ContactCategory:create" }
+    requirements: { _method: post }   
+ 
+contact_category_edit:
+    pattern:  /{id}/contact_category_edit
+    defaults: { _controller: "BundleAdminBundle:ContactCategory:edit" }
+
+contact_category_update:
+    pattern:  /{id}/contact_category_update
+    defaults: { _controller: "BundleAdminBundle:ContactCategory:update" }
+    
+contact_category_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BundleAdminBundle:ContactCategory:delete" }

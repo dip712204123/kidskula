@@ -1,0 +1,94 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaNotification
+ *
+ * @ORM\Table(name="kidskula_notification", indexes={@ORM\Index(name="fk_kidskula_from_id_idx", columns={"to_user"}), @ORM\Index(name="fk_kidskulla_from_id", columns={"from_user"})})
+ * @ORM\Entity
+ */
+class KidskulaNotification
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="seen_by_user", type="boolean", nullable=false)
+     */
+    private $seenByUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_date", type="datetime", nullable=false)
+     */
+    private $createdDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modified_date", type="datetime", nullable=true)
+     */
+    private $modifiedDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="texttoshow", type="text", nullable=false)
+     */
+    private $texttoshow;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subject", type="text", nullable=true)
+     */
+    private $subject;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="reciever_status", type="boolean", nullable=true)
+     */
+    private $recieverStatus;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="sender_status", type="boolean", nullable=true)
+     */
+    private $senderStatus;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaUsers
+     *
+     * @ORM\ManyToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaUsers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="to_user", referencedColumnName="id")
+     * })
+     */
+    private $toUser;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaUsers
+     *
+     * @ORM\ManyToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaUsers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="from_user", referencedColumnName="id")
+     * })
+     */
+    private $fromUser;
+
+
+}

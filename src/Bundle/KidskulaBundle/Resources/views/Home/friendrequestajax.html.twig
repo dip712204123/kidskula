@@ -1,0 +1,36 @@
+{% if countArray > 0 %}    
+               {% for frndlist in frndrequest  %} 
+                    <li class="list-group-item" id="frndli{{frndlist.sender.id}}">
+                        <div class="col-xs-12 col-sm-3">
+                            {% set profileImage = getprofileimage(frndlist.sender.id) %}
+                            {%  if profileImage is defined and profileImage is not null  %} 
+                             <a href="{{path('friend_home', {'username':frndlist.sender.username}) }}" style="text-decoration:none;"><img src="{{asset('upload/profilepicture/chatimages/')}}{{ profileImage|raw }}" alt="{{frndlist.sender.firstName}} {{frndlist.sender.lastName}}" class="img-responsive img-circle red-bor2" /></a>
+                             {% else %}
+                                 <a href="{{path('friend_home', {'username':frndlist.sender.username}) }}" style="text-decoration:none;"> <img src="{{asset('bundles/BundleAdmin/assets')}}/img/admin_profile_no_image.gif" class="img-responsive img-circle red-bor2" alt="" /></a>
+                             {% endif %}
+                        </div>
+                        <div class="col-xs-12 col-sm-9">
+                            <span class="name"><a href="{{path('friend_home', {'username':frndlist.sender.username}) }}" style="text-decoration:none;">{{frndlist.sender.firstName}} {{frndlist.sender.lastName}}</a></span><br/>
+                            <button class="btn btn-xs btn-success" onclick="acceptrequest({{frndlist.sender.id}});" type="button">Accept Friend</button>
+                            <button class="btn btn-xs btn-danger" onclick="rejectrequest({{frndlist.sender.id}});" type="button">Ignore Friend </button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>
+
+                {% endfor %} 
+                {% else %}
+                    <li class="list-group-item" >
+
+                        <div class="col-xs-12 col-sm-9 noresultfound">
+                            No more friend requests
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>
+                    {% endif %}
+                    <li class="list-group-item" id="emptyfrndlist" style="display:none;" >
+
+                        <div class="col-xs-12 col-sm-9 noresultfound">
+                            No more friend requests
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>

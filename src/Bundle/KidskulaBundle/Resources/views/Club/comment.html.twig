@@ -1,0 +1,111 @@
+
+{% set userid=app.security.getToken().getUser().getId()  %}
+
+{% if reply==0  %}
+<div class="row">
+<div class="col-md-12">
+    <h2>Related Comments ({{comments|length}})</h2>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<div class="well well-sm">
+<div class="row" id="post-review-box">
+<div class="col-md-12">
+<form accept-charset="UTF-8" action="" method="post">
+    <input id="ratings-hidden" name="rating" type="hidden"> 
+    <input type="hidden" id="articleId" name="articleId" value="{{ eventId }}"/>
+    <textarea class="form-control animated" id="answere-textarea" name="comment" rows="3" placeholder="Write your content here..."></textarea>
+    <div class="text-right">
+        <div class="stars starrr" data-rating="0"></div>
+        <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
+            <span class="glyphicon glyphicon-remove"></span>Cancel</a>
+		<button type="button" onclick="writeanswer(this,{{ eventId }}); return false;" class=btn btn-success btn-lg">Submit</button>
+    </div>
+</form>
+</div>
+</div>
+</div> 
+
+</div>
+</div>
+{% endif %}
+
+{% for ans in comments %}   
+    <div class="qa-message-list only_main_comments" id="article_comments{{ans.id}}" {% if loop.index > 5 %} style="display:none" {% endif %} >
+
+        <div class="message-item" id="m2">
+            <div class="message-inner">
+                <div class="message-head clearfix">
+                {% set profileImage = getprofileimage(ans.userid) %}
+                    {%  if profileImage is defined and profileImage is not null  %} 
+                    <div class="avatar pull-left"><a href="javascript:void(0)">
+                    
+                    <img alt="" src="{{asset('upload/profilepicture/cropedimages/')}}{{ profileImage|raw }}" class="img-circle yolo-bor2">
+                    {% endif %}
+                    </a></div>
+                    <div class="user-detail">
+                        <h5 class="handle">{{ans.userid.firstName}} {{ans.userid.lastName}}
+                        <span style="float: right;">
+                        {% if reply==0 %}
+                            <a onclick="$('#parent-reply').val({{ans.id}});$('#open-modal-ans{{ans.id}}').toggle('slow');" class="btn btn-info dis_reply">Reply</a>
+                        {% endif %} 
+                        {% if userid==ans.userid.id %}   
+                            <a style="cursor: pointer;" onclick="removecomment(this,{{ans.id}},{{ eventId }});" class="btn-small btn-danger btn dis_reply">Delete</a>
+                        {% endif %} 
+                        {% if reply==0 %}
+                            <a onclick="$('#comment-wallmessages-{{ans.id}}').toggle('slow');" class="btn btn-info dis_reply">Show Reply</a>
+                        {% endif %} 
+                        </span>
+                        </h5>
+                        <div class="post-meta">
+                            <div class="asker-meta">
+                                <span class="qa-message-what"></span>
+                                <span class="qa-message-when">
+                                    <span class="qa-message-when-data">{{ans.datecreated|date("F jS \\a\\t g:i a ")}}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="qa-message-content">
+                  {{ans.comment}}
+                </div>
+                   
+                     
+                <div id="open-modal-ans{{ans.id}}" style="display: none;">
+            
+                    <form>
+                        <textarea class="wysihtml5-command-active form-control" id="answere-textarea1" name="comment" rows="3" placeholder="Write your content here..."></textarea>
+                        <input type="hidden" name="parent_reply" id="parent-reply" value="{{ans.id}}">
+                        <input type="hidden" id="articleId" name="articleId" value="{{ eventId }}"/>
+                        <button type="button" onclick="replytoans(this,{{ eventId }},{{ans.id}});
+                                            return false;" class="btn btn-primary" style="margin: 5px 0;">Save</button>
+                    </form>
+                                    
+                </div>
+            
+            </div>
+           <div style="height: 10px;"></div>
+        
+            <div id="comment-wallmessages-{{ans.id}}" class="qa-message-list sumcomment" style="display: none;">
+                  {{render(url('commentlisting',{'parentId':ans.id}))}} 
+            </div>
+
+            </div>
+
+    </div>
+            
+{% endfor %}    
+
+{% if comments|length == 0 %} 
+<div class="col-md-12 friendlist-home">
+<img  src="{{asset('bundles/KidskulaBundle/assets')}}/images/error.png" alt="" height="25">
+No comments found...
+</div>  
+{% endif %}                                                   
+{% if reply==0  %}                                       
+{% if comments|length > 5 %} <div id="showallcomments" ><a onclick="$('.only_main_comments').show();$('#showallcomments').html('');">Show All</a></div> {% endif %}                                                   
+{% endif %}
+    
+ <!--commentpnel ends-->

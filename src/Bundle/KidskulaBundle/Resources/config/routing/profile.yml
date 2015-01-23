@@ -1,0 +1,19 @@
+profilesetting:
+    pattern:  /
+    defaults: { _controller: BundleKidskulaBundle:Profilesetting:index } 
+    
+profilesidesetting:
+    pattern:  /proset
+    defaults: { _controller: BundleKidskulaBundle:Profilesetting:setting }
+    
+profilechangepicture:
+    pattern:  /changepicture
+    defaults: { _controller: "BundleKidskulaBundle:Profilesetting:changepicture" } 
+    
+profilecroppicture:
+    pattern:  /image-crop
+    defaults: { _controller: "BundleKidskulaBundle:Profilesetting:imagecrop" }
+    
+profileavatar:
+    pattern:  /profileavatar
+    defaults: { _controller: "BundleKidskulaBundle:Profilesetting:avatarselect" }

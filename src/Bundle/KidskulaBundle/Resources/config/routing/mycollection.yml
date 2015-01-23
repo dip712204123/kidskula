@@ -1,0 +1,24 @@
+mycollection:
+    pattern:  /
+    defaults: { _controller: BundleKidskulaBundle:Collection:index }
+mycollection_point_count:
+    pattern:  /mycollection_point_count
+    defaults: { _controller: BundleKidskulaBundle:Collection:mycollections }
+mycollection_home_listing:
+    pattern:  /mycollection_home_listing
+    defaults: { _controller: BundleKidskulaBundle:Collection:mycollectionsHomeListing }
+mycollection_hometrade_button:
+    pattern:  /mycollection_hometrade_button
+    defaults: { _controller: BundleKidskulaBundle:Collection:mycollection_hometrade_button } 
+mycollection_trade:
+    pattern:  /Auth{id}exchange/collections-exchange
+    defaults: { _controller: BundleKidskulaBundle:Collection:mycollection_trade}
+mycollection_trade_exchange:
+    pattern:  /mycollection_trade_exchange
+    defaults: { _controller: BundleKidskulaBundle:Collection:mycollection_trade_exchange}
+mycollection_trade_accpet:
+    pattern:  /mycollection_trade_accpet
+    defaults: { _controller: BundleKidskulaBundle:Collection:mycollection_trade_accpet}   
+mycollection_trade_reject:
+    pattern:  /mycollection_trade_reject
+    defaults: { _controller: BundleKidskulaBundle:Collection:mycollection_trade_reject}         

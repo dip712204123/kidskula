@@ -1,0 +1,56 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaProfileSettings
+ *
+ * @ORM\Table(name="kidskula_profile_settings", indexes={@ORM\Index(name="fk_kidskula_profile_settings_kidskula_users1_idx", columns={"kidskula_users_user_id"})})
+ * @ORM\Entity
+ */
+class KidskulaProfileSettings
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $id;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="visibil_to_whom", type="boolean", nullable=true)
+     */
+    private $visibilToWhom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="what_to_show", type="text", nullable=true)
+     */
+    private $whatToShow;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="my_children_id", type="bigint", nullable=true)
+     */
+    private $myChildrenId;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaUsers
+     *
+     * @ORM\OneToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaUsers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="kidskula_users_user_id", referencedColumnName="id", unique=true)
+     * })
+     */
+    private $kidskulaUsersUser;
+
+
+}

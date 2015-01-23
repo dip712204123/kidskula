@@ -1,0 +1,137 @@
+{% extends 'BundleAdminBundle:layout:base.html.twig' %}
+{% block custom_css %} 
+<link href="{{asset('bundles/BundleAdmin/assets')}}/css/uploadfilemulti.css" rel="stylesheet" type="text/css"/>        
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title">
+        Add Avatar
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{path('bundle_admin_dashboard')}}">Home</a> 
+            <i class="icon-angle-right"></i>
+        </li>
+        <li>
+		<a href="{{path('allavatar')}}">Manage Avatar</a>
+		 <i class="icon-angle-right"></i>
+		</li>
+        <li><a href="#">Add Avatar</a></li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB-->
+
+    <div class="row-fluid">
+        <div class="span12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="tools">
+                        <a href="{{path('static_page_list')}}" class="btn icn-only"  title="Back">
+                        <i class="m-icon-swapleft"></i></a>									
+                    </div>
+                </div>                            
+                
+                <div class="portlet-body form">
+                	<form class="form-horizontal" action="{{path('avatar_save')}}" method="post">
+                    	{% for flashSuccessMessage in app.session.flashbag.get('success_message') %}                
+                            <div class="alert alert-success">
+                                <button class="close" data-dismiss="alert"></button>
+                                {{ flashSuccessMessage }}
+                            </div>
+                        {% endfor %}
+                        
+                        {% for flashErrorMessage in app.session.flashbag.get('error_message') %}                
+                            <div class="alert alert-error">
+                                <button class="close" data-dismiss="alert"></button>
+                                {{ flashErrorMessage }}
+                            </div>
+                        {% endfor %}
+                            
+                        <div id="mulitplefileuploader" width="1037px">Upload</div>
+
+                        <div id="status"></div>
+                        <input type="hidden" name="imagename" id="imagename" value="">
+                        <div class="form-actions center" style="display:none">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-check-circle"></i> Save</button>
+                            <a href="#"> <button type="button" class="btn btn-default"><i class="fa fa-times"></i>  Back to the list</button>
+                            </a>
+                        </div>
+                    </form>
+                    <!-- BEGIN FORM-->
+                    
+                    <!-- END FORM-->
+                </div>
+            </div>
+            <!-- END VALIDATION STATES-->
+        </div>
+    </div>
+
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/select2/select2.min.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/data-tables/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/data-tables/DT_bootstrap.js"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/admin/scripts/common.js"></script>
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/table-managed.js"></script>
+      
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/form-validation.js"></script> 
+	<!-- END PAGE LEVEL STYLES -->    
+	<script>
+		jQuery(document).ready(function() {   
+		   // initiate layout and plugins
+		   FormValidation.init();
+		   $("#page_frm").validate();
+		});
+	</script>
+        {% block customjs %}
+        <script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/jquery.fileuploadmulti.min.js"></script>
+        <script>
+
+$(document).ready(function()
+{
+var path='{{path('avatar_upload')}}';
+var imgarray= [];
+var settings = {
+	url: path,
+	method: "POST",
+	allowedTypes:"jpg,png,gif,bmp",
+	fileName: "myfile",
+	multiple: true,
+	onSuccess:function(files,data,xhr)
+	{
+            //alert(files);
+            imgarray.push(data);
+	    $("#status").html("<font color='green'>Upload is success</font>");
+		
+	},
+        afterUploadAll:function()
+        {  
+            //alert(imgarray); 
+            //var serializedArr = JSON.stringify( imgarray );
+             
+             $('#imagename').val(imgarray);
+            //alert("all images uploaded!!");
+            $('.form-actions').show('slow');
+        },
+	onError: function(files,status,errMsg)
+	{		
+		$("#status").html("<font color='red'>Upload is Failed</font>");
+	}
+}
+$("#mulitplefileuploader").uploadFile(settings);
+
+});
+</script>
+         {% endblock %}
+	<!-- END JAVASCRIPTS -->
+    
+</div>                
+     
+{% endblock content %}
+
+

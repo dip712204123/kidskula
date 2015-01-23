@@ -1,0 +1,63 @@
+manageuser:
+    pattern:  /
+    defaults: { _controller: "BundleAdminBundle:KidskulaUser:index" }
+    
+user_status:
+    pattern:  /{id}/status
+    defaults: { _controller: "BundleAdminBundle:KidsKulaUser:status" }
+    
+user_detail:
+    pattern:  /{id}/user_details
+    defaults: { _controller: "BundleAdminBundle:KidsKulaUser:show" }
+    
+user_settings:
+    pattern:  /{id}/settings
+    defaults: { _controller: "BundleAdminBundle:KidsKulaUser:settings" }
+    
+user_new:
+   pattern:  /new
+   defaults: { _controller: "BundleAdminBundle:KidsKulaUser:new" }  
+   
+user_form_create:
+    pattern:  /newuser_form_create
+    defaults: { _controller: "BundleAdminBundle:KidsKulaUser:create" }
+    requirements: { _method: post }
+    
+user_settings_edit:
+    pattern:  /user_update/{id}
+    defaults: { _controller: "BundleAdminBundle:KidsKulaUser:edituser" }
+    requirements: { _method: post }
+    
+user_parental_settings:
+    pattern:  /user_parental_settings/{id}
+    defaults: { _controller: "BundleAdminBundle:KidsKulaUser:parentalsettings" }
+   
+   
+#manageuser_show:
+#    pattern:  /{id}/show
+#    defaults: { _controller: "VetAdminBundle:VetcommUsers:show" }
+#
+#manageuser_new:
+#    pattern:  /new
+#    defaults: { _controller: "VetAdminBundle:VetcommUsers:new" }
+#
+#manageuser_create:
+#    pattern:  /create
+#    defaults: { _controller: "VetAdminBundle:VetcommUsers:create" }
+#    requirements: { _method: post }
+#manageuser_edit:
+#    pattern:  /{id}/edit
+#    defaults: { _controller: "VetAdminBundle:VetcommUsers:edit" }
+#manageuser_update:
+#    pattern:  /{id}/update
+#    defaults: { _controller: "VetAdminBundle:VetcommUsers:update" }
+#    requirements: { _method: post|put }
+#manageuser_delete:
+#    pattern:  /{id}/delete
+#    defaults: { _controller: "VetAdminBundle:VetcommUsers:delete" }
+#useraccesslogs:
+#    pattern:  /userlog
+#    defaults: { _controller: "VetAdminBundle:VetcommUsers:userlog" }
+#useraccesslogs_delete:
+#    pattern:  /userlog/{id}/delete
+#    defaults: { _controller: "VetAdminBundle:VetcommUsers:deletelog" }

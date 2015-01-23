@@ -1,0 +1,29 @@
+home:
+    pattern:  /
+    defaults: { _controller: BundleKidskulaBundle:Home:index }
+    
+friend_home:
+    pattern:  /friend-{username}
+    defaults: { _controller: BundleKidskulaBundle:Home:friendhome }
+    
+profilestatus:
+    pattern:  /savestatus
+    defaults: { _controller: BundleKidskulaBundle:Home:profilestatus }
+    
+profilesetting:
+    pattern:  /profile-setting
+    defaults: { _controller: BundleKidskulaBundle:Home:profilestatus }   
+    
+allfriendlisting:
+    pattern:  /allfriendlisting
+    defaults: { _controller: BundleKidskulaBundle:Home:allfriendlisting }
+    
+setavatarname:
+    pattern:  /setavatarname
+    defaults: { _controller: BundleKidskulaBundle:Home:setavatarname }
+
+sendmessage:
+    pattern:  /sendmessage
+    defaults: { _controller: BundleKidskulaBundle:Home:sendmessage }
+    
+    

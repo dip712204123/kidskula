@@ -1,0 +1,55 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaUserAccessLogs
+ *
+ * @ORM\Table(name="kidskula_user_access_logs", indexes={@ORM\Index(name="fk_vetcomm_user_access_logs_vetcomm_users1_idx", columns={"users_id"})})
+ * @ORM\Entity
+ */
+class KidskulaUserAccessLogs
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="bigint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="users_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $usersId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ip_address", type="string", length=200, nullable=false)
+     */
+    private $ipAddress;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="in_datetime", type="datetime", nullable=false)
+     */
+    private $inDatetime;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="out_datetime", type="datetime", nullable=true)
+     */
+    private $outDatetime;
+
+
+}

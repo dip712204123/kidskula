@@ -1,0 +1,173 @@
+{% extends 'BundleKidskulaBundle:Layout:base.html.twig' %}
+
+ {# BEGIN HEADER #}   
+        {% block header %} 
+ 
+	<div class="navbar navbar-inverse" role="navigation">
+      <div class="container">
+	  <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="" href="{{ path('bundle_kidskula_homepage' )}}"><img class="img-responsive" src="{{asset('bundles/KidskulaBundle/assets')}}/images/logo-sml.png" alt=""></a>
+        </div>
+	  <div class="col-md-4 login-main" style="display:none;">
+		
+
+
+ <a href="{{ path('fornt_logout' )}}"> Log out</a>
+ <a href="#" > /</a>
+  <a href="#" {#data-toggle="modal" data-target="#myModa2"#}>{{my_twig_get_username()}} </a>
+
+{# Modal #}
+
+</div>
+	  
+	  
+        <div class="col-md-10"> 
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li {% if app.request.attributes.get('_route') == 'home' %}class="active" {%endif%}><a href="{{ path('home' )}}">Home</a></li>          
+            <li {% if app.request.attributes.get('_route') == 'profilesetting' %}class="active" {%endif%}><a href="{{ path('profilesetting' )}}">Profile</a></li>
+            <li {% if app.request.attributes.get('_route') == 'mycollection' %}class="active" {%endif%}><a href="{{ path('mycollection' )}}">Collection</a></li>
+            <li {% if app.request.attributes.get('_route') == 'myclub' or app.request.attributes.get('_route') == 'myclub-details' %}class="active" {%endif%}><a href="{{ path('myclub' )}}">Club</a></li>
+            <li {% if app.request.attributes.get('_route') == 'mycontacts' %}class="active" {%endif%}><a href="{{ path('mycontacts' )}}">Contact</a></li>
+	    	
+  <div class="login-main">
+  <div class="settings">
+  <a class="main" href=""><i style="color:#fff;" class="glyphicon glyphicon-cog"></i></a>
+  <li class="n1"><a href="{{ path('fornt_logout' )}}">Logout</a></li>
+  <li class="n2"><a href="javascript:void(0);">Password Change</a></li>
+  
+</div>
+
+<div class="settings">
+  <a class="main" href="javascript:void(0);"><i style="color:#fff;" class="glyphicon glyphicon-envelope"></i></a>
+  <li class="n1"><a href="#">No messages !!</a></li>
+</div>
+
+<div class="settings">
+  <a class="main" href="javascript:void(0);"><i style="color:#fff;" class="glyphicon glyphicon-comment"></i></a>
+  {#***************************************************************************#}
+  {% set studentNotification = getNotifications() %}
+  
+    {% for notification in studentNotification %}
+	
+    <li id="notif{{notification.id}}"><input type="checkbox" value="{{notification.id}}"/> <a href="javascript:void(0);">{{notification.texttoshow}}</a>
+	<span id="loading{{notification.id}}" style="display:none;">Deleting...</span>
+	</li>
+    {% endfor %}
+	<li><a href="javascript:void(0);" onclick="notifSeenFunc();">Delete</a></li>
+	{#<input style="text-transform: uppercase; font-weight: bold; margin: 8px 0px 0px 6px;" class="btn btn-sm btn-success" type="button" onclick="notifSeenFunc();" value="Seen"/>#}
+	
+    
+  {#***************************************************************************#}
+</div>
+			
+<div class="settings-red"><a href="{{path('home')}}">{{my_twig_get_username()}} </a>
+<div>
+</div>
+
+
+          </ul>
+        </div>
+		</div>
+		{#/.nav-collapse #}
+      </div>
+    </div>
+            
+        {% endblock %}
+ {# END HEADER #}
+ {#container starts#}   
+{% block content %}
+ 
+{% endblock %}
+{#container ends#}
+ 
+ 
+ {# BEGIN FOOTER #}
+        {% block footer %}
+       <div class="footer-main">
+<div class="footertop"> 
+<div class="container">
+<img class="img-responsive" src="{{asset('bundles/KidskulaBundle/assets')}}/images/foot-bottombg.png" alt="">
+</div>
+</div> {#footertop ends#}
+<div class="footerbottom">
+<div class="container">
+<div class="row">
+<div class="col-md-12 footernav_link">
+<a href="{{path('staticpages',{'id':'5'})}}">About </a>      |      <a href="{{path('staticpages',{'id':'6'})}}">Privacy Policy</a>         |       <a href="{{path('staticpages',{'id':'7'})}}">Terms of Use</a>       |     <a href="{{path('mycontacts')}}">Contact Us</a>
+</div> {#footernav_link ends#}
+</div> {#row ends#}
+<div class="row foot-infotext">
+<div class="col-md-6 pull-left">+408-555-1212</div>
+<div class="col-md-6 pull-right" style="text-align:right;">info@KidsKula.com</div>
+</div> {#row ends#}
+
+<div class="row">
+<div class="col-md-12 last-infotext">
+Use of this site signifies your agreement to Terms of Use. Trade Mark & (c) KidsKula.com, a Media Span Company. All rights reserved.
+Powered By <a href="http://webgentechnologies.com/" target="_blank">WEBGEN TECHNOLOGIES</a>
+</div> {#infotext ends#}
+</div>
+
+</div> {#container ends#}
+</div> {#footerbottom ends#}
+</div> {#footer-main ends#}
+{% block notifjavascript %}
+<script>
+
+					function notifSeenFunc()
+					{
+						var val = [];
+						$(':checkbox:checked').each(function(i) {
+							val[i] = $(this).val();
+							$("#loading"+$(this).val()).show();
+						});
+						//alert(val);
+						
+						var path = "{{path('notificationSeen')}}";
+						
+						var form_data = {
+							visible: val
+
+						};
+
+						$.ajax({
+							type: "POST",
+							url: path,
+							data: form_data,
+							success: function(response) {
+								//alert(response.status);
+
+								if (response.status != 0) {
+								
+								$(':checkbox:checked').each(function(i) {
+							    var linotif = $(this).val();
+								$("#loading"+linotif).hide();
+							    $("#notif"+linotif).hide();
+						        });
+									
+								}
+								else
+								{
+									return false;
+
+								}
+
+							}
+						});
+					}
+</script>
+ {% endblock %}
+{% block customjavascript %}
+
+ {% endblock %}
+        {% endblock %}
+
+
+  {# END FOOTER #}

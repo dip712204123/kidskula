@@ -1,0 +1,95 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaIpnLog
+ *
+ * @ORM\Table(name="kidskula_ipn_log")
+ * @ORM\Entity
+ */
+class KidskulaIpnLog
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="listener_name", type="string", length=3, nullable=true)
+     */
+    private $listenerName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="transaction_type", type="string", length=16, nullable=true)
+     */
+    private $transactionType;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="transaction_id", type="string", length=19, nullable=true)
+     */
+    private $transactionId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=16, nullable=true)
+     */
+    private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="message", type="string", length=512, nullable=true)
+     */
+    private $message;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ipn_data_hash", type="string", length=32, nullable=true)
+     */
+    private $ipnDataHash;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="detail", type="text", nullable=true)
+     */
+    private $detail;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     */
+    private $updatedAt;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="payemt_history_id", type="bigint", nullable=true)
+     */
+    private $payemtHistoryId;
+
+
+}

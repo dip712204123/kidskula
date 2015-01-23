@@ -1,0 +1,109 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaGames
+ *
+ * @ORM\Table(name="kidskula_games")
+ * @ORM\Entity
+ */
+class KidskulaGames
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="bigint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=255, nullable=false)
+     */
+    private $url;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="game_add_date", type="datetime", nullable=false)
+     */
+    private $gameAddDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modified_date", type="datetime", nullable=true)
+     */
+    private $modifiedDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="genre", type="string", length=255, nullable=true)
+     */
+    private $genre;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rank", type="integer", nullable=true)
+     */
+    private $rank;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rating", type="string", length=45, nullable=true)
+     */
+    private $rating;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="priority", type="boolean", nullable=true)
+     */
+    private $priority;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="providers", type="string", length=255, nullable=true)
+     */
+    private $providers;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="status", type="boolean", nullable=true)
+     */
+    private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="game_path", type="string", length=255, nullable=true)
+     */
+    private $gamePath;
+
+
+}

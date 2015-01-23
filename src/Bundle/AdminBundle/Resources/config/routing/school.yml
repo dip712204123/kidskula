@@ -1,0 +1,28 @@
+school:
+    pattern:  /
+    defaults: { _controller: "BundleAdminBundle:KidsKulaSchool:index" }
+    
+school_status:
+    pattern:  /{id}/school_status
+    defaults: { _controller: "BundleAdminBundle:KidsKulaSchool:status" } 
+   
+school_new:
+   pattern:  /new
+   defaults: { _controller: "BundleAdminBundle:KidsKulaSchool:new" }  
+   
+school_form_create:
+    pattern:  /newschool_form_create
+    defaults: { _controller: "BundleAdminBundle:KidsKulaSchool:create" }
+    requirements: { _method: post }   
+ 
+school_edit:
+    pattern:  /{id}/school_edit
+    defaults: { _controller: "BundleAdminBundle:KidsKulaSchool:edit" }
+
+school_update:
+    pattern:  /{id}/grade_update
+    defaults: { _controller: "BundleAdminBundle:KidsKulaSchool:update" }
+    
+school_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BundleAdminBundle:KidsKulaSchool:delete" }

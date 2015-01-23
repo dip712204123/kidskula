@@ -1,0 +1,39 @@
+addfriend:
+    pattern:  /
+    defaults: { _controller: BundleKidskulaBundle:Addfriend:addfriend } 
+    
+cancelfriend:
+    pattern:  /cancel
+    defaults: { _controller: BundleKidskulaBundle:Addfriend:cancelfriend } 
+    
+acceptfriend:
+    pattern:  /accept
+    defaults: { _controller: BundleKidskulaBundle:Addfriend:acceptfriend }
+    
+rejectfriend:
+    pattern:  /reject
+    defaults: { _controller: BundleKidskulaBundle:Addfriend:rejectfriend }
+    
+unfriend:
+    pattern:  /unfriend
+    defaults: { _controller: BundleKidskulaBundle:Addfriend:unfriend }
+    
+intervalrequestcheck:
+    pattern:  /intervalrequestcheck
+    defaults: { _controller: BundleKidskulaBundle:Addfriend:intervalrequestcheck }
+    
+invitewithsecret:
+    pattern:  /invitewithsecret
+    defaults: { _controller: BundleKidskulaBundle:Addfriend:invitefrnds }  
+
+invitewithoutsecret:
+    pattern:  /search
+    defaults: { _controller: BundleKidskulaBundle:Addfriend:findfrnds}
+    
+invitenewfriends:
+    pattern:  /invite_friends
+    defaults: { _controller: BundleKidskulaBundle:Addfriend:invitenewfriends}
+    
+friendRequestCheckForDivShow:
+    pattern:  /friendRequestCheckForDivShow
+    defaults: { _controller: BundleKidskulaBundle:Addfriend:friendrequestcheck}   

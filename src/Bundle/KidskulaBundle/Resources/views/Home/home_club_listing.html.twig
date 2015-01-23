@@ -1,0 +1,57 @@
+<div class="row club-panel">
+
+    <a href="{{path('myclub')}}" style="text-decoration:none;"><h2> My Clubs <span class="totalcollection">{{clubcount}}</span></h2></a>
+
+    <div id="scrollbar2" class="col-md-12">
+        <div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+        <div class="viewport" style="padding-left:0px;">
+            <div class="overview">	
+
+               {% if clubentity is not empty %}
+                <div class="club-dashboard-list row">  
+                    {% for entity in clubentity  %}
+                    <div class="col-md-4">
+                        {# {{asset('upload/clubimages/')}}{{ entity.clubId.path }}#}
+                        <a href="{{path('myclub')}}" >
+
+                            <img style="width:60px; height:60px;" src="{{asset('upload/clubimages/')}}{{ entity.clubId.path }}" alt="My Club"/>
+
+                        </a>
+                        <h4>{{ entity.clubId.title|slice(0, 10) }}..</h4>
+
+
+                    </div>
+                    {% endfor %}
+
+                </div> 
+                {% else %}
+                <div class="club-dashboard-list row">  
+                    
+                      <div class="col-md-12 col-sm-9 noresultfound">
+                           {{personal.firstName}} has not joined any club yet.
+                        </div>
+                </div> 
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    <!--mt40 ends-->
+
+</div>   
+
+
+{# *******************scroll Scripts fetch******************************#}
+
+
+
+
+
+<script type="text/javascript">
+    var jq = jQuery.noConflict();
+    jq(document).ready(function() {
+        jq('#scrollbar2').tinyscrollbar();
+    });
+</script>
+
+{# *******************Scripts end********************************#}

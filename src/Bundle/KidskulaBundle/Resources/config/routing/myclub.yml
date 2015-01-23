@@ -1,0 +1,38 @@
+myclub:
+    pattern:  /
+    defaults: { _controller: BundleKidskulaBundle:Club:index }
+myclub_list:
+    pattern:  /view-myclubs
+    defaults: { _controller: BundleKidskulaBundle:Club:clublist } 
+    
+allclub_list:
+    pattern:  /view-clubs
+    defaults: { _controller: BundleKidskulaBundle:Club:clublist }
+      
+myclub-details:
+    pattern:  /{id}/details
+    defaults: { _controller: BundleKidskulaBundle:Club:clubdetails }
+myclub-membership:
+    pattern:  /membership
+    defaults: { _controller: BundleKidskulaBundle:Club:myclub_membership } 
+myarticle-add:
+    pattern:  /createarticle
+    defaults: { _controller: BundleKidskulaBundle:Club:createarticle }
+commentlisting:
+    pattern:  /commentlisting/{eventId}/{parentId}
+    defaults: { _controller: BundleKidskulaBundle:Club:getdiscussion , eventId: 0, parentId: 0} 
+articlelisting:
+    pattern:   /{id}/{status}/articlelisting
+    defaults: { _controller: BundleKidskulaBundle:Club:articlelisting }
+recentarticlelisting:
+    pattern:   /{id}/{articleid}/{status}
+    defaults: { _controller: BundleKidskulaBundle:Club:articlelisting } 
+articlelike:
+    pattern:   /articlelike
+    defaults: { _controller: BundleKidskulaBundle:Club:articlelike }
+view-notification:
+    pattern:   /view-notification
+    defaults: { _controller: BundleKidskulaBundle:Club:viewnotification }   
+student-club-log:
+    pattern:   /student-club-log
+    defaults: { _controller: BundleKidskulaBundle:Club:studentclublog } 

@@ -1,0 +1,112 @@
+{% extends 'BundleAdminBundle:layout:base.html.twig' %}
+{% block content %}
+<div class="container-fluid">
+<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title">
+        Add Collection Sub Category
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{path('bundle_admin_dashboard')}}">Home</a> 
+            <i class="icon-angle-right"></i>
+        </li>
+        <li>
+        	<a href="{{path('allcollection')}}">Collection</a>
+            <i class="icon-angle-right"></i>
+        </li>
+        <li>
+        	<a href="{{path('collection_category')}}">Category</a>
+            <i class="icon-angle-right"></i>
+        </li>
+        <li>
+        	<a href="{{path('collection_subcategory')}}">Sub Category</a>
+            <i class="icon-angle-right"></i>
+        </li>
+        <li>
+        	<a href="#">Add Sub Category</a>
+            
+        </li>
+        
+       
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB-->
+
+    <div class="row-fluid">
+        <div class="span12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="tools">
+                        <a href="{{path('collection_subcategory')}}" class="btn icn-only"  title="Back">
+                        <i class="m-icon-swapleft"></i></a>									
+                    </div>
+                </div>                            
+                
+                <div class="portlet-body form">
+                	<form class="form-horizontal">
+                    	{% for flashSuccessMessage in app.session.flashbag.get('success_message') %}                
+                            <div class="alert alert-success">
+                                <button class="close" data-dismiss="alert"></button>
+                                {{ flashSuccessMessage }}
+                            </div>
+                        {% endfor %}
+                        
+                        {% for flashErrorMessage in app.session.flashbag.get('error_message') %}                
+                            <div class="alert alert-error">
+                                <button class="close" data-dismiss="alert"></button>
+                                {{ flashErrorMessage }}
+                            </div>
+                        {% endfor %}
+                    </form>
+                    <!-- BEGIN FORM-->
+                    <form action="{{path('add_collection_subcategory')}}" method="post">
+                        
+                      <label>Select Category</label>
+                            <select id="catID" name="catID" maxlength="255" class="span6 m-wrap required">
+                                <option value="">Select Category</option>
+                                {% for cat in catgoeies %}
+                                
+                                <option value="{{cat.id}}">{{cat.categoryName}}</option>
+                                {% endfor %}
+                            </select><br><br>
+                            <label>Add Sub Category</label>
+                            
+                            <input type="text" id="subcat" name="subcat" required="required" maxlength="255" class="span6 m-wrap required">
+                            <br><br>
+                            <button type="submit" id="" name="" class="btn red" create="" value="add_page">Create</button>
+                    </form>                   
+                    <!-- END FORM-->
+                </div>
+            </div>
+            <!-- END VALIDATION STATES-->
+        </div>
+    </div>
+
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/select2/select2.min.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/data-tables/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/data-tables/DT_bootstrap.js"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/admin/scripts/common.js"></script>
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/table-managed.js"></script>
+      
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/form-validation.js"></script> 
+	<!-- END PAGE LEVEL STYLES -->    
+	<script>
+		jQuery(document).ready(function() {   
+		   // initiate layout and plugins
+		   FormValidation.init();
+		   $("#page_frm").validate();
+		});
+	</script>
+	<!-- END JAVASCRIPTS -->
+    
+</div>                
+     
+{% endblock content %}
+
+

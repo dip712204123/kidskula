@@ -1,0 +1,41 @@
+
+{% block header %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Kidskula Mail Templeate</title>
+    </head>
+    <body style="background:#e9e2bb; font-family:Verdana, Geneva, sans-serif; font-size:14px; color:#433a00; line-height:20px;">
+    <div style="width:800px; margin:0 auto;">
+        <div style="background:#19b9b3; padding:10px; width:800px; overflow:hidden;">
+            <div style="float:left;">kidskula{#<img src="http://50.62.31.191/kidskula/web/bundles/KidskulaBundle/assets/images/logo-sml.png" width="184" height="92" alt="" />#} </div>
+            <div style="float:right; font-size:15px; font-weight:bold; margin-top:35px;"></div>
+        </div>
+        <div style="margin:20px 0px; width:775px; padding-left:25px;">
+        	
+{% endblock %}
+
+{% block subjectmail %}
+   <h1 style="font-size:20px; color:#e23940; font-weight:bold; margin:0px 0px 10px 0px;">
+       {% if subject is defined %}
+            {{subject}}
+       {% else %}
+            Mail from kidskulla
+       {% endif %}
+  </h1>
+{% endblock %}
+
+{% block content %}
+	{{text}}
+{% endblock %}
+
+{% block footer %}
+			
+        </div>
+        <div style="background:#19b9b3; padding:10px; text-align:center; font-size:11px; width:800px;">Replies to this message are undeliverable and will not reach the Kidskula Team. Please do not reply.</div>
+    </div> <!--/*maindiv ends*/-->
+</body>
+</html>
+{% endblock %}
+

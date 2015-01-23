@@ -1,0 +1,133 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaPaymenthistory
+ *
+ * @ORM\Table(name="kidskula_paymenthistory", indexes={@ORM\Index(name="fk_kidskula_paymenthistory_kidskula_users1_idx", columns={"kidskula_users_user_id"})})
+ * @ORM\Entity
+ */
+class KidskulaPaymenthistory
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=50, nullable=true)
+     */
+    private $status;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime", nullable=true)
+     */
+    private $created;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="order_id", type="string", length=255, nullable=true)
+     */
+    private $orderId;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="transactionverified", type="boolean", nullable=true)
+     */
+    private $transactionverified;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="verifieddate", type="datetime", nullable=true)
+     */
+    private $verifieddate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payer_firstname", type="string", length=150, nullable=true)
+     */
+    private $payerFirstname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payer_lastname", type="string", length=150, nullable=true)
+     */
+    private $payerLastname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payer_email", type="string", length=150, nullable=true)
+     */
+    private $payerEmail;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="payer_amount", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $payerAmount;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payer_itemname", type="string", length=255, nullable=true)
+     */
+    private $payerItemname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payer_tx_token", type="string", length=45, nullable=true)
+     */
+    private $payerTxToken;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="package_info", type="text", nullable=true)
+     */
+    private $packageInfo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_info", type="text", nullable=true)
+     */
+    private $userInfo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payinfo", type="text", nullable=false)
+     */
+    private $payinfo;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaUsers
+     *
+     * @ORM\OneToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaUsers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="kidskula_users_user_id", referencedColumnName="id", unique=true)
+     * })
+     */
+    private $kidskulaUsersUser;
+
+
+}

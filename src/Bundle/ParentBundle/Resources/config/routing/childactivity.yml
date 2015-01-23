@@ -1,0 +1,4 @@
+childprofile:
+    pattern:  /{username}
+    defaults: { _controller: BundleParentBundle:Childprofile:index }
+   

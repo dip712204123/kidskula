@@ -1,0 +1,126 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaDefaultSiteConfig
+ *
+ * @ORM\Table(name="kidskula_default_site_config", indexes={@ORM\Index(name="fk_kidskula_default_site_config_kidskula_modules1_idx", columns={"kidskula_modules_modules_id"})})
+ * @ORM\Entity
+ */
+class KidskulaDefaultSiteConfig
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="configure_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $configureId;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="configure_purpose", type="boolean", nullable=true)
+     */
+    private $configurePurpose;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="configure_title", type="string", length=255, nullable=true)
+     */
+    private $configureTitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="configure_description", type="text", nullable=true)
+     */
+    private $configureDescription;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="configure_status", type="boolean", nullable=true)
+     */
+    private $configureStatus;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="configure_date_created", type="datetime", nullable=true)
+     */
+    private $configureDateCreated;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="configure_date_modified", type="datetime", nullable=true)
+     */
+    private $configureDateModified;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="configure_imagepath", type="string", length=255, nullable=true)
+     */
+    private $configureImagepath;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="configure_image_name", type="string", length=255, nullable=true)
+     */
+    private $configureImageName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="configure_file_type", type="string", length=255, nullable=true)
+     */
+    private $configureFileType;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="configure_file_extn", type="string", length=45, nullable=true)
+     */
+    private $configureFileExtn;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_title", type="string", length=255, nullable=true)
+     */
+    private $metaTitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_keyword", type="string", length=255, nullable=true)
+     */
+    private $metaKeyword;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_description", type="text", nullable=true)
+     */
+    private $metaDescription;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaModules
+     *
+     * @ORM\OneToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaModules")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="kidskula_modules_modules_id", referencedColumnName="modules_id", unique=true)
+     * })
+     */
+    private $kidskulaModulesModules;
+
+
+}

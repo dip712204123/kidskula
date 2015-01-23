@@ -1,0 +1,232 @@
+{% extends 'BundleKidskulaBundle:Layout:base.html.twig' %}
+
+ {# BEGIN HEADER #}   
+        {% block header %} 
+ 
+	<div class="navbar navbar-inverse" role="navigation">
+      <div class="container">
+	  <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="" href="{{ path('bundle_kidskula_homepage' )}}"><img class="img-responsive" src="{{asset('bundles/KidskulaBundle/assets')}}/images/logo-sml.png" alt=""></a>
+        </div>
+	  <div class="col-md-4 login-main" style="display:none;">
+		
+
+
+ <a href="{{ path('fornt_logout' )}}"> Log out</a>
+ <a href="#" > /</a>
+  <a href="#" {#data-toggle="modal" data-target="#myModa2"#}>{{my_twig_get_username()}} </a>
+
+{# Modal #}
+
+</div>
+	  
+	  
+        <div class="col-md-10"> 
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li {% if app.request.attributes.get('_route') == 'home' %}class="active" {%endif%}><a href="{{ path('home' )}}">Home</a></li>          
+            <li {% if app.request.attributes.get('_route') == 'profilesetting' %}class="active" {%endif%}><a href="{{ path('profilesetting' )}}">Profile</a></li>
+            <li {% if app.request.attributes.get('_route') == 'mycollection' %}class="active" {%endif%}><a href="{{ path('mycollection' )}}">Collection</a></li>
+            <li {% if app.request.attributes.get('_route') == 'myclub' or app.request.attributes.get('_route') == 'myclub-details' or app.request.attributes.get('_route') == 'myclub_list' or app.request.attributes.get('_route') == 'allclub_list' or app.request.attributes.get('_route') == 'articlelisting' %}class="active" {%endif%}><a href="{{ path('myclub' )}}">Club</a></li>
+            <li {% if app.request.attributes.get('_route') == 'mycontacts' %}class="active" {%endif%}><a href="{{ path('mycontacts' )}}">Contact</a></li>
+	    	
+<div class="login-main">
+<div class="btn-group btn-group-success" style="float:left;  margin-right:3px;">
+
+<button type="button" class="btn btn-warning dropdown-toggle quik-nav" data-toggle="dropdown"><i class="glyphicon glyphicon-cog" style="color:#fff;"></i> </br><span class="caret"></span></button>
+
+	  <ul class="dropdown-menu">
+	  <li><a href="{{ path('fornt_logout' )}}">Logout</a></li>
+	  <li><a href="javascript:void(0);">Password Change</a></li>
+	  </ul>
+</div>
+
+<div class="btn-group btn-group-success" style="float:left; margin-right:3px;">
+{#******* notification number *******#}
+{% set MessagesNotification = getMessages() %}
+{% set countnotification= MessagesNotification|length %}
+<div class="quik-nav-noti">{{countnotification}}</div>
+<button type="button" class="btn btn-warning dropdown-toggle quik-nav" data-toggle="dropdown">
+    <i class="glyphicon glyphicon-envelope" style="color:#fff;"></i> </br>
+    <span class="caret"></span>
+</button>
+
+	  <ul class="dropdown-menu">
+    {#***************************************************************************#}
+    
+    {% if countnotification == 0 %}
+     No new messages..
+    {% else %}
+    {% for notification in MessagesNotification %}
+	
+    <li id="notif{{notification.id}}"> 
+        <a href="javascript:void(0);">
+            {{notification.texttoshow}}
+        </a>
+	
+	</li>
+    {% endfor %}
+	
+    {% endif %}
+	
+    
+  {#***************************************************************************#}	  
+	</ul>
+</div>
+
+
+
+
+<div class="btn-group btn-group-success" style="float:left; ">
+{#******* notification number *******#}
+{% set studentNotification = getNotifications() %}
+{% set countnotification= studentNotification|length %}
+<div class="quik-nav-noti" id="notificId">{{countnotification}} </div>
+
+<button type="button" onclick="notificationshow()" class="btn btn-warning dropdown-toggle quik-nav"><i class="glyphicon glyphicon-comment" style="color:#fff;"></i> </br><span class="caret"></span></button>
+
+	  <ul class="dropdown-menu" id="notificationshow"  style="display: none;">
+	  
+  {#***************************************************************************#}
+    
+    {% if countnotification == 0 %}
+     No new ntofications..
+    {% else %}
+    {% for notification in studentNotification %}
+	
+    <li id="notif{{notification.id}}"> <a href="javascript:void(0);"><input type="checkbox" value="{{notification.id}}"/> {{notification.texttoshow}}</a>
+	<span id="loading{{notification.id}}" style="display:none;">Deleting...</span>
+	</li>
+    {% endfor %}
+	<li style="text-align: center; margin-bottom: 6px;">
+	<button href="javascript:void(0);" onclick="notifSeenFunc();" class="btn btn-labeled btn-warning" type="button"/>
+    <span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span></button>
+	</li>
+    {% endif %}
+	
+    
+  {#***************************************************************************#}
+
+	  
+	  
+	  </ul>
+</div>
+
+
+
+			
+<div class="settings-red"><a href="{{path('home')}}">{{my_twig_get_username()}} </a>
+<div>
+</div>
+
+
+          </ul>
+        </div>
+		</div>
+		{#/.nav-collapse #}
+      </div>
+    </div>
+            
+        {% endblock %}
+ {# END HEADER #}
+ {#container starts#}   
+{% block content %}
+ 
+{% endblock %}
+{#container ends#}
+ 
+ 
+ {# BEGIN FOOTER #}
+        {% block footer %}
+       <div class="footer-main">
+<div class="footertop"> 
+<div class="container">
+<img class="img-responsive" src="{{asset('bundles/KidskulaBundle/assets')}}/images/foot-bottombg.png" alt="">
+</div>
+</div> {#footertop ends#}
+<div class="footerbottom">
+<div class="container">
+<div class="row">
+<div class="col-md-12 footernav_link">
+<a href="{{path('staticpages',{'id':'5'})}}">About </a>      |      <a href="{{path('staticpages',{'id':'6'})}}">Privacy Policy</a>         |       <a href="{{path('staticpages',{'id':'7'})}}">Terms of Use</a>       |     <a href="{{path('mycontacts')}}">Contact Us</a>
+</div> {#footernav_link ends#}
+</div> {#row ends#}
+<div class="row foot-infotext">
+<div class="col-md-6 pull-left">+408-555-1212</div>
+<div class="col-md-6 pull-right" style="text-align:right;">info@KidsKula.com</div>
+</div> {#row ends#}
+
+<div class="row">
+<div class="col-md-12 last-infotext">
+Use of this site signifies your agreement to Terms of Use. Trade Mark & (c) KidsKula.com, a Media Span Company. All rights reserved.
+Powered By <a href="http://webgentechnologies.com/" target="_blank">WEBGEN TECHNOLOGIES</a>
+</div> {#infotext ends#}
+</div>
+
+</div> {#container ends#}
+</div> {#footerbottom ends#}
+</div> {#footer-main ends#}
+{% block notifjavascript %}
+<script>           
+                    function notificationshow()
+                    {
+                    $('#notificationshow').toggle('slow');  
+                    }
+
+					function notifSeenFunc()
+					{
+						var val = [];
+						$(':checkbox:checked').each(function(i) {
+							val[i] = $(this).val();
+							$("#loading"+$(this).val()).show();
+						});
+						//alert(val);
+						
+						var path = "{{path('notificationSeen')}}";
+						
+						var form_data = {
+							visible: val
+
+						};
+
+						$.ajax({
+							type: "POST",
+							url: path,
+							data: form_data,
+							success: function(response) {
+								//alert(response);
+
+								if (response.status != 0) {
+								
+                                $('#notificId').html(response.count);
+								$(':checkbox:checked').each(function(i) {
+							    var linotif = $(this).val();
+								$("#loading"+linotif).hide();
+							    $("#notif"+linotif).hide();
+						        });
+									
+								}
+								else
+								{
+									return false;
+
+								}
+
+							}
+						});
+					}
+</script>
+ {% endblock %}
+{% block customjavascript %}
+
+ {% endblock %}
+        {% endblock %}
+
+
+  {# END FOOTER #}

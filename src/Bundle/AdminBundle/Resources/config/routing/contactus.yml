@@ -1,0 +1,12 @@
+contact_us:
+    path:     /
+    defaults: { _controller: BundleAdminBundle:Contactus:index }
+
+contact_us_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BundleAdminBundle:Contactus:delete" }
+    
+contact_us_show:
+    pattern:  /{id}/details
+    defaults: { _controller: "BundleAdminBundle:Contactus:show" }
+     

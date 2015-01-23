@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
+
+        {% if app.security.getToken().getUser().getId() is defined %}
+        </script>
+        <link type="text/css" rel="stylesheet" id="arrowchat_css" media="all" href="/kidskula/mychat/external.php?type=css" charset="utf-8" />
+    {% endif %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="/kidskula/mychat/includes/js/jquery.js"></script>
+    <script type="text/javascript" src="/kidskula/mychat/includes/js/jquery-ui.js"></script>
+
+    
+    
+
+    
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+
+    <title>Kidskula</title>
+    <!-- BEGIN CSS -->   
+    {% block css %} 
+
+        {{include('BundleKidskulaBundle:Layout:css.html.twig')}}
+
+    {% endblock %}
+    <!-- END CSS -->
+
+
+
+</head>
+
+<body>
+
+    <!-- BEGIN HEADER -->   
+    {% block header %} 
+
+        {{include('BundleKidskulaBundle:Layout:header.html.twig')}}
+
+    {% endblock %}
+    <!-- END HEADER -->
+
+    <!--container starts-->   
+    {% block content %}
+
+    {% endblock %}
+    <!--container ends-->
+
+    <!-- BEGIN FOOTER -->
+    {% block footer %}
+        {{include('BundleKidskulaBundle:Layout:footer.html.twig')}}
+
+    {% endblock %}
+    <!-- END FOOTER -->
+    <!-- BEGIN SCRIPT -->
+    {% block script %}
+        {{include('BundleKidskulaBundle:Layout:script.html.twig')}}
+    {% endblock %}
+    <!-- END SCRIPT -->
+
+    {% if app.security.getToken().getUser().getId() is defined %}
+        <script type="text/javascript" src="/kidskula/mychat/external.php?type=djs" charset="utf-8"></script>
+        <script type="text/javascript" src="/kidskula/mychat/external.php?type=js" charset="utf-8"></script>
+    {% endif %}
+
+
+</body>
+</html>

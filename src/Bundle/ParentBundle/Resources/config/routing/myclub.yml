@@ -1,0 +1,38 @@
+parentclub:
+    pattern:  /
+    defaults: { _controller: BundleParentBundle:Club:index }
+parentclub_list:
+    pattern:  /view-myclubs
+    defaults: { _controller: BundleParentBundle:Club:clublist } 
+    
+parentclub_list:
+    pattern:  /view-clubs
+    defaults: { _controller: BundleParentBundle:Club:clublist }
+      
+parentclub-details:
+    pattern:  /{id}/details
+    defaults: { _controller: BundleParentBundle:Club:clubdetails }
+parentclub-membership:
+    pattern:  /membership
+    defaults: { _controller: BundleParentBundle:Club:myclub_membership } 
+parentarticle-add:
+    pattern:  /createarticle
+    defaults: { _controller: BundleParentBundle:Club:createarticle }
+parentcommentlisting:
+    pattern:  /commentlisting/{eventId}/{parentId}
+    defaults: { _controller: BundleParentBundle:Club:getdiscussion , eventId: 0, parentId: 0} 
+parentarticlelisting:
+    pattern:   /{id}/{status}/articlelisting
+    defaults: { _controller: BundleParentBundle:Club:articlelisting }
+parentrecentarticlelisting:
+    pattern:   /{id}/{articleid}/{status}
+    defaults: { _controller: BundleParentBundle:Club:articlelisting } 
+parentarticlelike:
+    pattern:   /articlelike
+    defaults: { _controller: BundleParentBundle:Club:articlelike }
+parentview-notification:
+    pattern:   /view-notification
+    defaults: { _controller: BundleParentBundle:Club:viewnotification }   
+parent-club-log:
+    pattern:   /student-club-log
+    defaults: { _controller: BundleParentBundle:Club:studentclublog } 

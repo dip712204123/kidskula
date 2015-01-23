@@ -1,0 +1,70 @@
+{% block notification %}
+<div class="row socialnotification_panel">
+<h2> Social Notification <span class="totalcollection">{{notification_count}}</span></h2>
+
+<ul class="socialnotification-list">
+    {% if studentNotification is empty %}
+    <div class="col-xs-12 col-sm-9 noresultfound">
+    No notifications.
+    </div>
+    
+    {% else %}
+	
+    {% for notification in studentNotification %}
+	
+    <li id="notif{{notification.id}}"><input type="checkbox" value="{{notification.id}}"/> <a href="javascript:void(0);">{{notification.texttoshow}}</a>
+	<span id="loading{{notification.id}}" style="display:none;">Deleting...</span>
+	</li>
+    {% endfor %}
+	
+	<input style="text-transform: uppercase; font-weight: bold; margin: 8px 0px 0px 6px;" class="btn btn-sm btn-success" type="button" onclick="notifSeenFunc();" value="Seen"/>
+	
+    {% endif %}
+</ul>
+</div>
+
+<script>
+
+					function notifSeenFunc()
+					{
+						var val = [];
+						$(':checkbox:checked').each(function(i) {
+							val[i] = $(this).val();
+							$("#loading"+$(this).val()).show();
+						});
+						//alert(val);
+						
+						var path = "{{path('notificationSeen')}}";
+						
+						var form_data = {
+							visible: val
+
+						};
+
+						$.ajax({
+							type: "POST",
+							url: path,
+							data: form_data,
+							success: function(response) {
+								//alert(response.status);
+
+								if (response.status != 0) {
+								
+								$(':checkbox:checked').each(function(i) {
+							    var linotif = $(this).val();
+								$("#loading"+linotif).hide();
+							    $("#notif"+linotif).hide();
+						        });
+									
+								}
+								else
+								{
+									return false;
+
+								}
+
+							}
+						});
+					}
+</script>
+{% endblock %}

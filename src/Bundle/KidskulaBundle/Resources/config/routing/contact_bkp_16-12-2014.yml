@@ -1,0 +1,11 @@
+mycontacts:
+    pattern:  /
+    defaults: { _controller: BundleKidskulaBundle:Contact:index }
+
+get_question_font_category:
+    pattern: /getcategory
+    defaults: { _controller: "BundleKidskulaBundle:Contact:getcategory"}
+    
+get_question_font_sub_category:
+    pattern: /getsubcategory
+    defaults: { _controller: "BundleKidskulaBundle:Contact:getsubcategory"}

@@ -1,0 +1,85 @@
+{# empty Twig template #}
+
+ <!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+{% block script %}
+{%if app.security.getToken().getUser().getId() is defined %}
+    
+
+  
+    
+    
+    
+    
+<script>
+$( document ).ready(function() {
+    setInterval(function() {
+    	var path = "/kidskula/mychat/test.php";					
+    	var form_data = {
+    		userid:'{{app.security.getToken().getUser().getId()}}'
+    	};
+    	$.ajax({
+    		type: "POST",
+    		url: path,
+    		data: form_data,
+    		success: function(response) {
+			 //alert(response);
+    		}
+    	});
+    }, 10000);
+});
+</script>
+{% endif %}
+
+
+
+<script src="{{asset('bundles/KidskulaBundle/assets')}}/js/bootstrap.js"></script>
+<script src="{{asset('bundles/KidskulaBundle/assets')}}/js/accordian/smoothscroll.js"></script>
+<script src="{{asset('bundles/KidskulaBundle/assets')}}/js/accordian/responsive-accordion.min.js"></script>
+<script src="{{asset('bundles/KidskulaBundle/assets')}}/js/artipopup/modalEffects.js"></script>
+<script src="{{asset('bundles/KidskulaBundle/assets')}}/js/artipopup/classie.js"></script>
+{% endblock %}
+
+{% block formvalidation %}
+<script>
+
+$(document).ready(function() {
+    
+    
+    
+    
+    $('#form')
+        .bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            
+        })
+        .on('error.field.bv', function(e, data) {
+            // $(e.target)  --> The field element
+            // data.bv      --> The BootstrapValidator instance
+            // data.field   --> The field name
+            // data.element --> The field element
+
+            data.bv.disableSubmitButtons(false);
+        })
+        .on('success.field.bv', function(e, data) {
+            // e, data parameters are the same as in error.field.bv event handler
+            // Despite that the field is valid, by default, the submit button will be disabled if all the following conditions meet
+            // - The submit button is clicked
+            // - The form is invalid
+            data.bv.disableSubmitButtons(false);
+        });
+
+
+});
+</script>
+{% endblock %}
+
+{% block customScript %} 
+<!--script src="{{asset('bundles/KidskulaBundle/assets')}}/js/headslider.js"></script-->
+{% endblock %}
+

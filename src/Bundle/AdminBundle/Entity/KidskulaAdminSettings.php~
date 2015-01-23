@@ -1,0 +1,49 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaAdminSettings
+ *
+ * @ORM\Table(name="kidskula_admin_settings", uniqueConstraints={@ORM\UniqueConstraint(name="config_key_UNIQUE", columns={"config_key"})}, indexes={@ORM\Index(name="fk_kidskula_admin_settings_kidskula_modules1_idx", columns={"kidskula_modules_modules_id"})})
+ * @ORM\Entity
+ */
+class KidskulaAdminSettings
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="settings_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $settingsId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="config_key", type="string", length=255, nullable=false)
+     */
+    private $configKey;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="config_value", type="text", nullable=true)
+     */
+    private $configValue;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaModules
+     *
+     * @ORM\OneToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaModules")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="kidskula_modules_modules_id", referencedColumnName="modules_id", unique=true)
+     * })
+     */
+    private $kidskulaModulesModules;
+
+
+}

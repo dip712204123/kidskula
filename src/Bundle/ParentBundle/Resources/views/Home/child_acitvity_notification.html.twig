@@ -1,0 +1,5 @@
+<ul class="socialnotification-list">
+{% for notification in Notification %}
+<li> <strong>@{{notification.firstName}} :</strong> {{notification.texttoshow}} on <strong>{{ notification.createdDate|date("M j,Y, g:i a")}}</strong></li>
+{% endfor %}
+</ul>

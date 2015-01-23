@@ -1,0 +1,157 @@
+{% extends 'BundleKidskulaBundle:Layout:social_base.html.twig' %}
+ {% block content %}
+<div class="container">
+    <div class="row student-social-dashboard">
+        <div class="col-md-8 leftpart"> 
+            <div class="student-info">
+                <div class="col-md-3 imagepart" style="text-align:center;"> 
+
+                 {#   <a href="#" data-toggle="modal" data-target=".pop-up-1"><img class="img-circle red-bor2" src="{{asset('bundles/KidskulaBundle/assets')}}/images/profilepic1.jpg" alt=""> </a>#}
+                       {%  if profile.profileCroppedImage is defined and profile.profileCroppedImage is not null  %}                            	
+                    <a href="#" data-toggle="modal" data-target=".pop-up-1"><img src="{{asset('upload/profilepicture/cropedimages/')}}{{profile.profileCroppedImage}}" class="img-circle red-bor2" width="150px" height="150px" alt="" /></a>   
+
+                            {% else %}
+
+                    <img src="{{asset('bundles/BundleAdmin/assets')}}/img/admin_profile_no_image.gif" class="img-circle red-bor2" width="150px" height="150px" alt="" />
+                            {% endif %}  
+                    <a href="javascript:void(0);">{{personal.firstName}} {{personal.lastName}}</a> 
+
+                    <!--  popup image -->
+                    <div class="modal fade pop-up-1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                                    <h4 class="modal-title" id="myLargeModalLabel-1">{{personal.firstName}}'s profile picture. </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <img src="{{asset('upload/profilepicture/cropedimages/')}}{{profile.profileCroppedImage}}" class="img-responsive img-rounded center-block" alt="">
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal mixer image -->
+                    <!--  popup image -->
+
+                </div>
+                <div class="col-md-9 message-text">
+                    <h2>{{personal.firstName}}'s Message Board 
+                        <img class="img-circle red-bor2" src="{{asset('bundles/KidskulaBundle/assets')}}/images/avatar-2.jpg" alt="">
+
+                        <a style="font-size:11px; font-family: Open sans;" href="#">{{personal.firstName}}'s Avatar</a>
+                    </h2>
+                    <p id="statmsg">{{profile.profileMsg}} </p>
+                    <div class="form-group row pro_submit_pnl">
+                        <div class="col-md-12" style="display: none;" id="statusdiv">
+                            <input type="text" name="status" id="status" class="form-control" placeholder="Enter Text" tabindex=""> 
+                            <a href="javascript:void(0);" onclick="getProfileSuggest();"><input name="" type="button" value="Submit" /></a>
+                        </div>
+                    </div>
+                </div> <!--message-text ends-->
+
+            </div> <!--student-info ends-->
+
+            <div style="clear:both"> </div>
+
+
+
+
+           <div class="row friendlessontab student-social-videolen">
+                <div class="col-md-12">
+                    <div class="panel with-nav-tabs panel-default tabpanel">
+                        <div class="panel-heading">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab1default2" data-toggle="tab">{{personal.firstName}}'s Friends</a></li>
+
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                
+                            <div class="tab-pane fade in active row student-social-myfriends-inner" id="tab1default2" style="min-height: 205px;">
+                                {% if mytotalfriend > 0%}
+                                {% for allfriends in myfrnds  %}
+                               
+                                    <div class="col-md-4 friendlist">
+                                         {% set profileImage = getprofileimage(allfriends.id) %}
+                                        {%  if profileImage is defined and profileImage is not null  %}                            	
+                                        <a href="#" data-toggle="modal" data-target=".pop-up-1"><img src="{{asset('upload/profilepicture/cropedimages/')}}{{profileImage}}" class="img-circle red-bor2" width="100px" height="100px" alt="" /></a>   
+                                        {% else %}
+
+                                        <img src="{{asset('bundles/BundleAdmin/assets')}}/img/admin_profile_no_image.gif" class="img-circle red-bor2" width="100px" height="100px" alt="" />
+                                        {% endif %}
+                                       {# <img alt="" src="{{asset('bundles/KidskulaBundle/assets')}}/images/profilepic1.jpg" class="img-circle red-bor2">#}<br>
+                                        {{allfriends.firstName}}  {{allfriends.lastName}}<br>
+                                        {% if myuserId == allfriends.id  %}
+                                        <a href="{{path('home') }}"><button type="button" class="btn btn-lg btn-success landing-frndbtn">View Profile</button></a>
+                                        {% else %}
+                                        <a href="{{path('friend_home', {'username':allfriends.username}) }}"><button type="button" class="btn btn-lg btn-success landing-frndbtn">View Profile</button></a>
+                                        {% endif %}
+                                    </div>
+                                  
+                                {% endfor %}
+                                {% else %}    
+                                    
+                                    <div class="col-md-12 noresultfound ">
+
+                                        {{personal.firstName}} has no friends right now.
+                                    </div>
+
+                                
+                                
+                                {%endif%}
+
+                                </div>
+
+                                </div> <!--/*row ends*/-->
+                              
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+         
+         
+ 
+
+
+
+            <!--student-social-myfriends ends-->
+            
+          <!--student-social-games starts-->
+          <!--student-social-games ends-->
+
+
+          
+        </div> <!--leftpart ends-->
+        <div class="col-md-4 rightpart">
+
+            <div class="row "><div class="col-md-12" id='addfrienddiv'> {#{{flag}}#}
+{% if flag == '0' %}<button id="addfriendbtn" class="btn col-md-12 addfrnd_btn" onclick='addfriend();' type="button">Add Friend</button>
+{% elseif flag == '1' or flag == '2' %}<button id="cancelfriendbtn" class="btn col-md-12 addfrnd_btn" onclick="cancelfriend();" type="button">Cancel Friend Request</button>
+{% elseif flag == '3' %}<button id="unfriendbtn" class="btn col-md-12 addfrnd_btn" onclick="unfriend();" type="button">Unfriend</button>
+{% elseif flag == '4' %}<button id="respondfriendbtn" class="btn col-md-12 addfrnd_btn" onclick="acceptrequest({{personal.id}});" type="button">Respond Friend Request</button>
+{% endif %}
+</div></div>
+            <input type='hidden' id='friendId' name='friendId' value='{{personal.id}}'>
+
+           {# *******************Notification panel fetch******************************#}
+
+           {{include('BundleKidskulaBundle:Home:frnds_collection.html.twig')}}
+
+           {# *******************Notification panel end********************************#}
+
+            {# *******************Club panel******************************#}
+		   
+		   {{include('BundleKidskulaBundle:Home:home_club_listing.html.twig')}}
+           {# *******************Club panel ends******************************#}
+        </div> <!--rightpart ends-->
+    </div> <!--student-social-dashboard ends-->
+</div>
+
+<!--container ends-->
+ {#for edit button click#}
+{# *******************Scripts fetch******************************#}
+{{include('BundleKidskulaBundle:Scripts:friend_home_scripts.html.twig')}}
+{# *******************Scripts ends******************************#}
+ {% endblock  %}

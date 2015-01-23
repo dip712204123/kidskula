@@ -1,0 +1,655 @@
+{% extends 'BundleKidskulaBundle:Layout:social_base.html.twig' %}
+ {% block content %} 
+<div class="container">
+    <div class="row student-social-dashboard">
+        <div class="col-md-8 leftpart"> 
+            <div class="student-info">
+                <div class="col-md-3 imagepart" style="text-align:center;"> 
+
+                 {#   <a href="#" data-toggle="modal" data-target=".pop-up-1"><img class="img-circle red-bor2" src="{{asset('bundles/KidskulaBundle/assets')}}/images/profilepic1.jpg" alt=""> </a>#}
+                       {%  if profile.profileCroppedImage is defined and profile.profileCroppedImage is not null  %}                            	
+                    <a href="#" data-toggle="modal" data-target=".pop-up-1"><img src="{{asset('upload/profilepicture/cropedimages/')}}{{profile.profileCroppedImage}}" class="img-circle red-bor2" width="150px" height="150px" alt="" /></a>   
+                       {% else %}
+
+                    <img src="{{asset('bundles/BundleAdmin/assets')}}/img/admin_profile_no_image.gif" class="img-circle red-bor2" width="100px" height="100px" alt="" />
+                            {% endif %}  
+                    <a href="javascript:void(0);">{{personal.firstName}} {{personal.lastName}}</a> 
+
+                    <!--  popup image -->
+                    <div class="modal fade pop-up-1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                                    <h4 class="modal-title" id="myLargeModalLabel-1">{{personal.firstName}}'s profile picture. </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <img src="{{asset('upload/profilepicture/cropedimages/')}}{{profile.profileCroppedImage}}" class="img-responsive img-rounded center-block" alt="">
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal mixer image -->
+                    <!--  popup image -->
+
+                </div>
+                <div class="col-md-9 message-text">
+                    <h2>My Message Board 
+                        {% if avatar is empty %}
+                        <img class="img-circle red-bor2" src="{{asset('bundles/BundleAdmin/assets')}}/img/admin_profile_no_image.gif" width="50" height="50" title="Set your avatar image" alt="">
+                        <a style="font-size:11px; font-family: Open sans;" href="{{path('profilesetting')}}">Set your avatar <i class="glyphicon glyphicon-edit iconsize"></i></a>
+                        {% else %}
+
+                        <img class="img-circle red-bor2" src="{{asset('upload/avatar/')}}{{avatar.path}}" width="50" height="50" title="Avatar" alt="">
+
+                        <span id="avtarstatmsg"><a style="font-size:11px; font-family: Open sans;" href="javascript:void(0)" onclick="editavatar();" title="Edit Your Avatar Name">{{personal.myavatar}} <i class="glyphicon glyphicon-edit iconsize" ></i></a></span>
+
+                        <div class="form-group row pro_submit_pnl">
+                            <div class="col-md-12" style="display: none;" id="avtarDuplicateSpanId">
+                                <input type="text" id="setavatarname" name="setavatarname" class="form-control" placeholder="Enter Avatar Name">
+                                <a href="javascript:void(0);" onclick="saveAvatarName();"><input name="" type="button" value="Submit" /></a>
+                            </div>
+                        </div>
+                        {% endif %}
+
+
+                    </h2>
+                    <p id="statmsg">{{profile.profileMsg}} <span class="edittext"><a href="javascript:void(0)" onclick="statusChange();">My mood</a></span> </p>
+                    <div class="form-group row pro_submit_pnl">
+                        <div class="col-md-12" style="display: none;" id="statusdiv">
+                            <input type="text" name="status" id="status" class="form-control" placeholder="Enter Text" tabindex=""> 
+                            <a href="javascript:void(0);" onclick="getProfileSuggest();"><input name="" type="button" value="Submit" /></a>
+                        </div>
+                    </div>
+                </div> <!--message-text ends-->
+
+            </div> <!--student-info ends-->
+
+            <div style="clear:both"> </div>
+
+
+            <div class="row student-social-videolen" style="display:none"> 
+                <h2>Favorite Videos & Lessons</h2>
+                <ul class="list-unstyled video-list-thumbs row">
+                    <li class="col-lg-3 col-sm-4 col-xs-6">
+                        <a href="#" title="Claudio Bravo, antes su debut con el Barça en la Liga">
+                            <img src="http://i.ytimg.com/vi/ZKOtE9DOwGE/mqdefault.jpg" alt="Barca" class="img-responsive" height="130px" />
+                            <h2>Claudio Bravo, antes su debut </h2>
+                            <span class="glyphicon glyphicon-play-circle"></span>
+                            <span class="duration">03:15</span>
+                        </a>
+                    </li>
+                    <li class="col-lg-3 col-sm-4 col-xs-6">
+                        <a href="#" title="Claudio Bravo, antes su debut con el Barça en la Liga">
+                            <img src="http://i.ytimg.com/vi/ZKOtE9DOwGE/mqdefault.jpg" alt="Barca" class="img-responsive" height="130px" />
+                            <h2>Barça en la Liga</h2>
+                            <span class="glyphicon glyphicon-play-circle"></span>
+                            <span class="duration">03:15</span>
+                        </a>
+                    </li>
+                    <li class="col-lg-3 col-sm-4 col-xs-6">
+                        <a href="#" title="Claudio Bravo, antes su debut con el Barça en la Liga">
+                            <img src="http://i.ytimg.com/vi/ZKOtE9DOwGE/mqdefault.jpg" alt="Barca" class="img-responsive" height="130px" />
+                            <h2>Debut con el </h2>
+                            <span class="glyphicon glyphicon-play-circle"></span>
+                            <span class="duration">03:15</span>
+                        </a>
+                    </li>
+                    <li class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                        <a href="#" title="Claudio Bravo, antes su debut con el Barça en la Liga">
+                            <img src="http://i.ytimg.com/vi/ZKOtE9DOwGE/mqdefault.jpg" alt="Barca" class="img-responsive" height="130px" />
+                            <h2>la Liga</h2>
+                            <span class="glyphicon glyphicon-play-circle"></span>
+                            <span class="duration">03:15</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div> <!--student-social-videolen ends-->
+
+
+            <div class="row friendlessontab student-social-videolen">
+                <div class="col-md-12">
+                    <div class="panel with-nav-tabs panel-default tabpanel">
+                        <div class="panel-heading">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab1default2" data-toggle="tab">All Friends</a></li>
+                                <li><a href="#tab2default3" data-toggle="tab">Friends Online</a></li>
+                                <li><a href="#tab3default4" data-toggle="tab">Invite Friends</a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+
+
+                            {#My all friends listings#}
+
+                                <input type="hidden" id="allfriendlisting" value="{{ path('allfriendlisting')}}">
+                                <div class="tab-pane fade in active row student-social-myfriends-inner" id="tab1default2" style="min-height: 205px;">
+
+                                      {{ render(url('allfriendlisting')) }}
+
+                                </div> 
+
+                                <!--/*row ends*/-->
+                            {#My all friends listings end#}
+                            {#My online friends listings strart#}    
+
+                                <div class="tab-pane fade row student-social-myfriends-inner" id="tab2default3">
+                                    <div class="col-md-4 friendlist">
+                                        <img alt="" src="{{asset('bundles/KidskulaBundle/assets')}}/images/profilepic1.jpg" class="img-circle red-bor2"><br>
+                                        Lorem Ip<br>
+                                        <button type="button" class="btn btn-lg btn-success landing-frndbtn">View Profile</button>
+                                    </div>
+
+                                    <div class="col-md-4 friendlist">
+                                        <img alt="" src="{{asset('bundles/KidskulaBundle/assets')}}/images/profilepic1.jpg" class="img-circle red-bor2"><br>
+                                        Lorem Ip<br>
+                                        <button type="button" class="btn btn-lg btn-success landing-frndbtn">View Profile</button>
+                                    </div>
+
+
+                                </div> 
+                            {#My online friends listings end#}
+                                <!--/*row ends*/-->
+                            {#My invite friends listings start#}   
+                                <div class="tab-pane fade row" id="tab3default4">
+                                    <h2 class="small-heading">Note: </h2>
+                                    <div class="col-md-12 class-inner">
+                                        <p>Regular Friends : If you don't know the secret code and avatar name of your friend, you can have limited communication with your friend, however you can play games and trade goodies. Select the correct option below to add your friend. </p>
+                                        <p> <input class="inviteradiocls" name="inviteradio" id="firstId" type="radio" value="1"> I know the Secret Code & Avatar Name</p>
+                                        <p> <input class="inviteradiocls" name="inviteradio" id="secondId" type="radio" value="2"> I don't know the code & Avatar name, but I want to search my friends</p>
+                                        <p> <input class="inviteradiocls" name="inviteradio" id="thirdId" type="radio" value="3"> I don't know the code & Avatar name, but I have their email addresses, and i want to ask them to join</p>
+                                        {#First form start#}
+                                        <form role="form" id="withsecret" >
+                                            {#<div class="form-group">
+                                               
+                                                 {{ form_widget(form.grade) }}
+			                         {{ form_errors(form.grade) }}
+                                            </div>#}
+                                            <div class="form-group">
+                                               {{ form_widget(form.securityCode,{'id':'securityCodeid'}) }}
+			                       {{ form_errors(form.securityCode) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_widget(form.myavatar,{'id':'myavatarid'}) }}
+			                        {{ form_errors(form.myavatar) }}
+                                            </div>
+                                            {{ form_widget(form._token) }}
+                                            <div class="form-group ">
+                                                <button type="button" onclick="invitewithsecret();" class="btn btn-primary col-md-4 joinnow2">Add Friend</button>
+                                                <button type="button" onclick="reset();" class="btn btn-primary col-md-4 joinnow pull-right">Cancel</button>
+                                            </div> 
+                                        </form>
+                                        {#First form ends#}
+                                        {#second form start#}
+                                        <form role="form" method="post" action="{{path('invitewithoutsecret')}}" id="withoutsecret" style="display:none;" >
+                                            <div class="form-group">
+                                                <p><input  id="checkbox1" name="checkbox1" type="checkbox" value="1" > Live in my city </p>
+                                                <p><input  id="checkbox2" name="checkbox2" type="checkbox" value="1" > Study in my school </p>
+                                                <p><input  id="checkbox3" name="checkbox3" type="checkbox" value="1" > Study in same grade level </p>
+
+                                            </div>
+
+                                            <div class="form-group ">
+                                                <button type="submit" class="btn btn-primary col-md-4 joinnow2">Find Friend</button>
+
+                                            </div> 
+                                        </form>
+                                        {#second form end#}
+                                         {#third form start#}
+                                        <form role="form" id="onlyemail" style="display:none;">
+                                            <div class="form-group">
+                                                <input id="name" name="name" type="text" placeholder="My Friend's email Id" class="form-control" required>
+                                            </div>
+
+                                            <div class="form-group ">
+                                                <button type="submit" class="btn btn-primary col-md-4 joinnow2">Add Friend</button>
+                                                <button type="submit" class="btn btn-primary col-md-4 joinnow pull-right">Cancel</button>
+                                            </div> 
+                                        </form>
+                                         {#third form end#}
+                                    </div> <!--class-inner ends-->
+                                </div> 
+                            {#My invite friends listings end#}
+                                <!--/*row ends*/-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="row student-social-myfriends" style="display:none"> 
+                <h2>My Friends</h2>
+                <div class="student-social-myfriends-inner">
+
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 friendlist">
+                        <img alt="" src="{{asset('bundles/KidskulaBundle/assets')}}/images/profilepic1.jpg" class="img-circle red-bor2"><br>
+                        Lorem Ip<br>
+                        <button type="button" class="btn btn-lg btn-success landing-frndbtn">View Profile</button>
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 friendlist">
+                        <img alt="" src="{{asset('bundles/KidskulaBundle/assets')}}/images/profilepic1.jpg" class="img-circle red-bor2"><br>
+                        Lorem Ip<br>
+                        <button type="button" class="btn btn-lg btn-success landing-frndbtn">View Profile</button>
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 friendlist">
+                        <img alt="" src="{{asset('bundles/KidskulaBundle/assets')}}/images/profilepic1.jpg" class="img-circle red-bor2"><br>
+                        Lorem Ip<br>
+                        <button type="button" class="btn btn-lg btn-success landing-frndbtn">View Profile</button>
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 friendlist">
+                        <img alt="" src="{{asset('bundles/KidskulaBundle/assets')}}/images/profilepic1.jpg" class="img-circle red-bor2"><br>
+                        Lorem Ip<br>
+                        <button type="button" class="btn btn-lg btn-success landing-frndbtn">View Profile</button>
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 friendlist">
+                        <img alt="" src="{{asset('bundles/KidskulaBundle/assets')}}/images/profilepic1.jpg" class="img-circle red-bor2"><br>
+                        Lorem Ip<br>
+                        <button type="button" class="btn btn-lg btn-success landing-frndbtn">View Profile</button>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 friendlist">
+                        <img alt="" src="{{asset('bundles/KidskulaBundle/assets')}}/images/profilepic1.jpg" class="img-circle red-bor2"><br>
+                        Lorem Ip<br>
+                        <button type="button" class="btn btn-lg btn-success landing-frndbtn">View Profile</button>
+                    </div>
+
+                </div> <!--student-social-myfriends-inner ends-->
+            </div> <!--student-social-myfriends ends-->
+
+            <div class="row student-social-games"> 
+                <h2>Favorite Games</h2>
+                <div class="student-social-games-inner">
+                    <div class="col-lg-4 col-md-5 col-sm-5 col-xs-7 gamelist">
+                        <img class="img-circle yolo-bor2"  src="{{asset('bundles/KidskulaBundle/assets')}}/images/game1.jpg" alt=""><br>
+                        <a href="#">Play Game</a>
+                    </div> <!--gamelist ends-->
+
+                    <div class="col-lg-4 col-md-5 col-sm-5 col-xs-7 gamelist">
+                        <img class="img-circle yolo-bor2"  src="{{asset('bundles/KidskulaBundle/assets')}}/images/game1.jpg" alt=""><br>
+                        <a href="#">Play Game</a>
+                    </div> <!--gamelist ends-->
+
+                    <div class="col-lg-4 col-md-5 col-sm-5 col-xs-7 gamelist">
+                        <img class="img-circle yolo-bor2"  src="{{asset('bundles/KidskulaBundle/assets')}}/images/game1.jpg" alt=""><br>
+                        <a href="#">Play Game</a>
+                    </div> <!--gamelist ends-->
+
+                </div> <!--student-social-games-inner ends-->
+            </div> <!--student-social-games ends-->
+
+
+
+        </div> <!--leftpart ends-->
+        <div class="col-md-4 rightpart">
+            {#*******************frdrequest-pnl start*******************************#}
+            <div class="row frdrequest-pnl"> 
+                <h2> Friend Notification</h2>
+                <input type="hidden" id="frndreqstnotificationUrl" value="{{ path('intervalrequestcheck')}}">
+                <ul class="list-group" id="contact-list">
+                  {{ render(url('intervalrequestcheck')) }}
+                </ul>
+            </div>
+            <!--frdrequest-pnl ends-->
+
+           {# *************************************************#}
+            <div class="row collection-panel">
+                <h2> Collections</h2>
+                <div class="mt40">
+                    <article class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <a href="http://lorempixel.com/350/350/nature/4" title="Nature Portfolio" class="zoom" data-title="Amazing Nature" data-footer="The beauty of nature" data-type="image" data-toggle="lightbox">
+                                    <img src="http://lorempixel.com/350/350/nature/4" alt="Nature Portfolio" />
+                                    <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+                                </a>
+                            </div>
+
+                        </div>
+                        <p class="collection-text">Lorem Ip </p>
+                    </article>
+
+                    <article class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <a href="http://lorempixel.com/350/350/food/2" title="Food Portfolio" class="zoom" data-title="Delicious Food" data-footer="Whatever your desire" data-type="image" data-toggle="lightbox">
+                                    <img src="http://lorempixel.com/350/350/food/2" alt="Food Portfolio" />
+                                    <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+                                </a>
+                            </div>
+
+                        </div>
+                        <p class="collection-text">Lorem Ip </p>
+                    </article>
+
+                    <article class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <a href="http://lorempixel.com/350/350/sports/3" title="Sports Portfolio" class="zoom" data-title="Radical Sports" data-footer="This are the best moments" data-type="image" data-toggle="lightbox">
+                                    <img src="http://lorempixel.com/350/350/sports/3" alt="Sports Portfolio" />
+                                    <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+                                </a>
+                            </div>
+
+                        </div>
+                        <p class="collection-text">Lorem Ip </p>
+                    </article>
+
+
+
+                </div> <!--mt40 ends-->
+
+            </div> <!--collection-panel ends-->
+
+
+        </div> <!--rightpart ends-->
+    </div> <!--student-social-dashboard ends-->
+</div>
+<!--container ends-->
+ {#for edit button click#}
+<script>
+    $(document).ready(function() {
+        // alert('ok');
+        $(".inviteradiocls").click(function() {
+            $("#alertId").hide('slow');
+            if ($(this).attr("value") == 1) {
+
+                $('#withsecret').show('slow');
+            }
+            else
+            {
+                $('#withsecret').hide('slow');
+            }
+
+            if ($(this).attr("value") == 2) {
+                $('#withoutsecret').show('slow');
+            }
+            else
+            {
+                $('#withoutsecret').hide('slow');
+            }
+
+            if ($(this).attr("value") == 3) {
+                $('#onlyemail').show('slow');
+            }
+            else
+            {
+                $('#onlyemail').hide('slow');
+            }
+
+        });
+    });
+
+
+
+    function statusChange()
+    {
+        $(document).ready(function() {
+
+            $('#statusdiv').toggle('slow');
+        })
+    }
+
+ {#for status submit button click#}
+    function getProfileSuggest()
+    {
+
+        var newstatus = $('#status').val();
+        var path = "{{path('profilestatus')}}";
+
+        //alert(path);
+        if (newstatus != '')
+        {
+
+            var form_data = {
+                newstatus: newstatus
+
+            };
+
+            $.ajax({
+                type: "POST",
+                url: path,
+                data: form_data,
+                success: function(response) {
+                    //alert(response.msg);
+
+                    if (response.status != 0) {
+
+                        $("#statmsg").html(response.msg);
+                        $("#statusdiv").fadeOut("slow");
+                    }
+                    else
+                    {
+                        $("#statusdiv").fadeOut("slow");
+
+                    }
+
+                }
+            });
+
+
+        }
+
+
+    }
+
+    function acceptrequest(id)
+    {
+        //alert(id);
+
+
+        var path = "{{path('acceptfriend')}}";
+
+        var friendId = id;
+        //alert (friendId);
+
+        var form_data = {
+            friendId: friendId
+
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                // alert(response.msg);
+
+                if (response.status != 0) {
+                    $("#frndli" + friendId).hide('slow');
+                    if (response.lastrequest == 'yes')
+                    {
+                        $("#emptyfrndlist").show('slow');
+                        allfriendlist();
+                    }
+                }
+                else
+                {
+                    return false;
+
+
+                }
+
+            }
+        });
+    }
+
+    function rejectrequest(id)
+    {
+        //alert(id);
+
+
+        var path = "{{path('rejectfriend')}}";
+
+        var friendId = id;
+        //alert (friendId);
+
+        var form_data = {
+            friendId: friendId
+
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                // alert(response.msg);
+
+                if (response.status != 0) {
+                    $("#frndli" + friendId).hide('slow');
+                    {#$("#addfrienddiv").html(response.msg);#}
+                    if (response.lastrequest == 'yes')
+                    {
+                        $("#emptyfrndlist").show('slow');
+                    }
+
+                }
+                else
+                {
+                    return false;
+
+
+                }
+
+            }
+        });
+    }
+
+    function invitewithsecret()
+    {
+        //alert(id);
+
+        var path = "{{path('invitewithsecret')}}";
+
+        var secretcode = $('#securityCodeid').val();
+        var avatarname = $('#myavatarid').val();
+        var type = 'invitewithsecret'
+        if (secretcode == '' || avatarname == '')
+        {
+            return false;
+        }
+
+        var form_data = {
+            secretcode: secretcode,
+            avatarname: avatarname,
+            type: type
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                //alert(response.msg);
+
+                if (response.status != 0) {
+                    $("#withsecret").hide('slow');
+                    if (response.msg == 'request_sent') {
+                        $("#tab3default4").append('<div class="col-md-12 class-inner"><p class="collection-text noresultfound" id="alertId">A request has been sent to ' + avatarname + '.</p></div>');
+                    } else if (response.msg == 'already_sent') {
+                        $("#tab3default4").append('<div class="col-md-12 class-inner"><p class="collection-text noresultfound" id="alertId">A request has already been sent to ' + avatarname + '.</p></div>');
+                    } else if (response.msg == 'already_friend') {
+                        $("#tab3default4").append('<div class="col-md-12 class-inner"><p class="collection-text noresultfound" id="alertId">' + avatarname + ' is already in your friend list.</p></div>');
+                    }
+
+                }
+                else
+                {
+                    $("#withsecret").hide('slow');
+                    $("#tab3default4").append('<div class="col-md-12 class-inner"><p class="collection-text noresultfound" id="alertId">' + avatarname + ' is not found.</p></div>');
+
+                }
+                $('#securityCodeid').val('');
+                $('#myavatarid').val('');
+            }
+        });
+    }
+{#For friend request listing#}
+    function frndreqstnotification() {
+        $.ajax({
+            url: $('#frndreqstnotificationUrl').val(),
+            data: '',
+            type: 'POST',
+            success: function(response) {
+                $('#contact-list').html(response);
+            },
+            error: function() {
+                //$(e).text('Error...');
+            }
+
+        });
+    }
+
+    function allfriendlist() {
+        $.ajax({
+            url: $('#allfriendlisting').val(),
+            data: '',
+            type: 'POST',
+            success: function(response) {
+                $('#tab1default2').html(response);
+            },
+            error: function() {
+                //$(e).text('Error...');
+            }
+
+        });
+    }
+
+    setInterval(function() {
+        frndreqstnotification();
+        allfriendlist();
+    }, 6000);
+
+    {#fucntion for avatar title change#}
+
+    function editavatar()
+    {
+        $(document).ready(function() {
+          {#$('#avtarSpanId').toggle('slow'); #}
+            $('#avtarDuplicateSpanId').toggle('slow');
+
+        });
+    }
+    function saveAvatarName()
+    {
+        var textval = $('#setavatarname').val();
+        var path = "{{path('setavatarname')}}";
+      
+        var form_data = {
+            textval: textval
+            
+
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                //alert(response.status);
+
+                if (response.status != 0) {
+                    $('#avtarDuplicateSpanId').hide('slow');                 
+                    $("#avtarstatmsg").html(response.msg);
+                    
+                }
+                else
+                {
+                    $('#avtarDuplicateSpanId').hide('slow');       
+                    $("#avtarstatmsg").html('Not saved');
+                    
+                }
+
+            }
+        });
+    }
+</script>
+ {% endblock  %}

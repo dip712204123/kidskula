@@ -1,0 +1,111 @@
+{% extends 'BundleAdminBundle:layout:base.html.twig' %}
+{% block content %}
+<div class="container-fluid">
+<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title">
+        Add Email Notifications
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{path('bundle_admin_dashboard')}}">Home</a> 
+            <i class="icon-angle-right"></i>
+        </li>
+
+        <li><a href="#">Add Email Notification</a></li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB-->
+
+    <div class="row-fluid">
+        <div class="span12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="tools">
+                        <a href="<?php echo base_url();?>admin/notification" class="btn icn-only"  title="Back">
+                        <i class="m-icon-swapleft"></i></a>									
+                    </div>
+                </div>                            
+                
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form action="" name="notification_frm" method="post" id="notification_frm" class="form-horizontal">
+                    
+                        <!--<div class="alert alert-error">
+                            <button class="close" data-dismiss="alert"></button>                           
+                        </div>
+                        <div class="alert alert-success">
+                            <button class="close" data-dismiss="alert"></button>
+                        </div> -->
+                        
+                        <div class="control-group">
+                            <label class="control-label">Notification Title<span class="required">*</span></label>
+                            <div class="controls">
+                                <!--<input type="text" data-required="1" class="span6 m-wrap required" name="email_code" value=""/>-->
+                                {% form_theme form 'BundleAdminBundle:Form:fields.html.twig' %}
+                                {{ form_start(form) }}
+                                {{form_row(form.emailCode)}}
+                                {{ form_end(form) }}
+                                
+                            
+                                <span class="help-inline">Please enter "_ or -" between two words. Don't enter special character and space.</span>
+                            </div>
+                        </div>
+                        
+                       
+                        <div class="control-group">
+                            <label class="control-label">Subject<span class="required">*</span></label>
+                            <div class="controls">
+                                <input type="text" data-required="1" class="span6 m-wrap" name="subject" value=""/>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label">Content<span class="required">*</span></label>
+                            <div class="controls">
+                                <textarea class="span12 ckeditor m-wrap required" name="content" rows="6" data-error-container="#editor2_error">
+                                     
+                                </textarea>
+                                <span class="help-inline">Text between ### is dynamic part.Please don't Change.</span>
+                                <div id="editor2_error"></div>
+                            </div>
+                        </div>									
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn red" name="add_notification_btn" value="add_page">Add</button>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+            <!-- END VALIDATION STATES-->
+        </div>
+    </div>
+
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/select2/select2.min.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/data-tables/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/data-tables/DT_bootstrap.js"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/admin/scripts/common.js"></script>
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/table-managed.js"></script>
+      
+	<script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/form-validation.js"></script> 
+	<!-- END PAGE LEVEL STYLES -->    
+	<script>
+		jQuery(document).ready(function() {   
+		   // initiate layout and plugins
+		   FormValidation.init();
+		   $("#page_frm").validate();
+		});
+	</script>
+	<!-- END JAVASCRIPTS -->
+    
+</div>                
+     
+{% endblock content %}
+
+

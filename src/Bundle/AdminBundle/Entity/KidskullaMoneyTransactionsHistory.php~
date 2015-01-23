@@ -1,0 +1,59 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskullaMoneyTransactionsHistory
+ *
+ * @ORM\Table(name="kidskulla_money_transactions_history", indexes={@ORM\Index(name="fk_money_transaction_parent_id_idx", columns={"parent_id"}), @ORM\Index(name="fk_money_transaction_childrent_id_idx", columns={"children_id"})})
+ * @ORM\Entity
+ */
+class KidskullaMoneyTransactionsHistory
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="bigint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="amount_transferres", type="decimal", precision=20, scale=2, nullable=true)
+     */
+    private $amountTransferres;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateof_transaction", type="datetime", nullable=true)
+     */
+    private $dateofTransaction;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaUsers
+     *
+     * @ORM\ManyToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaUsers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="children_id", referencedColumnName="id")
+     * })
+     */
+    private $children;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaUsers
+     *
+     * @ORM\ManyToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaUsers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     * })
+     */
+    private $parent;
+
+
+}

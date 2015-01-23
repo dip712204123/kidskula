@@ -1,0 +1,64 @@
+<a href="{{path('mycollection')}}" style="text-decoration:none;"><h2> My Collections   <span class="totalcollection">{{totalcollection}}</span></h2></a>
+<div id="scrollbar1">
+<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+<div class="viewport" style="padding-left:0px;">
+<div class="overview">	
+			<div class="mt40">
+                       {% if collectionarray is empty %}
+                        <div class="col-md-12 col-sm-9 noresultfound">
+                            You have not rewarded any collection item
+                        </div>
+                         
+                     {% else %}
+                       
+                         {% for collectionID in collectionarray  %}
+                        <article class="col-xs-4 col-sm-4 col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    {% set getcollectionimage = getcollectionimage(collectionID.collectionId) %}
+                                    <a href="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" title="Nature Portfolio" class="zoom" data-title="Amazing Nature" data-footer="The beauty of nature" data-type="image" data-target=".pop-up-2" data-toggle="modal">
+                                         
+                                        <img src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" alt="My collection" {% if collectionID.status == '2' %}class="collection-green-border img-responsive"{% else %}class="collection-ass-border img-responsive" {% endif %}/>
+                                        <span class="overlay"><i class="glyphicon glyphicon-fullscreenpp"></i></span>
+                                    </a>
+                                </div>
+
+                            </div>
+                             
+                            {% if collectionID.status == '2' %}
+                            <p id="allowedTrade{{collectionID.id}}" class="collection-text" >
+                             <a href="javascript:void(0);" class="classtrade" onclick="tradeIcon({{collectionID.id}});"><img src="{{asset('bundles/KidskulaBundle/assets')}}/images/trade.png" title="Allowed to trade" height="16px" width="16px"  /></a>
+                            </p>
+                             <p id="returnmsg{{collectionID.id}}" class="collection-text"></p>
+                            {% else %}
+                           <p id="wantTrade{{collectionID.id}}" class="collection-text" >
+                             <a href="javascript:void(0);" class="classtrade" onclick="tradeIcon({{collectionID.id}});"><img src="{{asset('bundles/KidskulaBundle/assets')}}/images/cart.png" title="Not allowed to tarde" height="16px" width="16px"  /></a>
+                           </p>
+                            <p id="returnmsg{{collectionID.id}}" class="collection-text"></p>
+                            {% endif %}
+                           
+                           
+                            {#<p class="collection-text">  <a href="{{path('mycollection')}}">Trade</a></p>#}
+                        </article>
+                        {% endfor %}
+                        
+                        {% endif %}
+                      
+</div>
+</div>
+</div>
+</div>                  
+{# *******************Scripts fetch******************************#}
+
+           {{include('BundleKidskulaBundle:Scripts:collection_script.html.twig')}}
+		   
+		   
+	<script src="{{asset('bundles/KidskulaBundle/assets')}}/js/jquery.tinyscrollbar.min.js"></script>
+	<script type="text/javascript">
+	var jq = jQuery.noConflict();
+		jq(document).ready(function(){ 
+			jq('#scrollbar1').tinyscrollbar();	
+		});
+	</script>
+
+ {# *******************Scripts end********************************#}

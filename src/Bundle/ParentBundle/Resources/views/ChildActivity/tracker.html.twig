@@ -1,0 +1,30 @@
+<div class="inner">
+
+<div class="col-md-12">
+  <div class="">
+    <div class="box-wrap">
+      <div class="box-inner">
+        <div class="row-fluid">
+          <div class="widget-main">
+          
+          {%if((tracker == 0) and (collectiontracker == 0) and (message_tracker == 0))%}<p>No chert to display!</p>{%endif%}
+            
+            <div id="piechart-placeholder">
+            
+            
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</div>
+
+
+</div>
+
+<script src="{{asset('bundles/ParentBundle/assets')}}/js/flot/jquery.flot.min.js"></script>
+<script src="{{asset('bundles/ParentBundle/assets')}}/js/flot/jquery.flot.pie.min.js"></script>

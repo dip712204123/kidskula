@@ -1,0 +1,306 @@
+{% extends 'BundleKidskulaBundle:Layout:social_base.html.twig' %}
+ {% block content %} 
+<div class="container">
+    <div class="row student-social-dashboard">
+        <div class="col-md-12 leftpart"> 
+            <!--student-social-myfriends ends-->
+ {% if app.request.attributes.get('_route') == 'myclub_list' %}
+            <div class="row student-social-games"> 
+                <h2 class="club-head-main"> My Clubs 
+				<div class="ui-group-buttons pull-right">
+                <button class="btn btn-warning md-trigger" data-modal="modalclub-2" type="button">Suggest Club</button>
+                <div class="or"></div>
+                <a href="{{path('allclub_list')}}"><button class="button btn btn-success" type="button">View All Clubs</button></a>
+               </div>
+				</h2>
+				
+				
+			<div class="md-modal md-effect-2" id="modalclub-2">
+			<div class="md-content">
+				<h3>Create Club <span class="md-close pull-right" style="cursor: pointer;">X</button> </span></h3>
+				
+            <div class="article-form-main">
+            <form method="post" class="article-form-inner" action="" role="form">
+            <div class="required-field-block">
+            <input type="text" placeholder="Club Title" class="form-control" required="required" name="" >
+            <div class="required-icon">
+            <div class="text">*</div>
+            <input type="hidden" value="3" name="clubid">
+            </div>
+            </div>
+            
+            <div class="required-field-block">
+            <textarea placeholder="Club Description" class="form-control" rows="3" name="" ></textarea>
+            
+            <div class="required-icon">
+            <div class="text">*</div>
+            </div>
+            </div>
+            {#<button type="submit" class="btn btn-lg btn-success pull-left"><span class="glyphicon glyphicon-thumbs-up"></span> Like Club</button>#}
+            <button type="submit" class="btn btn-lg btn-warning pull-right">Post Club</button>
+            </form>
+            </div>
+				
+				
+			</div>
+		</div>
+        <div class="md-overlay"></div><!-- the overlay element -->
+				
+				
+                <div class="student-social-games-inner">
+                {% if myclubentity is empty %}
+                <div class="col-md-12 noresultfound ">
+                <br />
+                <img  src="{{asset('bundles/KidskulaBundle/assets')}}/images/error.png" alt="" height="25">
+                You have not joined any club yet.
+                </div>
+                {% endif %}
+                    {% for myclub in myclubentity %}
+                     {% set totaljoinedmember = totalJoinedClubMember(myclub.clubId) %}
+                     {% set totalMyFrndClubMember = totalMyFrndClubMember(myclub.clubId) %}
+                    <div class="clublist col-md-2"> 
+                        <div class="col-sm-12 left">
+                            <a href="{{path('myclub-details', { 'id': myclub.clubId.id })}}" > 
+                                {% if myclub.clubId.path!='' %} <img class="img-circle yolo-bor2"  src="{{asset('upload/clubimages/')}}{{ myclub.clubId.path }}" alt="" /> {% endif %}
+                            </a>
+                        </div>
+                        
+                        <div class="club-short-info col-sm-12">
+                            <h2>
+                            <a style="color:#fff;" href="{{path('myclub-details', { 'id': myclub.clubId.id })}}">{{myclub.clubId.title|slice(0,10)|striptags}}..</a>  
+                            </h2>
+                           
+                          <div class="club-member-info"> 
+                          <ul> 
+						<li><span>{{totaljoinedmember}}</span> Follower</li>
+                        <li><span>{{totalMyFrndClubMember}}</span> My Friend Follower</li>
+						</ul>
+							</div>
+							
+                        </div>
+                       {#POPUP STARTS HERE#}
+                       <div class="md-modal md-effect-1" id="unsubmodal-{{myclub.clubId.id}}">
+                        <div class="md-content">
+                            <h3>Leave This Club Now  <span class="md-close pull-right" style="cursor: pointer;">X</button> </span></h3>
+                           
+                          <div class="joinclub-pop">
+						  
+				<div id="returnmsg{{myclub.clubId.id}}" class="col-md-12 pop-msg"></div>
+						  
+                                <p><input type="checkbox" name="unjoichkbox" id="unjoichkbox{{myclub.clubId.id}}"> I understand the terms and conditions of the club</p>
+                                
+                                <a href="javascript:void(0);" onclick="unjoichkbox({{myclub.clubId.id}})">
+				<button id="agreebtn{{myclub.clubId.id}}" class="btn btn-warning">Agree</button></a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                       {#POPUP CLOSES HERE#}
+                    </div> <!--clublist ends-->
+                       
+                    {% endfor %}
+
+                </div> <!--student-social-games-inner ends-->
+            </div> <!--student-social-games ends-->
+            {%endif%}
+            {# **************** All clubs starts here ************************#}
+            {% if app.request.attributes.get('_route') == 'allclub_list' %} 
+            <div class="row student-social-games"> 
+                <h2> All Clubs
+                <div class="ui-group-buttons pull-right">
+                <button class="btn btn-warning md-trigger" data-modal="modalclub-2" type="button">Suggest Club</button>
+                <div class="or"></div>
+                <a href="{{path('myclub_list')}}"><button class="button btn btn-success" type="button">View My Clubs</button></a>
+                </div>
+
+                 
+                 </h2>
+                 
+                 {#******************* club creation popup start here ***********************  #}
+                    <div class="md-modal md-effect-2" id="modalclub-2">
+                    <div class="md-content">
+                    <h3>Create Club <span class="md-close pull-right" style="cursor: pointer;">X</button> </span></h3>
+                    
+                    <div class="article-form-main">
+                    <form method="post" class="article-form-inner" action="" role="form">
+                    <div class="required-field-block">
+                    <input type="text" placeholder="Club Title" class="form-control" required="required" name="" >
+                    <div class="required-icon">
+                    <div class="text">*</div>
+                    <input type="hidden" value="3" name="clubid">
+                    </div>
+                    </div>
+                    
+                    <div class="required-field-block">
+                    <textarea placeholder="Club Description" class="form-control" rows="3" name="" ></textarea>
+                    
+                    <div class="required-icon">
+                    <div class="text">*</div>
+                    </div>
+                    </div>
+                    {#<button type="submit" class="btn btn-lg btn-success pull-left"><span class="glyphicon glyphicon-thumbs-up"></span> Like Club</button>#}
+                    <button type="submit" class="btn btn-lg btn-warning pull-right">Post Club</button>
+                    </form>
+                    </div>
+                    
+                    
+                    </div>
+                    </div>
+                    <div class="md-overlay"></div><!-- the overlay element -->
+                 {#******************* club creation popup closes here ***********************  #}
+                 
+                <div class="student-social-games-inner">
+                    {% for allclub in entity %}
+                    {% if allclub.id not in membership %}
+                     {% set totaljoinedmember = totalJoinedClubMember(allclub.id) %}
+                     {% set totalMyFrndClubMember = totalMyFrndClubMember(allclub.id) %}
+                    <div class="clublist col-md-2"> 
+                        <div class="col-sm-12 left">
+                            <a href="{{path('myclub-details', { 'id': allclub.id })}}" > 
+                                {% if allclub.path!='' %} <img class="img-circle yolo-bor2"  src="{{asset('upload/clubimages/')}}{{ allclub.path }}" alt="" /> {% endif %}
+                            </a>
+                        </div>
+                        
+                        <div class="club-short-info col-sm-12">
+                            <h2>
+                            <a style="color:#fff;" href="{{path('myclub-details', { 'id': allclub.id })}}">{{allclub.title|slice(0,10)|striptags}}..</a>  
+                            </h2>
+                             <div class="member-btn-main">
+                             {% if allclub.id not in membership %}
+                                <a href="javascript:void(0)" class="md-trigger" data-modal="modal-{{allclub.id}}"><button class="btn btn-warning club-join-btn" type="button">Join Now</button></a>
+                             {% else %}
+                               <button class="btn btn-warning club-join-btn" type="button">Member</button> 
+                             {% endif %}
+                             </div>
+                          <div class="club-member-info"> 
+                          <ul> 
+						<li><span>{{totaljoinedmember}}</span> Follower</li>
+                        <li><span>{{totalMyFrndClubMember}}</span> My Friend Follower</li>
+						</ul>
+							</div>
+							
+                        </div>
+                       {#POPUP STARTS HERE#}
+                       <div class="md-modal md-effect-1" id="modal-{{allclub.id}}">
+                        <div class="md-content">
+                            <h3>Join This Club Now  <span class="md-close pull-right" style="cursor: pointer;">X</button> </span></h3>
+                           
+                          <div class="joinclub-pop">
+						  
+				<div id="returnmsg{{allclub.id}}" class="col-md-12 pop-msg"></div>
+						  
+                                <p><input type="checkbox" name="chkbox" id="chkbox{{allclub.id}}"> I understand the terms and will abide by "GOOD MANNERS" rules of the club</p>
+                                
+                                <a href="javascript:void(0);" onclick="clubmember({{allclub.id}})">
+				<button id="agreebtn{{allclub.id}}" class="btn btn-warning">Agree</button></a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                       {#POPUP CLOSES HERE#}
+                    </div> <!--clublist ends-->
+                   
+                       {% endif %}
+                    {% endfor %}
+
+                </div> <!--student-social-games-inner ends-->
+            </div> <!--student-social-games ends-->
+            {%endif%}
+            
+
+        </div> <!--leftpart ends-->
+{#<div class="col-md-4 rightpart">
+<div class="row chatpnal"><img class="img-responsive" src="assets/images/chat-placeholder.png" alt=""> </div>
+ <!--collection-panel ends-->
+</div>#} <!--rightpart ends-->
+    </div> <!--student-social-dashboard ends-->
+</div>
+
+
+{# *******************Scripts fetch******************************#}
+
+<script>
+
+    function unjoichkbox(id)
+    {
+       
+       if(!$('#unjoichkbox' + id).is(":checked"))
+       {
+           return false;
+       }
+        var clubid = id;
+        var path = "{{path('myclub-membership')}}";
+        
+            var form_data = {
+                clubid: clubid,
+                variable: 'unjoin'
+            };
+	   $("#agreebtn"+id).html("Loading...");
+            $.ajax({
+                type: "POST",
+                url: path,
+                data: form_data,
+                success: function(response) {
+                    //alert(response.msg);
+
+                    if (response.status == 1) {
+                       $("#returnmsg"+id).html(response.msg);
+                       setTimeout(function() {
+                       location.reload();
+                        }, 1000); 
+                    }
+                    else
+                    {
+                        return false;
+
+                    }
+
+                }
+            });
+
+    }
+     function clubmember(id)
+    {
+       
+       if(!$('#chkbox' + id).is(":checked"))
+       {
+           return false;
+       }
+        var clubid = id;
+        var path = "{{path('myclub-membership')}}";
+        
+            var form_data = {
+                clubid: clubid,
+                variable: 'join'
+            };
+	   $("#agreebtn"+id).html("Loading...");
+            $.ajax({
+                type: "POST",
+                url: path,
+                data: form_data,
+                success: function(response) {
+                    //alert(response.msg);
+
+                    if (response.status == 1) {
+                       $("#returnmsg"+id).html(response.msg);
+                       setTimeout(function() {
+                       location.reload();
+                        }, 1000); 
+                    }
+                    else
+                    {
+                        return false;
+
+                    }
+
+                }
+            });
+
+    }
+    
+    
+</script>
+
+ {# *******************Scripts end********************************#}
+{% endblock %}
+

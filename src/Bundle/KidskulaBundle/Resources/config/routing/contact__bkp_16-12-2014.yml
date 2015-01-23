@@ -1,0 +1,3 @@
+mycontacts:
+    pattern:  /
+    defaults: { _controller: BundleKidskulaBundle:Contact:index } 

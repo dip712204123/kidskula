@@ -1,0 +1,188 @@
+{% extends 'BundleKidskulaBundle:Layout:social_base.html.twig' %}
+{% block content %} 
+{% if clubid is not empty %}
+<input type="hidden" name="clubid" id="clubid" value="{{clubid}}" />
+{% endif %}
+<div class="container">
+    <div class="row student-social-dashboard">
+        <div class="col-md-12 leftpart"> 
+            <!--student-social-myfriends ends-->
+            <div class="row student-social-games"> 
+            <div class="student-social-clubdetail-inner">
+                    <div class="article-panel row">
+
+                        <!-- Content -->
+                        <div class="accordian-club col-md-12">
+                            <h2>{{title}} </h2>
+
+                            <ul class="responsive-accordion responsive-accordion-default bm-larger">
+            				{#******************article loop starts here*********************#}
+                            {% if clubArticles is empty %}
+                                <div class="col-md-12 friendlist-home">
+                                <img  src="{{asset('bundles/KidskulaBundle/assets')}}/images/error.png" alt="" height="25">
+                                You have no article in this club!!!
+                                </div>  
+                            {% endif %}
+            				{% for articles in clubArticles %}
+                                <li>
+                                    <div id="article_list_{{loop.index}}" class="responsive-accordion-head">{{articles.title}} 
+									<span class="pull-right arti-authertext">------By {{articles.firstName}} {{articles.lastName}} On {{articles.createDate|date('F j, Y, g:i a')}} 
+        <i class="fa fa-chevron-down responsive-accordion-plus fa-fw"></i><i class="fa fa-chevron-up responsive-accordion-minus fa-fw"></i> </span>
+                                    </div>
+                                    <div id="article_show_{{loop.index}}" class="responsive-accordion-panel artilist-inner">
+                                        <div style="">
+                                            <div class="col-md-2 left">
+                                                <a href="#"> 
+                                                    <img alt="" src="{{asset('upload/clubArticle/')}}{{ articles.path }}" class="img-circle yolo-bor2">
+                                                </a>
+                                            </div>
+
+                                            <div class="club-short-info col-md-10">
+                                                <h2>{{articles.title}} </h2> 
+                                                {#---for article edit--------#}
+                                                {#{% if articles.ownerId.getId == articleowner %}<a href="javascript:void(0);" class="btn btn-lg btn-success md-trigger" data-modal="modal-{{articles.id}}"> Edit</a>{% endif %}#}
+                                                <p>{{articles.description|raw}}</p>
+                                                <br /><strong>{{articles.createDate|date("F jS \\a\\t g:i a ")}}</strong> 
+                                                <div class="ui-group-buttons">
+                                                {% set liked = getClubNotifications(articles.liked) %}
+                                                {% if liked=='0' %}
+                                                    <span id="artlikeid{{articles.id}}">
+                                                    <a role="button"  class="btn btn-success" href="javascript:void(0)" onclick="articlelikefunc({{articles.id}},'like')">
+                                                        <span id="artlike{{articles.id}}"><i title="Like" style="font-size:16px;" class="glyphicon glyphicon-thumbs-up"></i></span>
+                                                    </a>
+                                                    </span>
+                                                {% else %}
+                                                    <span id="artlikeid{{articles.id}}">
+                                                    <a role="button" id="artlikeid{{articles.id}}" class="btn btn-success" href="javascript:void(0)" onclick="articlelikefunc({{articles.id}},'dislike')">
+                                                        <span id="artlike{{articles.id}}">
+	<i title="Dislike" style="font-size:16px;" class="glyphicon glyphicon-thumbs-down"></i>													
+														</span>
+                                                    </a>
+                                                    </span>
+
+                                                {% endif %}
+                                                <div class="or"></div>
+                                                <a role="button" class="btn btn-danger md-trigger" data-modal="modal-1" href="#"><span><i title="Share" class="glyphicon glyphicon-share"></i></span></a>
+                                                
+                                                {# ***************for star rating*********************#}
+                                                <div>
+                                                
+                                                {# ***************for star rating end*********************#}
+                                                <div class="md-modal md-effect-1 sharepopup" id="modal-1">
+                                                			<div class="md-content">
+                                                				<button class="md-close pull-right btn btn-labeled btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
+                                                				<div class="sharepopup-inner">
+                                                					<ul>
+                                                						<li><strong><i class="glyphicon glyphicon-envelope"></i></strong> <a href="#">Share This article with Email</a>.</li>
+                                                						<li><strong><i class="glyphicon glyphicon-user"></i></strong><a href="#"> Share This article with Kidskula Friends </a>.</li>
+                                                						
+                                                					</ul>
+                                                					
+                                                				</div>
+                                                			</div>
+                                                </div>
+                                            <div class="md-overlay"></div><!-- the overlay element -->
+                                            
+                                            
+                                            </div>
+                                            </div> 
+                                        </div>
+                                 {#******************Comment starts here*********************#}
+                                 <div class="commentpnel col-md-12">
+								 
+								 
+                                 <input type="hidden" id="commenturl" value="{{ path('commentlisting',{'eventId':articles.id})}}"/>
+                                            
+                                 <div id="anwer-content{{articles.id}}">
+                                 {{ render(url('commentlisting',{'eventId':articles.id})) }}
+                                 </div>
+                                           
+                                             
+                                  </div>
+                                 {#******************Comment close here*********************#}
+                                        
+
+                                    </div><!--artilist-inner endes-->
+                                    </div> <!--accordian-club ends -->
+                                </li>
+
+                                
+                                {% endfor %}
+                                {#******************article loop ends here*********************#}
+                            </ul>
+
+                    </div> <!-- article-panel ends -->
+                   </div>
+                </div> <!--student-social-clubdetail-inner ends-->
+            </div> <!--student-social-games ends-->
+
+        </div> <!--leftpart ends-->
+
+    </div> <!--student-social-dashboard ends-->
+
+        
+
+{# *******************Scripts fetch******************************#}
+
+{#{{include('BundleKidskulaBundle:Scripts:collection_script.html.twig')}}#}
+<script>
+function articlelikefunc(id,status)
+{
+
+   
+    //$("#artlike" + id).html('<img src="{{asset('bundles/KidskulaBundle/assets')}}/images/Loading.gif" width="24" height="24" >');
+   $("#artlike" + id).html('Thanks');
+    var artid = id;
+    var path = "{{path('articlelike')}}";
+    
+    //alert(id);
+    
+    
+    var form_data = {
+    articleid: artid,
+    status   : status
+    
+    };
+    
+    $.ajax({
+    type: "POST",
+    url: path,
+    data: form_data,
+    success: function(response) {
+   // alert(response.msg);
+    
+    if (response.status != 0) {
+        
+        $("#artlikeid" + id).html(response.msg);
+      
+    }
+    else
+    {
+        $("#artlikeid" + id).html(response.msg);
+    
+    }
+    
+    }
+    });
+
+}
+
+$(document).ready(function(){
+
+//$("#article_list_1").addClass('active');
+//$("#article_show_1").addClass('active');
+//$("#article_show_1").css({"display":"block"});
+//$("#article_show_1").css("display","block !important");
+
+
+})
+
+</script>
+
+{# *******************Scripts end********************************#}
+{% endblock %}
+{% block customjavascript %} 
+{#<script src="{{asset('bundles/KidskulaBundle/assets')}}/js/question_answer.js"></script>#}
+<script src="{{asset('bundles/KidskulaBundle/assets')}}/js/question_detail.js"></script>
+
+{% endblock %}

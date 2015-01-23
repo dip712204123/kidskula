@@ -1,0 +1,121 @@
+{% extends 'BundleAdminBundle:layout:base.html.twig' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title">
+        User List 
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{path('bundle_admin_dashboard')}}">Home</a> 
+            <i class="icon-angle-right"></i>
+        </li>
+
+        <li><a href="#">Users</a></li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB-->
+    <div class="row-fluid">
+        <div class="span12">
+            <form name="frm" method="post" action="">
+
+
+                <div class="portlet box grey">
+                    <div class="portlet-title">
+                        <div class="caption"><i class="icon-cogs"></i>Users List</div>
+                         <div class="actions">
+                        <a href="{{ path('user_new') }}" class="btn blue" title="Add Page"><i class="icon-plus"></i> Add User</a>
+                    </div>
+                    </div>
+                    <div class="portlet-body">
+                    {% for flashSuccessMessage in app.session.flashbag.get('success_message') %}                
+                        <div class="alert alert-success">
+                            <button class="close" data-dismiss="alert"></button>
+                                {{ flashSuccessMessage }}
+                        </div>
+                        {% endfor %}
+                        {% for flashSuccessMessage in app.session.flashbag.get('error_message') %}                
+                        <div class="alert alert-error">
+                            <button class="close" data-dismiss="alert"></button>
+                                {{ flashSuccessMessage }}
+                        </div>
+                        {% endfor %}
+                        <table class="table table-striped table-bordered table-hover" id="mytable">
+                            <thead>                                    
+                                <tr>
+                                    <th class="hidden-480">{{ knp_pagination_sortable(entities, 'Name', 'a.firstName') }}</th>
+                                    <th class="hidden-480">Email</th>
+                                    <th class="hidden-480">User Roles</th>
+                                    <th class="hidden-480">Status</th>
+                                    <th >Action</th>
+                                </tr>                                       
+                            </thead>
+                            <tbody>
+                            	{% for entity in entities  %}                
+                                <tr class="odd gradeX">                                
+                                    <td class="hidden-480">{{ entity.firstname }} {{ entity.lastname }}</td>
+                                    <td class="hidden-480">{{ entity.email  }}</td>                                    
+                                    <td class="hidden-480"> 
+                                        {% for role in entity.roles %}
+                                        {{role}}
+                                        {% endfor %}
+                                    </td>
+                                    <td class="hidden-480"> {% if entity.status == '0' %} Block {% else %} Unblock {% endif %}</td>
+                                    <td>
+                                        {% if 'ROLE_ADMIN' not in entity.roles %}
+                                        {#{% if entity.status==0 %}
+                                        <a href="{{ path('user_status', { 'id': entity.id }) }}" title="To Unblock"><i class="fa fa-lock"></i></a>
+                                        {% endif %}
+                                        {% if entity.status==1%}
+                                        <a href="{{ path('user_status', { 'id': entity.id }) }}" title="To Block"><i class="fa fa-unlock"></i></a>
+                                        {% endif %}
+                                        #}
+                                        {% if entity.enabled==0 %}
+                                        <a href="{{ path('user_status', { 'id': entity.id }) }}" title="To Active"><i class="fa fa-lock"></i></a>
+                                        {% endif %}
+                                        {% if entity.enabled==1%}
+                                        <a href="{{ path('user_status', { 'id': entity.id }) }}" title="To Inactive"><i class="fa fa-unlock"></i></a>
+                                        {% endif %}
+                                        
+                                        {%endif%}
+                                        <span style="padding-left:10px;">
+                                        <a  href="{{path('user_detail', { 'id': entity.id })}}">
+                                             <img src="{{asset('bundles/BundleAdmin/assets')}}/img/search-icon-blue.png" alt="View Details" title="View Details"  />
+                                          </a>
+                                        </span>
+                                        <span style="padding-left:10px;">
+                                            
+                                            {% if 'ROLE_ADMIN' not in entity.roles %}
+                                            <a href="{{ path('user_settings', { 'id': entity.id }) }}" title="General Settings"><i class="icon-cogs"></i></a>
+                                            {%endif%}
+                                        </span>
+                                        <span style="padding-left:10px;">
+                                            
+                                            {% if 'ROLE_PARENT' in entity.roles %}
+                                            <a href="{{ path('user_parental_settings', { 'id': entity.id }) }}" title="Parental Settings"><i class="icon-cogs"></i></a>
+                                            {%endif%}
+                                        </span>
+                                    </td>
+                                </tr>
+                            	{% endfor %}
+                            </tbody>                                    
+                        </table>
+                        {# display navigation #}
+        			<div class="navigation">
+                    	{{ knp_pagination_render(entities) }}
+                    </div>
+                </div>
+            </form>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+    
+    <link rel="stylesheet" href="{{asset('bundles/BundleAdmin/assets')}}/css/font-awesome.min.css">
+    </div>
+    
+{% endblock %}
+
+{#{% block sidebar %} 
+{% endblock %}#}

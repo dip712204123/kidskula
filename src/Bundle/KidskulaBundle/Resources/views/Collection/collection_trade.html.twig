@@ -1,0 +1,368 @@
+{% extends 'BundleKidskulaBundle:Layout:social_base.html.twig' %}
+ {% block content %} 
+<div class="container">
+
+    <div class="row student-collection-trade-main">
+        <div class="row" ><div class="col-md-12" style="text-align:center;"><a href="javascript:history.go(-1);"><button class="btn btn-success" type="button">
+                        <span style="margin-right:8px;" class="glyphicon glyphicon-arrow-left"></span>Previous Page</button></a></div></div>
+        <div class="col-md-5 leftpart pull-left"> 
+            <h2>My Collection 
+                {{totalpoint}}
+                <ul style="float:right; font-size:13px; font-family:Open Sans; font-weight:normal; text-shadow:none; margin-top:15px;">
+                    <li style="list-style:none;" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle noti" href="#">Notification <span>{{totalCollectionReq}} </span></a>
+                        <ul class="dropdown-menu noti-drop arrow_box" style="width: 201px;">
+            {% for req in myCollectionReq %}
+            {% set getcollectionimage = getcollectionimage(req.sendercollectionid) %}
+            {% set getcollectionimage1 = getcollectionimage(req.receivercollectionid) %}
+                            <li id="request-{{req.id}}"><a style=" border-bottom:1px dashed #fe5a5a; overflow:hidden;">
+                                    <div class="top" style="float:left; width:100%; margin-bottom:8px;">
+                                        <strong style="float:left;">Your</strong> 
+                                        <span style="float:left;" class="text">&nbsp;trade with <strong>{{req.receiverId.firstName}}</strong> </span></br>
+                                        <div style="float:left; margin-top:5px; width:100%;">
+                                            <span style="float:left;" class="pic-left"><img style="width: 52px; height:52px;" class="img-circle img-responsive"  src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" alt=""></span>
+                                            <span class="glyphicon glyphicon-transfer" style=" font-size:30px; color:#fff; float:left; padding:9px;"></span>
+                                            <span style="float:left;" class="pic-right"><img style="width: 52px; height:52px;" class="img-circle img-responsive"  src="{{asset('upload/collections/')}}{{ getcollectionimage1|raw }}" alt=""></span>
+                                        </div>
+                                    </div>
+                                    <div class="bottom" style="float:left; margin:0px 0px 8px 0px;">       
+                                        <button class="btn btn-xs btn-warning" onclick="rejectCollectionRequest({{req.id}})">Reject</button>
+                                    </div>
+                                </a>
+                            </li>
+            {% endfor %}
+                        </ul>
+                        <span class="notifloader" style="display:none;" ><img src="{{asset('bundles/KidskulaBundle/assets')}}/images/ajax-loader-cancel.gif" width="20" height="20"/></span>
+                    </li>
+                </ul>
+            </h2>
+            <div class="row collection-trade-listing">
+
+                {% for mycol in myCollection %}
+                {% set getcollectionimage = getcollectionimage(mycol.collectionId) %}
+                {% if mycol.status == 2 %}
+                <div class="col-xs-6 col-md-4 listitem">
+                    <a data-toggle="modal" data-target=".pop-up-{{mycol.id}}" href="#"> <img class="img-circle collection-green-border img-responsive" src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" alt=""></a> <br>
+                    <br>
+
+                    {#******************************POP UP START***********************************#}
+                    <div class="modal fade pop-up-{{mycol.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                    <h4 class="modal-title" id="myLargeModalLabel-1">Exchange Your Collection</h4>
+
+                                </div>
+                                <div class="modal-body">
+                                    {#alert message start#}
+                                    <div class="row" id="alertId{{mycol.id}}" style="display:none">
+                                        <div class="col-md-12">
+                                            <div id="showtext{{mycol.id}}" class="alert alert-warning alert-dismissible exchange-pop"></div>
+                                        </div>
+                                    </div>
+
+                                    {#alert message stop#}
+                                    <div class="row xchange-inner">
+                                        <div class="col-md-4 left">
+                                            <h2> My Collection Image</h2>
+                                            <div class="row" style="margin-bottom:10px">
+                                                <span class="col-xs-6 pull-left" id="mycolimagearea{{mycol.id}}"><span class="pointstar">{{mycol.collectionPoint}} ptr</span><img id="mycolimage{{mycol.id}}" class="img-circle collection-green-border img-responsive" src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" alt=""></span>
+
+                                                <a class="col-xs-6 pull-right" href="javascript:void(0);" {#onclick="exchangeMyCollection({{mycol.id}},{{friendId}});"#}><span  class="glyphicon glyphicon-transfer change-ico"></span></a>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-8 right pull-right"> 
+                                            <h2>Friends Collection </h2>
+
+                                            <div class="row collection-trade-listing">
+                                                {% for frndcol in friendTradeCollection %}
+                                                {% if frndcol.collectionPoint <= mycol.collectionPoint %}
+                                                {% set getcollectionimage = getcollectionimage(frndcol.collectionId) %}
+                                                <div class="col-md-3 listitem">
+
+                                                    <span id="friendimg{{frndcol.id}}"><span class="pointstar">{{frndcol.collectionPoint}} ptr</span><img id="friendcolimage-{{frndcol.id}}" class="img-circle tradingpic img-responsive" src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" alt=""></span>
+                                                    <input type="radio" onchange="exchangeMyCollection({{mycol.id}},{{friendId}},{{frndcol.collectionPoint}},{{mycol.collectionPoint}});" value="{{frndcol.id}}" id="exchangePoint" name="exchangePoint">
+
+                                                </div>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </div> <!--collection-trade-listing ends-->
+                                        </div>
+
+
+                                    </div> 
+                                    <span id="showexchangetext{{mycol.id}}"></span>
+                                    <div class="row">
+                                        <div style="text-align:center; border-top:5px solid #dd1f1f; padding-top:15px" class="col-md-12"><button type="button" class="btn btn-lg btn-success tradedbtn1 id-{{mycol.id}}" onclick="collectionExchange({{mycol.id}})">Exchange Now</button> <button type="button" class="btn btn-lg btn-danger id-{{mycol.id}}" onclick="cancelExchange()">Cancel</button> <span class="loader" style="display:none;"><img src="{{asset('bundles/KidskulaBundle/assets')}}/images/ajax-loader-cancel.gif" width="32" height="32"/></span></div>
+
+                                    </div>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal mixer image -->
+                    {#*****************************POP UP CLOSE************************************#}
+                </div>
+                {% else %}
+                <div class="col-xs-6 col-md-4 listitem">
+                    <a data-toggle="modal" data-target=".pop-up-{{mycol.id}}" href="#"> <img class="img-circle collection-ass-border img-responsive" src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" alt=""></a> <br>
+                    <br>
+                    {#******************************POP UP START***********************************#}
+                    <div class="modal fade pop-up-{{mycol.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel-1" aria-hidden="true">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                    <h4 class="modal-title" id="myLargeModalLabel-1">Allow to exchange your collection</h4>
+                                    <span id="showtext{{mycol.id}}"></span>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row xchange-inner">
+                                        <div class="col-md-12 left">
+                                            <h2> My Collection Image</h2>
+                                            <div class="row" style="margin-bottom:10px">
+                                                <span class="col-xs-6 pull-left" id="mycolimagearea{{mycol.id}}"><img id="mycolimage{{mycol.id}}" class="img-circle collection-green-border img-responsive" src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" alt=""></span>
+                                                <span class="col-xs-6 pull-right" style="text-align:left; color:#000">
+                                                Point: 5ptr</br>
+                                                This collection is not allowed to exchange.If you want to exchange then please click on the "Allow Exchange" button.
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </div> 
+                                    <div class="row">
+                                        <div style="text-align:center; border-top:5px solid #dd1f1f; padding-top:15px" class="col-md-12"><button type="button" class="btn btn-lg btn-success tradedbtn1 id-{{mycol.id}}" onclick="tradeIcon({{mycol.id}});">Allow Exchange</button> <button type="button" class="btn btn-lg btn-danger tradedbtn1 id-{{mycol.id}}" onclick="cancelExchange()">Cancel</button> <span class="loader" style="display:none;"><img src="{{asset('bundles/KidskulaBundle/assets')}}/images/ajax-loader-cancel.gif" width="32" height="32"/></span></div>
+
+                                    </div>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal mixer image -->
+                    {#*****************************POP UP CLOSE************************************#}
+                </div>
+                {% endif %}
+                {% endfor %}
+
+
+            </div> <!--collection-trade-listing ends-->
+        </div> <!--leftpart ends-->
+
+        <div class="col-md-5 rightpart pull-right"> 
+            <h2>Friends Collection </h2>
+            <div class="row collection-trade-listing">
+                {% for frndcol in friendCollection %}
+                {% set getcollectionimage = getcollectionimage(frndcol.collectionId) %}
+                <div class="col-xs-6 col-md-4 listitem">
+                    <a data-toggle="modal" data-target=".pop-up-1-{{frndcol.id}}" href="#"> <img {% if frndcol.status == '2' %}class="img-circle img-responsive collection-green-border"{% else %}class="img-circle img-responsive collection-ass-border" {% endif %} src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" alt=""></a> <br>
+                    <br>
+                    <!--  Modal content for the mixer image example -->
+                    <div class="modal fade pop-up-1-{{frndcol.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                    <h4 class="modal-title" id="myLargeModalLabel-1">My Collection</h4>
+
+                                </div>
+                                <div class="modal-body">
+                                   
+                                    <img src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" class="img-responsive img-rounded center-block" alt="">
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal mixer image -->
+                </div>
+               {% endfor %}
+            </div> <!--collection-trade-listing ends-->
+        </div>  <!--rightpart ends-->
+
+    </div> <!--student-collection-trade-main ends-->
+    <input type="hidden" value="" id="friendid" id="friendid" />
+    <input type="hidden" value="" id="mycolid" id="mycolid" />
+    <input type="hidden" value="" id="friendcolid" id="friendcolid" />
+    <input type="hidden" value="" id="mycolpoint" id="mycolpoint" />
+    <input type="hidden" value="" id="friendcolpoint" id="friendcolpoint" />
+    <input type="hidden" value="{{totalpoint}}" id="mytotalpoint" id="mytotalpoint" />
+</div>
+
+
+{% endblock  %}
+{% block customjavascript %}
+<script>
+    function tradeIcon(id)
+    {
+
+
+        var colid = id;
+        var path = "{{path('mycollection_hometrade_button')}}";
+
+        // alert(id);
+
+
+        var form_data = {
+            newstatus: colid
+
+        };
+        //$("#returnmsg"+id).html("Loading...");
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                //alert(response.msg);
+
+                if (response.status != 0) {
+
+                    $('.loader').show();
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                }
+                else
+                {
+                    return false;
+
+                }
+
+            }
+        });
+
+
+
+
+    }
+    function cancelExchange()
+    {
+        $('.loader').show();
+        setTimeout(function() {
+            location.reload();
+        }, 1000);
+    }
+    function exchangeMyCollection(mycolid, friendid, mycolpoint, friendcolpoint) {
+        $('#alertId' + mycolid).hide();
+        $('#mycolid').val(mycolid);
+        $('#friendid').val(friendid);
+        $('#mycolpoint').val(mycolpoint);
+        $('#friendcolpoint').val(friendcolpoint);
+        var exchangePoint = $("#exchangePoint:checked").val();
+        $('#friendcolid').val(exchangePoint);
+        var mycolimage = $('#mycolimage' + mycolid).attr('src');
+        var friendcolimage = $('#friendcolimage-' + exchangePoint).attr('src');
+        $('#mycolimagearea' + mycolid + ' img').attr("src", friendcolimage);
+        $('#friendimg' + exchangePoint + ' img').attr("src", mycolimage);
+        var mycolpoint = $('#mycolpoint').val();
+        var friendcolpoint = $('#friendcolpoint').val();
+        var mycolid = $('#mycolid').val();
+        var mytotalpoint = $('#mytotalpoint').val();
+        if (friendcolpoint > mycolpoint) {
+            var earning = parseInt(friendcolpoint) - parseInt(mycolpoint);
+            $('#alertId' + mycolid).show("slow");
+            //$('#alertId' + mycolid).hide(7000);
+            $("#showtext" + mycolid).html('You will get ' + earning + ' point from your friend');
+        }
+        else if (mycolpoint < friendcolpoint)
+        {
+            var earning = parseInt(friendcolpoint) - parseInt(mycolpoint);
+            $('#alertId' + mycolid).show("slow");
+            //$('#alertId' + mycolid).hide(7000);
+            if (mytotalpoint < earning)
+            {
+                $("#showtext" + mycolid).html('OOPS..You have not sufficient point to exchange this collection');
+            }
+            else
+            {
+                $("#showtext" + mycolid).html('You have to pay additional ' + earning + 'points');
+            }
+        }
+        else {
+            $('#alertId' + mycolid).show("slow");
+            //$('#alertId' + mycolid).hide(7000);
+            $("#showtext" + mycolid).html('Great exchange buddy :)');
+        }
+    }
+
+//******************************************************
+    function collectionExchange(mycolid)
+    {
+
+        //$(this).text("Exchanging..");
+        var path = "{{path('mycollection_trade_exchange')}}";
+        var friendId = $('#friendid').val();
+        var mycolid = $('#mycolid').val();
+        var friendcolid = $('#friendcolid').val();
+        var mycolpoint = $('#mycolpoint').val();
+        var friendcolpoint = $('#friendcolpoint').val();
+        //alert(mycolpoint);
+        //alert(friendcolpoint);
+        if (friendcolid == '')
+        {
+            return false;
+        }
+        var form_data = {
+            friendId: friendId,
+            mycolid: mycolid,
+            friendcolid: friendcolid
+
+        };
+        $('.btn.btn-lg.btn-success.tradedbtn1.id-' + mycolid).attr('disabled', 'disabled');
+        $('.btn btn-lg.btn-danger.id-' + mycolid).attr('disabled', 'disabled');
+        $(".btn.btn-lg.btn-success.tradedbtn1.id-" + mycolid).html('Exchanging..');
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                // alert(response.msg);
+                if (response.status != 0) {
+                    $("#showexchangetext" + mycolid).html(response.msg);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                }
+                else
+                {
+                    $("#showtext" + mycolid).html('Not saved');
+                    $('.btn.btn-lg.btn-success.tradedbtn1.id-' + mycolid).prop("disabled", false);
+                    $('.btn btn-lg.btn-danger.id-' + mycolid).attr('disabled', false);
+                    $(".btn.btn-lg.btn-success.tradedbtn1.id-" + mycolid).html('Try Again');
+                    return false;
+                }
+            }
+        });
+    }
+
+    function rejectCollectionRequest(mycolid)
+    {
+        $('.notifloader').show();
+        var path = "{{path('mycollection_trade_reject')}}";
+
+        var form_data = {
+            mycolid: mycolid
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                // alert(response.msg);
+                if (response.status != 0) {
+                    $("#request-" + mycolid).html(response.msg);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    return false;
+                }
+            }
+        });
+    }
+</script>
+{% endblock  %}

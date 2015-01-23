@@ -1,0 +1,3 @@
+staticpages:
+    pattern:  /{id}
+    defaults: { _controller: BundleKidskulaBundle:Staticpages:index } 

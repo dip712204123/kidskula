@@ -1,0 +1,79 @@
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+bundle_admin_homepage:
+    path:     /
+    defaults: { _controller: BundleAdminBundle:Default:index }
+
+bundle_admin_logincheck:
+    path:     /login
+    defaults: { _controller: BundleAdminBundle:User:login }  
+    
+bundle_admin_dashboard:
+    path:     /dashboard
+    defaults: { _controller: BundleAdminBundle:Default:index }
+
+bundle_admin_logout:
+    path:     /logout
+    defaults: { _controller: BundleAdminBundle:User:logout } 
+    
+bundle_admin_user:
+    path:     /user
+    defaults: { _controller: BundleAdminBundle:KidsKulaUser:index }
+    
+profile_account:
+    resource: "@BundleAdminBundle/Resources/config/routing/profile.yml"
+    prefix:   /profile 
+
+bundle_email_notification:
+    resource: "@BundleAdminBundle/Controller/KidsKulaEmailNotificationController.php"
+    type:     annotation
+    
+bundle_static_pages:
+    resource: "@BundleAdminBundle/Resources/config/routing/static_pages.yml"
+    prefix:   /static_page_list
+    
+bundle_admin_mnguser:
+    resource: "@BundleAdminBundle/Resources/config/routing/user.yml"
+    prefix:   /manageuser 
+    
+bundle_admin_contact:
+    resource: "@BundleAdminBundle/Resources/config/routing/contactus.yml"
+    prefix:   /contactus 
+    
+bundle_admin_grade:
+    resource: "@BundleAdminBundle/Resources/config/routing/grade.yml"
+    prefix:   /student_grade
+
+bundle_admin_school:
+    resource: "@BundleAdminBundle/Resources/config/routing/school.yml"
+    prefix:   /school
+    
+bundle_admin_collection:
+    resource: "@BundleAdminBundle/Resources/config/routing/collection.yml"
+    prefix:   /collection
+
+bundle_admin_avatar:
+    resource: "@BundleAdminBundle/Resources/config/routing/avatar.yml"
+    prefix:   /avatar 	
+    
+bundle_admin_contact_question:
+    resource: "@BundleAdminBundle/Resources/config/routing/contact_question.yml"
+    prefix:   /contact_question
+    
+bundle_admin_modules:
+    resource: "@BundleAdminBundle/Resources/config/routing/modules.yml"
+    prefix:   /admin_modules
+bundle_admin_contact_category:
+    resource: "@BundleAdminBundle/Resources/config/routing/contact_category.yml"
+    prefix:   /contact_category
+    
+bundle_club:
+    resource: "@BundleAdminBundle/Resources/config/routing/club.yml"
+    prefix:   /club
+    
+bundle_artcle:
+    resource: "@BundleAdminBundle/Resources/config/routing/article.yml"
+    prefix:   /article    
+    

@@ -1,0 +1,51 @@
+{% if mytotalfriend > 0%}
+    {% for allfriends in myfrnds  %}
+        <div class="col-md-4 friendlist">
+            <p style="text-align:center">
+                {% set profileImage = getprofileimage(allfriends.id) %}
+                {%  if profileImage is defined and profileImage is not null  %} 
+                    <img alt="" src="{{asset('upload/profilepicture/chatimages/')}}{{ profileImage|raw }}" width="100px" height="100px" class="img-circle red-bor2">
+                {% else %}
+                    <img src="{{asset('bundles/BundleAdmin/assets')}}/img/admin_profile_no_image.gif" class="img-circle red-bor2" width="100px" height="100px" alt="" />
+                {% endif %}
+            </p>
+
+            <h2>{{allfriends.firstName}}  {{allfriends.lastName}}</h2>
+            <a class="md-trigger sendmsg" data-modal="modal-{{allfriends.id}}"><span class="glyphicon glyphicon-envelope "></span></a>
+
+
+            <div class="md-modal md-effect-1" id="modal-{{allfriends.id}}">
+                <div class="md-content">
+                    <span class="md-close pull-right"><span class="glyphicon glyphicon-remove"></span></span>
+                    <div style=" margin-top:25px;">
+                        <form class="studentprofile_settings_frm">
+                            <div class="form-group">
+                                <textarea required class="form-control input-lg" id="message{{allfriends.id}}" name="message" cols="" rows=""></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12">
+
+                                    <a onclick="get_message({{allfriends.id}})" href="javascript:void(0)" class="btn btn-success btn-block btn-md contactdbtn">Send Message</a>
+                                    <a  href="{{path('messagelist')}}" class="btn contactdbtn">See all conversation</a>
+                                </div>
+                                
+                                <span style="display:none" id="success{{allfriends.id}}" class="success">Your message has been sent to this user.</span>
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> 
+            <div class="md-overlay"></div><!-- the overlay element -->
+            <!--popup ends-->
+            <br>
+            <a href="{{path('friend_home', {'username':allfriends.username}) }}"><button type="button" class="btn btn-lg btn-success landing-frndbtn">View Profile</button></a>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="col-md-12 noresultfound ">
+
+        Sorry,you have no friends right now.If you want to search your friends please click the "search friend" tab.
+        {#<a href="{{ path('bundle_kidskula_homepage' )}}"><button type="button" class="btn btn-lg btn-success landing-frndbtn">Search Friends</button></a>#}
+    </div>
+{%endif%}

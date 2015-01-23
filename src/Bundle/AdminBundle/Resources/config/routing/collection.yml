@@ -1,0 +1,58 @@
+allcollection:
+    path:     /
+    defaults: { _controller: BundleAdminBundle:Collection:index }
+
+collection_add:
+    pattern:  /add
+    defaults: { _controller: BundleAdminBundle:Collection:new }
+
+collection_upload:
+    pattern:  /upload
+    defaults: { _controller: "BundleAdminBundle:Collection:upload" }
+collection_subcatdrop:
+    pattern:  /subcatdrop
+    defaults: { _controller: "BundleAdminBundle:Collection:subcatdrop" }	
+collection_save:
+    pattern:  /save
+    defaults: { _controller: "BundleAdminBundle:Collection:save" }
+    requirements: { _method: post|put }
+collection_status:
+    pattern:  /{id}/status
+    defaults: { _controller: "BundleAdminBundle:Collection:status" }
+collection_category:
+    pattern:  /category
+    defaults: { _controller: "BundleAdminBundle:Collection:listcategory" }
+category_add:
+    pattern:  /category_add
+    defaults: { _controller: BundleAdminBundle:Collection:categoryadd }
+category_add_submit:
+    pattern:  /category_submit
+    defaults: { _controller: BundleAdminBundle:Collection:create }
+category_edit:
+    pattern:  /{id}/category_edit
+    defaults: { _controller: BundleAdminBundle:Collection:edit }
+category_edit_submit:
+    pattern:  /{id}/category_edit_submit
+    defaults: { _controller: BundleAdminBundle:Collection:update }    
+category_delete:
+    pattern:  /{id}/category_delete
+    defaults: { _controller: BundleAdminBundle:Collection:delete }
+category_status:
+    pattern:  /{id}/category_status
+    defaults: { _controller: "BundleAdminBundle:Collection:categorystatus" }
+collection_subcategory:
+    pattern:  /subcategory
+    defaults: { _controller: "BundleAdminBundle:Collection:listsubcategory" }
+add_collection_subcategory:
+    pattern:  /add_subcategory
+    defaults: { _controller: "BundleAdminBundle:Collection:addsubcategory" }
+status_collection_subcategory:
+    pattern: /{id}/subcatstatus
+    defaults: { _controller: "BundleAdminBundle:Collection:subcatstatus" }
+collection_settings:
+    pattern: /{id}/rewardsetting
+    defaults: { _controller: "BundleAdminBundle:CollectionSettings:mailaccept" }
+collection_settings_save:
+    pattern: /{id}/savesetting
+    defaults: { _controller: "BundleAdminBundle:CollectionSettings:save" }
+

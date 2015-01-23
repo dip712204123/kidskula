@@ -1,0 +1,186 @@
+{% extends 'BundleKidskulaBundle:Layout:social_base.html.twig' %}
+{% block content %} 
+    <div class="container">
+        <div class="row student-social-dashboard">
+            <div class="col-md-12 leftpart"> 
+                <!--student-social-myfriends ends-->
+
+                <div class="row student-social-games"> 
+
+                    <div class="student-social-clubdetail-inner">
+
+                        <div class="article-panel row">
+                            <!-- Content -->
+                            <div class="accordian-club col-md-12">
+                                <h2>Message </h2>
+                                
+                                
+                                <div class="row">
+                                                    <div class="col-md-12 msg-comment">
+                                                        <div class="well well-sm">
+                                                            <div id="post-review-box" class="row">
+                                                                <div class="col-md-12">
+                                                                    <form method="post" action="" accept-charset="UTF-8">
+                                                                        
+                                                                        <textarea placeholder="Write your content here..." rows="3" name="" id="answere" class="form-control animated"></textarea>
+                                                                        <div class="text-right">
+                                                                            <div data-rating="0" class="stars starrr"></div>
+                                                                            <a style="display:none; margin-right: 10px;" id="close-review-box" href="#" class="btn btn-danger btn-sm">
+                                                                                <span class="glyphicon glyphicon-remove"></span>Cancel</a>
+                                                                            <button class="btn btn-warning btn-cons" onclick="writemessage(); return false;" type="button">Submit</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div> 
+
+                                                    </div>
+                                                </div>
+                                
+
+                                <ul class="responsive-accordion responsive-accordion-default bm-larger">
+                                    {#******************article loop starts here*********************#}
+
+
+                                    <li>
+                                       <!-- <div class="responsive-accordion-head">{{messagedetails.texttoshow}}</div>-->
+                                         <div id="m2" class="message-item">
+                                         <div class="message-inner">
+<div class="message-head clearfix">
+
+                    <div class="avatar pull-left">
+                    <a href="">
+
+                            <img class="img-circle yolo-bor2" src="{{asset('upload/profilepicture/chatimages/')}}{{messagedetails.fromuser.profileimage}}" alt="">
+                        </a></div>
+
+                    <div class="user-detail">
+                        <h5 class="handle">{{messagedetails.fromuser.firstName}}</h5>
+                        <div class="post-meta">
+                            <div class="asker-meta">
+                               
+                                <span class="qa-message-when">
+                                    <span class="qa-message-when-data">{{messagedetails.createddate|date('F j, Y, g:i a')}}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                         
+                                         <div class="qa-message-content">
+                                         <p>{{messagedetails.texttoshow}} </p>
+                                         </div>
+                                         
+                                         </div>
+                                         </div>
+                                        
+                                        
+ <div style="">
+
+ <div id="anwer-content1">
+<div id="timeline">
+<div id="replymessage">
+
+{{ render(url('replymessage',{'messageid':messagedetails.id})) }}
+</div>
+</div>
+                                                
+                                                
+
+
+
+
+
+
+
+                                                <!--commentpnel ends-->
+                                            </div>
+
+
+
+                                        </div><!--artilist-inner endes-->
+                                    </li>
+
+
+
+                                    {#******************article loop ends here*********************#}
+                                </ul>
+
+                            </div> <!--accordian-club ends -->
+
+
+
+                        </div> <!-- article-panel ends -->
+                    </div>
+                </div> <!--student-social-clubdetail-inner ends-->
+            </div> <!--student-social-games ends-->
+
+        </div> <!--leftpart ends-->
+
+    </div> <!--student-social-dashboard ends-->
+
+
+
+    {# *******************Scripts fetch******************************#}
+
+    {#{{include('BundleKidskulaBundle:Scripts:collection_script.html.twig')}}#}
+    <script>
+        
+
+        function writemessage(){
+            //alert('aaa');
+            
+            var  answere = $("#answere").val();
+            var path = "{{ path('messagedetails', { 'messageid': messagedetails.id,'replyid': messagedetails.id }) }}";
+            //alert(answere); return false;
+            var form_data = {
+                answere: answere,
+                
+                
+                };
+                
+                $.ajax({
+                type: "POST",
+                url: path,
+                data: form_data,
+                success: function(response) {
+                //alert(response);return false;
+                
+                if (response) {
+                    
+                    var path = "{{ path('replymessage', { 'messageid': messagedetails.id }) }}";
+                    //alert(answere); return false;
+                    var form_data = {
+                        messageid: {{messagedetails.id}}
+                        };
+                
+                    $.ajax({
+                    type: "POST",
+                    url: path,
+                    data: form_data,
+                    success: function(response) {
+                    //alert(response);
+                    $("#answere").val('');
+                    $("#replymessage").html(response);
+
+                    return false;
+
+                    
+
+                    }
+                    });
+                  
+                }
+                
+                
+                }
+                });
+        }
+        
+        
+
+    </script>
+
+    {# *******************Scripts end********************************#}
+{% endblock %}
+

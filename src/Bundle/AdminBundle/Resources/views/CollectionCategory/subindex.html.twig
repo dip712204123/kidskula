@@ -1,0 +1,109 @@
+{% extends 'BundleAdminBundle:layout:base.html.twig' %}
+{% block content %}
+<div class="container-fluid">
+    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title">
+       
+        Manage Collection Sub Category
+   
+       {# {% if heading is defined %}{{heading}} {% endif%}#}
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{path('bundle_admin_dashboard')}}">Home</a> 
+            <i class="icon-angle-right"></i>
+            <a href="{{path('allcollection')}}">Collection</a>
+            <i class="icon-angle-right"></i>
+            <a href="{{path('collection_category')}}">Category</a>
+            <i class="icon-angle-right"></i>
+            <a href="#">Sub Category</a>
+        </li>
+
+        <li><a href="#">{% if heading is defined %}{{heading}} {% endif%}</a></li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB-->
+
+    <div class="row-fluid">
+        <div class="span12">
+            <form name="frm" method="post" action="">
+
+            {% for flashSuccessMessage in app.session.flashbag.get('success') %}                
+                <div class="alert alert-success">
+                    <button class="close" data-dismiss="alert"></button>
+                    {{ flashSuccessMessage }}
+                </div>
+            {% endfor %}
+
+            {% for flashErrorMessage in app.session.flashbag.get('error') %}                
+                <div class="alert alert-error">
+                    <button class="close" data-dismiss="alert"></button>
+                    {{ flashErrorMessage }}
+                </div>
+            {% endfor %}
+
+                <div class="portlet box grey">
+                    <div class="portlet-title">
+                        <div class="caption"><i class="icon-cogs"></i>{% if title is defined %}{{title}} {% endif%}</div>
+                        <div class="actions"> 
+                            <a href="{{ path('add_collection_subcategory') }}" class="btn blue" title="Add Sub Category"><i class="icon-plus"></i> Add</a>
+                        </div>
+                    </div>
+                    <div class="portlet-body" > 
+                        <table class="table table-striped table-bordered table-hover" id="mytable">
+                            <thead>                                    
+                                <tr>
+                                    <th class="hidden-480">{{ knp_pagination_sortable(entities, 'Sub Category Name', 'a.categoryName') }}</th>
+                                    <th class="hidden-480">{{ knp_pagination_sortable(entities, 'Category Name', 'a.parent') }}</th>
+                                    {#<th class="hidden-480">Category</th#}
+                                    <th class="hidden-480">Status</th>
+                                    <th >Action</th>
+                                </tr>                                       
+                            </thead>
+                            <tbody>
+                            	{% for entity in entities %}                
+                                <tr class="odd gradeX">                                
+                                    <td class="hidden-480">{{ entity.categoryName }}</td>
+                                    {% set parentName = getcollectionparent(entity.parent) %}
+                                    
+                                   <td class="hidden-480">{{ parentName|raw }}</td>
+                                    <td class="hidden-480"> {% if entity.status == '1' %} Unblock {% else %} Block {% endif %}</td>
+                                    <td>
+                                    	{% if entity.status==1 %}
+                                        <a href="{{ path('status_collection_subcategory', { 'id': entity.id }) }}" title="To Block"><i class="fa fa-unlock"></i></a>
+                                        {% endif %}
+                                        {% if entity.status==0 %}
+                                        <a href="{{ path('status_collection_subcategory', { 'id': entity.id }) }}" title="To Unblock"><i class="fa fa-lock"></i></a>
+                                        {% endif %}
+
+                                        <a href="{{ path('collection_settings', { 'id': entity.id }) }}" title="Settings">
+                                            <i class="icon-cogs"></i></a>
+                                        {#<a class="btn mini red" href="{{ path('category_delete', { 'id': entity.id }) }}" onclick="return confirm('Are you sure to delete?');">
+                                            <i class="icon-trash"></i>
+                                        </a>#}
+                                    </td>
+                                </tr>
+                            	{% endfor %}
+                            </tbody>                                    
+                        </table>
+                        <!--<?php } else { ?>
+                            <div class="no_record">No record found</div>
+                        <?php } ?> -->
+                    {# display navigation #}
+                        <div class="navigation">
+                    	{{ knp_pagination_render(entities) }}
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link rel="stylesheet" href="{{asset('bundles/BundleAdmin/assets')}}/css/font-awesome.min.css">
+    <!-- END PAGE LEVEL PLUGINS -->
+</div>                
+
+{% endblock content %}

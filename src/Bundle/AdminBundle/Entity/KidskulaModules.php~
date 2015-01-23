@@ -1,0 +1,88 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaModules
+ *
+ * @ORM\Table(name="kidskula_modules")
+ * @ORM\Entity
+ */
+class KidskulaModules
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="modules_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $modulesId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="modules_language", type="string", length=255, nullable=true)
+     */
+    private $modulesLanguage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="modules_title", type="string", length=255, nullable=true)
+     */
+    private $modulesTitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="modules_description", type="text", nullable=true)
+     */
+    private $modulesDescription;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="modules_ordering", type="integer", nullable=true)
+     */
+    private $modulesOrdering;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="modules_position", type="string", length=45, nullable=true)
+     */
+    private $modulesPosition;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modules_publish_date", type="datetime", nullable=true)
+     */
+    private $modulesPublishDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modules_modified_date", type="datetime", nullable=true)
+     */
+    private $modulesModifiedDate;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="modules_status", type="boolean", nullable=true)
+     */
+    private $modulesStatus;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="modules_access", type="boolean", nullable=true)
+     */
+    private $modulesAccess;
+
+
+}

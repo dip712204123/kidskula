@@ -1,0 +1,16 @@
+
+{% if collectionarray is not empty %}
+{% for allcollection in collectionarray %}
+<div class="friendlist-inner col-md-3">
+<p class="frnd-img">
+{% set getcollectionimage = getcollectionimage(allcollection.collectionId) %}
+<p class="frnd-img"><img class="img-responsive red-bor2" src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" alt=""></p>
+
+</div>
+{% endfor %}
+{% else %}
+<div class="col-md-12 col-sm-9 noresultfound">
+ <img src="/~kidskula/web/bundles/KidskulaBundle/assets/images/error.png" alt="" height="25"> {{personal.firstName}} has not rewarded any collection item !!!
+ </div>
+{% endif %}
+

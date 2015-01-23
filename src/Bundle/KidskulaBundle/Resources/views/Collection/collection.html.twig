@@ -1,0 +1,220 @@
+{% extends 'BundleKidskulaBundle:Layout:social_base.html.twig' %}
+ {% block content %} 
+<div class="container">
+    <div class="row student-social-dashboard">
+        <div class="col-md-12 leftpart"> 
+            <!--student-social-myfriends ends-->
+
+            <div class="row student-social-games"> 
+                <h2>My Collections (Points : {{totalpoint}})
+    {#NOTIFICATION STARTS HERE#}
+                    <ul style="float:right; font-size:13px; font-family:Open Sans; font-weight:normal; text-shadow:none; margin-top:15px;">
+                        <li style="list-style:none;" class="dropdown">
+                            <a  class="dropdown-toggle noti" href="javascript:void(0);" id="notifShowid"  onclick="notifShowFunc()">Notification <span>{{totalCollectionReq}} </span></a>
+                            <ul class="dropdown-menu noti-drop arrow_box" id="notifpanelid" style="width: 201px;">
+            {% for req in myCollectionReq %}
+            {% set getcollectionimage = getcollectionimage(req.sendercollectionid) %}
+            {% set getcollectionimage1 = getcollectionimage(req.receivercollectionid) %}
+                                <li id="request-{{req.id}}"><a style=" border-bottom:1px dashed #fe5a5a; overflow:hidden;">
+                                        <div class="top" style="float:left; width:100%; margin-bottom:8px;">
+                                            <strong style="float:left;">{{req.senderId.firstName}}</strong> 
+                                            <span style="float:left;" class="text">&nbsp; wants to trade </span></br>
+                                            <div style="float:left; margin-top:5px; width:100%;">
+                                                <span style="float:left;" class="pic-left"><img style="width: 52px; height:52px;" class="img-circle img-responsive"  src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" alt=""></span>
+                                                <span class="glyphicon glyphicon-transfer" style=" font-size:38px; color:#fff; float:left; padding:9px;"></span>
+                                                <span style="float:left;" class="pic-right"><img style="width: 52px; height:52px;" class="img-circle img-responsive"  src="{{asset('upload/collections/')}}{{ getcollectionimage1|raw }}" alt=""></span>
+                                            </div>
+                                        </div>
+                                        <div class="bottom" style="float:left; margin:0px 0px 8px 0px;">
+                                            <button class="btn btn-sm btn-success" id="acptId{{req.id}}"  onclick="acceptCollectionRequest({{req.id}},{{req.sendercolpoint}},{{req.receivercolpoint}})" >Accept</button>
+ 
+                                            <button class="btn btn-sm btn-warning" onclick="rejectCollectionRequest({{req.id}})">Reject</button>
+                                        </div>
+
+                                    </a>
+                                    <div role="alert" class="alert alert-warning" id="alertallowdiv{{req.id}}" style="display:none;">
+                                        <span id="pointalert{{req.id}}"></span>
+                                        <br>
+                                        <br>
+                                        <button type="button" onclick="acceptRequest({{req.id}})" id="acceptbtn{{req.id}}" class="btn btn-sm btn-success">Accept</button>
+                                        <button type="button" onclick="cancelbtnfunc({{req.id}})" id="cancelbtn{{req.id}}" class="btn btn-sm btn-success">Cancel</button>
+                                    </div>
+                                </li>
+            {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
+    {#NOTIFICATION CLOSES HERE#}
+                </h2>
+                <div class="student-social-games-inner">
+{% for collectionID in collectionarray  %}
+                    <div class="col-md-2 {#col-sm-5 col-xs-7 #}gamelist">
+{% set getcollectionimage = getcollectionimage(collectionID.collectionId) %}
+                        <a href="#" data-toggle="modal" data-target=".pop-up-1-{{collectionID.id}}">
+     {% if collectionID.status == 2 %}
+                            <img class="img-circle collection-green-border img-responsive id-{{collectionID.id}}"  src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" alt="">
+    {%else%}
+                            <img class="img-circle collection-ass-border img-responsive id-{{collectionID.id}}"  src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" alt="">
+    {%endif%}
+                        </a>
+                        <br>
+
+                        <!--  Modal content for the mixer image example -->
+                        <div class="modal fade pop-up-1-{{collectionID.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                        <h4 class="modal-title" id="myLargeModalLabel-1">My Collection</h4>
+
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <img src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" class="img-responsive img-rounded center-block" alt="">
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal mixer image -->
+
+{#<a href="#">Collection Detail</a>#}
+
+                        <button id="allowedTrade{{collectionID.id}}" onclick="tradeIconDetails({{collectionID.id}});" type="button" class="btn btn-lg btn-success joinnow_btn id-{{collectionID.id}}" {% if collectionID.status == '2' %} style="display:block;" {% else %} style="display:none;" {% endif %} >Exchange</button>
+                        <button id="wantTrade{{collectionID.id}}" onclick="tradeIconDetails({{collectionID.id}});" type="button" class="btn btn-lg btn-success joinnow_btn id-{{collectionID.id}}" {% if collectionID.status == '1' %} style="display:block;" {% else %} style="display:none;" {% endif %} >Available</button>
+
+
+                    </div> <!--gamelist ends-->
+
+{% endfor %}
+                </div> <!--student-social-games-inner ends-->
+            </div> <!--student-social-games ends-->
+
+        </div> <!--leftpart ends-->
+{#<div class="col-md-4 rightpart">
+<div class="row chatpnal"><img class="img-responsive" src="assets/images/chat-placeholder.png" alt=""> </div>
+ <!--collection-panel ends-->
+</div>#} <!--rightpart ends-->
+    </div> <!--student-social-dashboard ends-->
+</div>
+
+<input type="hidden" value="{{totalpoint}}" id="mytotalpoint" id="mytotalpoint" />
+{# *******************Scripts fetch******************************#}
+
+           {{include('BundleKidskulaBundle:Scripts:collection_script.html.twig')}}
+
+ {# *******************Scripts end********************************#}
+{% endblock %}
+{% block customjavascript %}
+<script>
+function notifShowFunc()
+{
+   
+    $("#notifpanelid").toggle('slow');
+  
+
+}
+//******************************************************
+    function acceptCollectionRequest(mycolid, sendercolpoint, receivercolpoint)
+    {
+        var sendercolpoint = sendercolpoint;
+        var receivercolpoint = receivercolpoint;
+        var mytotalpoint = $('#mytotalpoint').val();
+        var pointcount = 0;
+        var path = "{{path('mycollection_trade_accpet')}}";
+        $(".dropdown").addClass(" open");
+        $('#alertallowdiv' + mycolid).css("display", "block");
+        $('#acptId' + mycolid).hide('slow');
+        if (sendercolpoint > receivercolpoint)
+        {
+            pointcount = parseInt(sendercolpoint) - parseInt(receivercolpoint);
+
+            if (mytotalpoint >= pointcount)
+            {
+                //var minuspoint=  parseInt(mytotalpoint)- parseInt(pointcount);
+                //alert('You have to pay ' + pointcount + ' extra points to exchange this collection..Are you sure..');
+                //acceptRequest(mycolid)
+                $("#pointalert" + mycolid).html('You have to pay ' + pointcount + ' extra points to exchange this collection..Are you sure..');
+            }
+            else
+            {
+                //alert('OOPS..You have not sufficient points to exchange this collection');
+                $("#pointalert" + mycolid).html('OOPS..You have not sufficient points to exchange this collection');
+                return false;
+            }
+
+        }
+        else if (sendercolpoint < receivercolpoint)
+        {
+            pointcount = parseInt(receivercolpoint) - parseInt(sendercolpoint);
+            //alert('Yeeppii..You will get ' + pointcount + ' points from your friend');
+            $("#pointalert" + mycolid).html('Yeeppii..You will get ' + pointcount + ' points from your friend');
+            return false;
+        }
+        else
+        {
+            //alert('Points are same..are you sure !!!');
+            //acceptRequest(mycolid)
+            $("#pointalert" + mycolid).html('Points are same..Great exchange request buddy !!!');
+        }
+    }
+    function cancelbtnfunc(mycolid)
+    {   
+        $('#acptId' + mycolid).show('slow');
+        $('#alertallowdiv' + mycolid).hide();
+        
+    }
+    function acceptRequest(mycolid)
+    {
+
+        var path = "{{path('mycollection_trade_accpet')}}";
+        var form_data = {
+            mycolid: mycolid
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                //alert(response.msg);
+                if (response.status != 0) {
+                    $("#request-" + mycolid).html(response.msg);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    return false;
+                }
+            }
+        });
+    }
+
+    function rejectCollectionRequest(mycolid)
+    {
+
+        var path = "{{path('mycollection_trade_reject')}}";
+
+        var form_data = {
+            mycolid: mycolid
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                // alert(response.msg);
+                if (response.status != 0) {
+                    $("#request-" + mycolid).html(response.msg);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    return false;
+                }
+            }
+        });
+    }
+</script>
+{% endblock  %}

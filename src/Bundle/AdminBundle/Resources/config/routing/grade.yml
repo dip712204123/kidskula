@@ -1,0 +1,28 @@
+student_grade:
+    pattern:  /
+    defaults: { _controller: "BundleAdminBundle:KidsKulaStudentGrade:index" }
+    
+student_grade_status:
+    pattern:  /{id}/grade_status
+    defaults: { _controller: "BundleAdminBundle:KidsKulaStudentGrade:status" } 
+   
+student_grade_new:
+   pattern:  /new
+   defaults: { _controller: "BundleAdminBundle:KidsKulaStudentGrade:new" }  
+   
+student_grade_form_create:
+    pattern:  /newgrade_form_create
+    defaults: { _controller: "BundleAdminBundle:KidsKulaStudentGrade:create" }
+    requirements: { _method: post }   
+ 
+student_grade_edit:
+    pattern:  /{id}/grade_edit
+    defaults: { _controller: "BundleAdminBundle:KidsKulaStudentGrade:edit" }
+
+student_grade_update:
+    pattern:  /{id}/grade_update
+    defaults: { _controller: "BundleAdminBundle:KidsKulaStudentGrade:update" }
+    
+student_grade_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BundleAdminBundle:KidsKulaStudentGrade:delete" }

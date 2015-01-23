@@ -1,0 +1,113 @@
+{% extends 'BundleAdminBundle:layout:base.html.twig' %}
+
+{% block content %}
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<div class="container-fluid">
+    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title">
+        Contact Messages List 
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{path('bundle_admin_dashboard')}}">Home</a> 
+            <i class="icon-angle-right"></i>
+        </li>
+
+        <li><a href="#">Contact Messages</a></li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB-->
+    <div class="row-fluid">
+        <div class="span12">
+            <form name="frm" method="post" action="" id="target">
+
+
+                <div class="portlet box grey">
+                    <div class="portlet-title">
+                        <div class="caption"><i class="icon-cogs"></i>Messages List</div>
+                        <div class="actions">
+                         
+                               
+                            <select onchange="section_form()" name="sort_by" id="section_name">
+                                <option>Sort By</option>
+                                <option >Student</option>
+                                <option>Parent</option>
+                                <option>Non-Registered</option>
+                            </select> 
+                             
+                         
+                        </div>
+                    </div>
+                    
+                    <div class="portlet-body">
+                    {% for flashSuccessMessage in app.session.flashbag.get('success_message') %}                
+                        <div class="alert alert-success">
+                            <button class="close" data-dismiss="alert"></button>
+                                {{ flashSuccessMessage }}
+                        </div>
+                        {% endfor %}
+                        {% for flashSuccessMessage in app.session.flashbag.get('error_message') %}                
+                        <div class="alert alert-error">
+                            <button class="close" data-dismiss="alert"></button>
+                                {{ flashSuccessMessage }}
+                        </div>
+                        {% endfor %}
+                        <table class="table table-striped table-bordered table-hover" id="mytable">
+                            <thead>                                    
+                                <tr>
+                                    <th class="hidden-480">Regarding</th>
+                                    <th class="hidden-480">{{ knp_pagination_sortable(entities, 'Email', 'a.senderemail') }}</th>
+                                    <th class="hidden-480">Category{#{{ knp_pagination_sortable(entities, 'Category', 'a.categoryid') }}#}</th>
+                                    <th class="hidden-480">Subject</th>
+                                    <th >Action</th>
+                                    <th >Send Mail</th>
+                                </tr>                                       
+                            </thead>
+                            <tbody>
+                            	{% for entity in entities  %}                
+                                <tr class="odd gradeX">                                
+                                    <td class="hidden-480">
+                                        {{ entity.questionregarding }}
+                                    </td>
+                                    <td class="hidden-480">{{ entity.senderemail }}</td>
+                                    <td class="hidden-480">{{ entity.categoryid }}</td>
+                                    <td class="hidden-480"> {{ entity.comment|slice(0,80) }}... </td>
+                                    <td>                                       
+                                        <a href="{{path('contact_us_delete', { 'id': entity.id })}}" title="Delete" onclick="return confirm('Are you sure?');" ><i class="icon-trash"></i></a>                                       
+                                        <span style="padding-left:10px;">
+                                        <a  href="{{path('contact_us_show', { 'id': entity.id })}}">
+                                             <img src="{{asset('bundles/BundleAdmin/assets')}}/img/search-icon-blue.png" alt="View Details" title="View Details"  />
+                                          </a>
+                                        </span>
+                                    </td>
+                                    <td class="hidden-480"><a href="mailto:{{ entity.senderemail }}">Reply Mail</a></td>
+                                </tr>
+                                
+                            	{% endfor %}
+                            </tbody>                                    
+                        </table>
+                        {# display navigation #}
+        			<div class="navigation">
+                    	{{ knp_pagination_render(entities) }}
+                    </div>
+                </div>
+            </form>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+    </div>
+    <script>
+        
+        function section_form()
+        {
+            
+            $( "#target" ).submit();
+
+        }
+
+    </script>
+{% endblock %}
+
+
+{#{% block sidebar %} 
+{% endblock %}#}

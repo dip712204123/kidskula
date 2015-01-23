@@ -1,0 +1,84 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaFriendRequest
+ *
+ * @ORM\Table(name="kidskula_friend_request", indexes={@ORM\Index(name="fk_kidskula_friend_request_sender_id_idx", columns={"sender_id"})})
+ * @ORM\Entity
+ */
+class KidskulaFriendRequest
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="bigint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="receiver_id", type="bigint", nullable=true)
+     */
+    private $receiverId;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="status", type="boolean", nullable=true)
+     */
+    private $status;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="sender_parent_approval", type="boolean", nullable=true)
+     */
+    private $senderParentApproval;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="reciever_parent_approval", type="boolean", nullable=true)
+     */
+    private $recieverParentApproval;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="send_date", type="datetime", nullable=true)
+     */
+    private $sendDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="reply_date", type="datetime", nullable=true)
+     */
+    private $replyDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comment", type="text", nullable=true)
+     */
+    private $comment;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaUsers
+     *
+     * @ORM\ManyToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaUsers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="sender_id", referencedColumnName="id")
+     * })
+     */
+    private $sender;
+
+
+}

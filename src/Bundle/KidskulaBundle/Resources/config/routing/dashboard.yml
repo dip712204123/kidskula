@@ -1,0 +1,3 @@
+dashboard:
+    pattern:  /
+    defaults: { _controller: BundleKidskulaBundle:Dashboard:index }

@@ -1,0 +1,53 @@
+{% extends 'BundleAdminBundle:layout:base.html.twig' %}
+
+{% block content %}
+<!-- START PAGE CONTAINER-->  
+<div class="container-fluid">
+    <!-- BEGIN PAGE HEADER-->
+    <div class="row-fluid">
+        <div class="span12">
+
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                Dashboard 
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="index.html">Home</a> 
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li><a href="#">Dashboard</a></li>
+                <li class="pull-right no-text-shadow">
+                    <div id="dashboard-report-range" class="dashboard-date-range tooltips no-tooltip-on-touch-device responsive" data-tablet="" data-desktop="tooltips" data-placement="top" data-original-title="Change dashboard date range">
+                        <i class="icon-calendar"></i>
+                        <span></span>
+                        <i class="icon-angle-down"></i>
+                    </div>
+                </li>
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <div id="dashboard">
+        <!-- BEGIN DASHBOARD STATS -->
+
+        About KidsKula
+
+        In today's education system how can a student know how he or she is performing in various subjects? Preparing students through online tests based on accredited curriculum is the answer.KidsKula boosts knowledge and lets students gain confidence through online quizzes where students earn rewards in form of games.
+
+        KidsKula is founded on the principle:<strong>Learn, Earn and have Fun</strong>
+
+        By providing rich resources such as educational videos, digital books, podcasts our students gain knowledge and make well-informed decisions.
+
+        Interested in Partnering with KidsKula?
+        If you would like to become a recommended site by KidsKula or explore a potential business relationship, contact us at info@KidsKula.com
+        <!-- END DASHBOARD STATS -->
+
+    </div>
+</div>
+</div>
+<!-- END PAGE CONTAINER-->  
+{% endblock content %}
+

@@ -1,0 +1,46 @@
+parent_home:
+    resource: "@BundleParentBundle/Resources/config/routing/parenthome.yml"
+    prefix:   /home
+    
+fornt_profile:
+    resource: "@BundleParentBundle/Resources/config/routing/profile.yml"
+    prefix:   /profile
+
+parent_child_profile:
+    resource: "@BundleParentBundle/Resources/config/routing/childactivity.yml"
+    prefix:   /child-profile
+    
+parent_logout:
+    path:     /loggedout
+    defaults: { _controller: BundleParentBundle:ParentLogin:logout } 
+    
+parent_addfriend:
+    resource: "@BundleParentBundle/Resources/config/routing/addfriend.yml"
+    prefix:   /parent_addfriend
+    
+parent_forgotpassword:
+    path:     /forgotpassword
+    defaults: { _controller: BundleParentBundle:ParentLogin:forgotpassword } 
+    
+parent_registration:
+    path:     /registration
+    defaults: { _controller: BundleParentBundle:Registration:index }
+    
+parent_auth_registration:
+    path:     /auth_registration/{auth}/
+    defaults: { _controller: BundleKidskulaBundle:Registration:index }   
+
+parent_activation:
+    pattern:  /{token}/parent_activation
+    defaults: { _controller: "BundleParentBundle:Registration:parent_activation" }
+    
+showchildmessage:
+    pattern:  /showchildmessage
+    defaults: { _controller: BundleParentBundle:Childprofile:showchildmessage } 
+    
+parent_club:
+    resource: "@BundleParentBundle/Resources/config/routing/myclub.yml"
+    prefix:   /club
+
+    
+    

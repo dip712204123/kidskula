@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  
+    <title>Kidskula</title>
+       <!-- BEGIN CSS -->   
+        {% block css %} 
+           
+		{{include('BundleCommonBundle:Layout:css.html.twig')}}
+           
+        {% endblock %}
+        <!-- END CSS -->
+	
+
+
+	
+  </head>
+
+  <body>
+  
+        <!-- BEGIN HEADER -->   
+        {% block header %} 
+            
+		{{include('BundleCommonBundle:Layout:header.html.twig')}}
+           
+        {% endblock %}
+        <!-- END HEADER -->
+
+ <!--container starts-->   
+{% block content %}
+ 
+{% endblock %}
+<!--container ends-->
+
+ <!-- BEGIN FOOTER -->
+{% block footer %}
+{{include('BundleCommonBundle:Layout:footer.html.twig')}}
+   
+{% endblock %}
+  <!-- END FOOTER -->
+<!-- BEGIN SCRIPT -->
+{% block script %}
+{{include('BundleKidskulaBundle:Layout:script.html.twig')}}
+{% endblock %}
+<!-- END SCRIPT -->
+ 
+</body>
+</html>

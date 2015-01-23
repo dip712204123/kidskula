@@ -1,0 +1,230 @@
+{% extends 'BundleParentBundle:Layout:social_base.html.twig' %}
+ {% block content %} 
+<div class="container">
+<div class="row parents-social-dashboard">
+<div class="col-md-8 leftpart">
+<div class="mychildfrndlist_pnl">
+<h2>{{personal.firstName}}'s Friends </h2>
+<div class="friendlist-main">
+<div id="scrollbar1">
+<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+<div class="viewport">
+<div class="overview">
+{#**********************FRIEND LISTING SECTION*********************#}
+{{include('BundleParentBundle:ChildActivity:child_friendlisting.html.twig')}}
+
+{#****************************************************************#}
+</div>
+</div>
+</div>
+
+</div> <!--friendlist-main ends-->
+</div> <!--mychildfrndlist_pnl ends-->
+
+
+
+
+<div class="mychildfrndlist_pnl">
+<h2>{{personal.firstName}}'s Collections </h2>
+
+<div class="friendlist-main">
+<div id="scrollbar2">
+<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+<div class="viewport">
+<div class="overview">
+
+
+{#**********************COLLECTION LISTING SECTION*********************#}
+{{include('BundleParentBundle:ChildActivity:child_collectionlisting.html.twig')}}
+
+{#****************************************************************#}
+</div>
+</div>
+</div>
+</div> <!--friendlist-main ends-->
+
+</div> <!--mychild collection list_pnl ends-->
+
+
+
+<div class="mychildfrndlist_pnl">
+<h2>{{personal.firstName}}'s Club </h2>
+<div class="friendlist-main">
+<div id="scrollbar3">
+<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+<div class="viewport">
+<div class="overview">
+
+{#**********************COLLECTION LISTING SECTION*********************#}
+{{include('BundleParentBundle:ChildActivity:child_clublisting.html.twig')}}
+
+{#****************************************************************#}
+
+
+
+</div>
+</div>
+</div>
+
+</div> <!--friendlist-main ends-->
+</div> <!--mychild club list_pnl ends-->
+
+
+
+
+</div> <!--leftpart ends-->
+
+<div class="col-md-4 rightpart">
+<div class="row time-report-panel">
+<h2> Time Utilization Report</h2>
+{#**********************TIME UTILIZATION PIE CHART SECTION*********************#}
+{{include('BundleParentBundle:ChildActivity:tracker.html.twig')}}
+{#****************************************************************#}
+<!--inner ends-->
+</div> <!--time-report-panel ends-->
+</div> <!--rightpart ends-->
+
+</div> <!--parents-social-dashboard ends-->
+</div>
+<!--container ends-->
+ {# *******************Scripts fetch******************************#}
+ <script src="{{asset('bundles/KidskulaBundle/assets')}}/js/jquery.tinyscrollbar.min.js"></script>
+    
+    
+    
+    <script type="text/javascript">
+	var jq = jQuery.noConflict();
+		jq(document).ready(function(){ 
+			jq('#scrollbar1').tinyscrollbar();	
+		});
+        
+        jq(document).ready(function(){ 
+			jq('#scrollbar2').tinyscrollbar();	
+		});
+        
+        jq(document).ready(function(){ 
+			jq('#scrollbar3').tinyscrollbar();	
+		});
+        
+  
+  jq(function() {  
+        
+        var data = [
+        { label: "Club",  data: {{ tracker }} , color: "#48CA3B"},
+        { label: "Collection",  data: {{collectiontracker}}, color: "#00BCE1"},
+        { label: "Message",  data: {{message_tracker}}, color: "#bd282f"}
+        
+        ];
+      
+        var placeholder = jq('#piechart-placeholder').css({'width':'70%' , 'min-height':'150px'});
+        jq.plot(placeholder, data, {
+        
+        series: {
+              pie: {
+                  show: true,
+            tilt:0.8,
+            highlight: {
+              opacity: 0.25
+            },
+            stroke: {
+              color: '#fff',
+              width: 2
+            },
+            startAngle: 2
+            
+              }
+          },
+          legend: {
+              show: true,
+          position: "ne", 
+            labelBoxBorderColor: null,
+          margin:[-30,15]
+          }
+        ,
+        grid: {
+          hoverable: true,
+          clickable: true
+        },
+        tooltip: true, //activate tooltip
+        tooltipOpts: {
+          content: "%s : %y.1",
+          shifts: {
+            x: -30,
+            y: -50
+          }
+        }
+        
+       });
+      
+       
+        var $tooltip = jq("<div class='tooltip top in' style='display:none;'><div class='tooltip-inner'></div></div>").appendTo('body');
+        placeholder.data('tooltip', $tooltip);
+        var previousPoint = null;
+      
+        placeholder.on('plothover', function (event, pos, item) {
+        if(item) {
+          if (previousPoint != item.seriesIndex) {
+            previousPoint = item.seriesIndex;
+            var tip = item.series['label'] + " : " + item.series['percent'].toFixed(0)+'%';
+            jq(this).data('tooltip').show().children(0).text(tip);
+          }
+          jq(this).data('tooltip').css({top:pos.pageY + 10, left:pos.pageX + 10});
+        } else {
+          jq(this).data('tooltip').hide();
+          previousPoint = null;
+        }
+        
+       });
+      
+      
+        var d1 = [];
+        for (var i = 0; i < Math.PI * 2; i += 0.5) {
+          d1.push([i, Math.sin(i)]);
+        }
+      
+        var d2 = [];
+        for (var i = 0; i < Math.PI * 2; i += 0.5) {
+          d2.push([i, Math.cos(i)]);
+        }
+      
+        var d3 = [];
+        for (var i = 0; i < Math.PI * 2; i += 0.2) {
+          d3.push([i, Math.tan(i)]);
+        }
+        
+      
+        var sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
+        jq.plot("#sales-charts", [
+          { label: "Yellow", data: d1 },
+          { label: "Blue", data: d2 },
+          { label: "Red", data: d3 }
+        ], {
+          hoverable: true,
+          shadowSize: 0,
+          series: {
+            lines: { show: true },
+            points: { show: true }
+          },
+          xaxis: {
+            tickLength: 0
+          },
+          yaxis: {
+            ticks: 10,
+            min: -2,
+            max: 2,
+            tickDecimals: 3
+          },
+          grid: {
+            backgroundColor: { colors: [ "#fff", "#fff" ] },
+            borderWidth: 1,
+            borderColor:'#555'
+          }
+        });
+      
+      })  
+	</script> 
+
+ {# *******************Scripts end********************************#}
+
+ {% endblock  %}
+

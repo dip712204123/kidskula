@@ -1,0 +1,161 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaUsersProfile
+ *
+ * @ORM\Table(name="kidskula_users_profile", indexes={@ORM\Index(name="fk_kidskula_users_profile_kidskula_users_idx", columns={"kidskula_users_user_id"})})
+ * @ORM\Entity
+ */
+class KidskulaUsersProfile
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="profile_id", type="bigint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $profileId;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="profile_status", type="boolean", nullable=true)
+     */
+    private $profileStatus;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="profile_relationship_status", type="boolean", nullable=true)
+     */
+    private $profileRelationshipStatus;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="profile_relationship_dependency", type="boolean", nullable=true)
+     */
+    private $profileRelationshipDependency;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_msg", type="string", length=255, nullable=true)
+     */
+    private $profileMsg;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_about_me", type="text", nullable=true)
+     */
+    private $profileAboutMe;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_profile_picture", type="string", length=255, nullable=true)
+     */
+    private $profileProfilePicture;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_website", type="string", length=255, nullable=true)
+     */
+    private $profileWebsite;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_facebook", type="string", length=45, nullable=true)
+     */
+    private $profileFacebook;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_twitter", type="string", length=45, nullable=true)
+     */
+    private $profileTwitter;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_google_plus", type="string", length=45, nullable=true)
+     */
+    private $profileGooglePlus;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_youtube", type="string", length=45, nullable=true)
+     */
+    private $profileYoutube;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_linkedin", type="string", length=45, nullable=true)
+     */
+    private $profileLinkedin;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_cropped_image", type="string", length=255, nullable=true)
+     */
+    private $profileCroppedImage;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="profile_date_created", type="datetime", nullable=true)
+     */
+    private $profileDateCreated;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="profile_date_modified", type="datetime", nullable=true)
+     */
+    private $profileDateModified;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="profile_dob", type="date", nullable=true)
+     */
+    private $profileDob;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_additional_info", type="text", nullable=true)
+     */
+    private $profileAdditionalInfo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_video_resume", type="text", nullable=true)
+     */
+    private $profileVideoResume;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaUsers
+     *
+     * @ORM\OneToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaUsers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="kidskula_users_user_id", referencedColumnName="id", unique=true)
+     * })
+     */
+    private $kidskulaUsersUser;
+
+
+}

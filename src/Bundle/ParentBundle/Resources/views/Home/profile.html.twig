@@ -1,0 +1,194 @@
+{% extends 'BundleParentBundle:Layout:social_base.html.twig' %}
+ {% block content %} 
+<div class="container">
+<div class="row student-social-dashboard">
+<div class="col-md-8 leftpart"> 
+<div class="student-info">
+<div class="col-md-3 imagepart" style="text-align:center;"> 
+{%  if profile.profileCroppedImage is defined and profile.profileCroppedImage is not null  %}                            	
+<a href="#" data-toggle="modal" data-target=".pop-up-1"><img src="{{asset('upload/profilepicture/cropedimages/')}}{{profile.profileCroppedImage}}" class="img-circle red-bor2" width="150px" height="150px" alt="" /></a>   
+{% elseif profile.path is defined and profile.path is not null  %}
+
+<a href="#" data-toggle="modal" data-target=".pop-up-1"><img src="{{asset('upload/profilepicture/')}}{{profile.path}}" class="img-circle red-bor2" width="150px" height="150px" alt="" /></a>
+{% endif %}  <br/>
+ <a href="javascript:void(0);">{{personal.firstName}} {{personal.lastName}}</a>
+ <!--  popup image -->
+                    <div class="modal fade pop-up-1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                                    <h4 class="modal-title" id="myLargeModalLabel-1">{{personal.firstName}}'s profile picture. </h4>
+                                </div>
+
+                                <div class="modal-body">
+                                    <img src="{{asset('upload/profilepicture/cropedimages/')}}{{profile.profileCroppedImage}}" class="img-responsive img-rounded center-block" alt="">
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal mixer image -->
+                    <!--  popup image -->
+</div>
+<div class="col-md-9 message-text">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h2>My Message Board</h2>
+                            <p id="statmsg">"{{profile.profileMsg}}"<br> <span class="edittext"><a href="javascript:void(0)" onclick="statusChange();">My mood</a></span> </p>
+                            <div class="form-group row pro_submit_pnl">
+                                <div class="col-md-12" style="display: none;" id="statusdiv">
+                                    <input type="text" name="status" id="status" class="form-control" placeholder="Enter Text" tabindex=""> 
+                                    <a href="javascript:void(0);" onclick="getProfileSuggest();"><input name="" type="button" value="Submit" /></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4"> 
+                          {% if avatar is empty %}
+                            <img class="img-circle red-bor2" src="{{asset('bundles/BundleAdmin/assets')}}/img/admin_profile_no_image.gif" width="50" height="50" title="Set your avatar image" alt="">
+                            <a style="font-size:11px; font-family: Open sans;" href="{{path('profilesetting')}}">Set your avatar <i class="glyphicon glyphicon-edit iconsize"></i></a>
+                            {% else %}
+                            <img class="img-circle red-bor2" src="{{asset('upload/avatar/')}}{{avatar.path}}" width="50" height="50" title="Avatar" alt="">
+                            <span id="avtarstatmsg"><a style="font-size: 11px; font-family: Open sans;margin-right: 5px; margin-top:3px;" href="javascript:void(0)" onclick="editavatar();" title="Edit Your Avatar Name">{{personal.myavatar}} <i class="glyphicon glyphicon-edit iconsize" ></i></a></span>
+                            <div class="form-group pro_avatar_pnl">
+                                <div  style="display: none;" id="avtarDuplicateSpanId">
+                                    <input type="text" id="setavatarname" name="setavatarname" class="form-control" placeholder="Avatar">
+                                    <a href="javascript:void(0);" onclick="saveAvatarName();">
+                                        <span class="glyphicon glyphicon-hand-up"></span>							
+
+                                    </a>
+                                </div>
+                            </div>
+                         {% endif %}
+                        </div>
+                    </div>
+                </div> <!--message-text ends-->
+
+</div> <!--student-info ends-->
+
+<div style="clear:both"> </div>
+
+
+<div class="row student-social-videolen" > 
+<h2>Favorite Videos & Lessons</h2>
+<ul class="list-unstyled video-list-thumbs row">
+	<li class="col-lg-3 col-sm-4 col-xs-6">
+		<a href="#" title="Claudio Bravo, antes su debut con el Barça en la Liga">
+			<img src="http://i.ytimg.com/vi/ZKOtE9DOwGE/mqdefault.jpg" alt="Barca" class="img-responsive" height="130px" />
+			<h2>Claudio Bravo, antes su debut </h2>
+			<span class="glyphicon glyphicon-play-circle"></span>
+			<span class="duration">03:15</span>
+		</a>
+	</li>
+	<li class="col-lg-3 col-sm-4 col-xs-6">
+		<a href="#" title="Claudio Bravo, antes su debut con el Barça en la Liga">
+			<img src="http://i.ytimg.com/vi/ZKOtE9DOwGE/mqdefault.jpg" alt="Barca" class="img-responsive" height="130px" />
+			<h2>Barça en la Liga</h2>
+			<span class="glyphicon glyphicon-play-circle"></span>
+			<span class="duration">03:15</span>
+		</a>
+	</li>
+	<li class="col-lg-3 col-sm-4 col-xs-6">
+		<a href="#" title="Claudio Bravo, antes su debut con el Barça en la Liga">
+			<img src="http://i.ytimg.com/vi/ZKOtE9DOwGE/mqdefault.jpg" alt="Barca" class="img-responsive" height="130px" />
+			<h2>Debut con el </h2>
+			<span class="glyphicon glyphicon-play-circle"></span>
+			<span class="duration">03:15</span>
+		</a>
+	</li>
+	<li class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+		<a href="#" title="Claudio Bravo, antes su debut con el Barça en la Liga">
+			<img src="http://i.ytimg.com/vi/ZKOtE9DOwGE/mqdefault.jpg" alt="Barca" class="img-responsive" height="130px" />
+			<h2>la Liga</h2>
+			<span class="glyphicon glyphicon-play-circle"></span>
+			<span class="duration">03:15</span>
+		</a>
+	</li>
+
+</ul>
+</div> <!--student-social-videolen ends-->
+
+
+ <!--student-social-myfriends starts-->
+ 
+  {{include('BundleParentBundle:Home:frndlistingsection.html.twig')}} 
+
+ <!--student-social-myfriends ends--> 
+
+
+
+
+
+ <!--student-social-games starts-->
+ 
+ <!--student-social-games ends-->
+
+
+
+</div> <!--leftpart ends-->
+<div class="col-md-4 rightpart">
+<div class="row chatpnal" style="display:none;"><img class="img-responsive"; src="assets/images/chat-placeholder.png" alt=""></div>
+{#*******************frdrequest-pnl start*******************************#}
+            
+            <div class="row frdrequest-pnl" id="friendRequestCheckForDivShow" {% if countArray == 0 %} style="display:block;"{% endif %}> 
+            <input type="hidden" id="frndreqstnotificationUrl" value="{{ path('intervalrequestcheck')}}">
+            
+                <h2> Friend Invitations</h2>
+                
+                <ul class="list-group" id="contact-list">
+                  {{ render(url('intervalrequestcheck')) }}
+                </ul>
+                
+            </div>
+            
+            <!--frdrequest-pnl ends--> <!--frdrequest-pnl ends-->
+ {# *******************Club panel******************************#}
+		   
+ {{include('BundleParentBundle:Home:home_club_listing.html.twig')}}
+			
+ {# *******************Notification panel fetch******************************#} 
+ <!--club-panel ends-->
+
+
+</div> <!--rightpart ends-->
+</div> <!--student-social-dashboard ends-->
+</div>
+ {# *******************Scripts fetch******************************#}
+
+ {{include('BundleParentBundle:Scripts:homepage_scripts.html.twig')}}
+
+ {# *******************Scripts end********************************#}
+ <script>
+    $(document).ready(function() {
+        
+        $(".inviteradiocls").click(function() {
+            $("#alertId").hide('slow');
+            if ($(this).attr("value") == 1) {
+
+                $('#withsecret').show('slow');
+            }
+            else
+            {
+                $('#withsecret').hide('slow');
+            }
+
+            if ($(this).attr("value") == 2) {
+                $('#withoutsecret').show('slow');
+            }
+            else
+            {
+                $('#withoutsecret').hide('slow');
+            }
+
+            if ($(this).attr("value") == 3) {
+                $('#onlyemail').show('slow');
+            }
+            else
+            {
+                $('#onlyemail').hide('slow');
+            }
+
+        });
+    });
+    </script>
+    
+ {% endblock  %}

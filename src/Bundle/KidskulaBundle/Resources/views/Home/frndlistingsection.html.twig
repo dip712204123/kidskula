@@ -1,0 +1,253 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="{{asset('bundles/KidskulaBundle/assets')}}/tag/jquery.tagsinput.css" rel="stylesheet" type="text/css" />
+<script src="{{asset('bundles/KidskulaBundle/assets')}}/tag/jquery.tagsinput.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js" type='text/javascript' ></script>
+<link href="{{asset('bundles/KidskulaBundle/assets')}}/tag/jquery-ui.css" rel="stylesheet" type="text/css" /> 
+ 
+<div class="row friendlessontab student-social-videolen">
+         {% set accountactive = getFriendActiveTab() %}
+                        
+                <div class="col-md-12">
+                    <div class="panel with-nav-tabs panel-default tabpanel">
+                        <div class="panel-heading">
+                        
+                            <ul class="nav nav-tabs">
+                                <li {% if accountactive is not defined or accountactive is empty %} class="active" {% endif %} ><a href="#tab1default2" data-toggle="tab">All Friends</a></li>
+                                <li><a href="#tab2default3" data-toggle="tab">Friends Online</a></li>
+                                <li {% if accountactive == 1 %}class="active" {% endif %}><a href="#tab3default4" data-toggle="tab">Invite Friends</a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+
+
+                            {#My all friends listings#}
+
+                                <input type="hidden" id="allfriendlisting" value="{{ path('allfriendlisting')}}">
+                                <div class="tab-pane fade {% if accountactive is not defined or accountactive is empty %} in active {% endif %} row student-social-myfriends-inner" id="tab1default2" style="min-height: 205px;">
+
+                                      {{ render(url('allfriendlisting')) }}
+
+                                </div> 
+
+                                <!--/*row ends*/-->
+                            {#My all friends listings end#}
+                            {#My online friends listings strart#}    
+
+                                <div class="tab-pane fade row student-social-myfriends-inner" id="tab2default3">
+                                    {#<div class="col-md-4 friendlist">
+                                        <img alt="" src="{{asset('bundles/KidskulaBundle/assets')}}/images/profilepic1.jpg" class="img-circle red-bor2"><br>
+                                        Lorem Ip<br>
+                                        <button type="button" class="btn btn-lg btn-success landing-frndbtn">View Profile</button>
+                                    </div>#}
+									
+									<link type="text/css" rel="stylesheet" media="all" href="/~kidskula/mychat/public/list/css/style.css" charset="utf-8" /> 
+									<script type="text/javascript">var ac_max_results = 0;</script>
+									<script type="text/javascript" src="/~kidskula/mychat/public/list/js/list_core.js" charset="utf-8"></script>
+									<div id="arrowchat_public_list"></div>
+                                   
+
+
+                                </div> 
+                            {#My online friends listings end#}
+                                <!--/*row ends*/-->
+                            {#My invite friends listings start#}   
+                                <div class="tab-pane fade {% if accountactive == 1 %} in active {% endif %} row" id="tab3default4">
+                                    <div class="col-md-12">  
+                                        <div class="row" style="padding-top: 10px;">	
+                                        {% for flashSuccessMessage in app.session.flashbag.get('success_message') %} 
+                                            <div class="alert alert-success alert-dismissible" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                            {{ flashSuccessMessage }}
+                                            </div>
+                                        {% endfor %}
+                                        {% for flashErrorMessage in app.session.flashbag.get('error_message') %}  
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                            {{ flashErrorMessage }}
+                                            </div>
+                                        {% endfor %} 
+                                        </div>
+                                    </div>
+                
+                                    <h2 class="small-heading">Note: </h2>
+                                    <div class="col-md-12 class-inner">
+                                        <p>Regular Friends : If you don't know the secret code and avatar name of your friend, you can have limited communication with your friend, however you can play games and trade goodies. Select the correct option below to add your friend. </p>
+                                        <p> <input class="inviteradiocls" name="inviteradio" id="firstId" type="radio" value="1"> I know the Secret Code & Avatar Name</p>
+                                        <p> <input class="inviteradiocls" name="inviteradio" id="secondId" type="radio" value="2"> I don't know the code & Avatar name, but I want to search my friends</p>
+                                        <p> <input class="inviteradiocls" name="inviteradio" id="thirdId" type="radio" value="3"> I don't know the code & Avatar name, but I have their email addresses, and i want to ask them to join</p>
+                                        {#First form start#}
+                                        <form role="form" id="withsecret" >
+                                            {#<div class="form-group">
+                                               
+                                                 {{ form_widget(form.grade) }}
+			                         {{ form_errors(form.grade) }}
+                                            </div>#}
+                                            <div class="form-group">
+                                               {{ form_widget(form.securityCode,{'id':'securityCodeid'}) }}
+			                       {{ form_errors(form.securityCode) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_widget(form.myavatar,{'id':'myavatarid'}) }}
+			                        {{ form_errors(form.myavatar) }}
+                                            </div>
+                                            {{ form_widget(form._token) }}
+                                            <div class="form-group ">
+                                                <button type="button" onclick="invitewithsecret();" class="btn btn-primary col-md-4 joinnow2">Add Friend</button>
+                                                <button type="button" onclick="reset();" class="btn btn-primary col-md-4 joinnow pull-right">Cancel</button>
+                                            </div> 
+                                        </form>
+                                        {#First form ends#}
+                                        {#second form start#}
+                                        <form role="form" method="post" action="{{path('invitewithoutsecret')}}" id="withoutsecret" style="display:none;" >
+                                            <div class="form-group">
+                                                <p><input  id="checkbox1" name="checkbox1" type="checkbox" value="1" > Live in my city </p>
+                                                <p><input  id="checkbox2" name="checkbox2" type="checkbox" value="1" > Study in my school </p>
+                                                <p><input  id="checkbox3" name="checkbox3" type="checkbox" value="1" > Study in same grade level </p>
+
+                                            </div>
+
+                                            <div class="form-group ">
+                                                <button type="submit" class="btn btn-primary col-md-4 joinnow2">Find Friend</button>
+
+                                            </div> 
+                                        </form>
+                                        {#second form end#}
+                                         {#third form start#}
+                                        <form role="form" id="onlyemail" style="display:none;" method="post" action="{{path('invitenewfriends')}}">
+                                            <div class="form-group">
+                                                {# <input id="name" name="name" type="text" placeholder="My Friend's email Id" class="form-control" required> #}
+                                                <input id="tags_1" name="friend_name" type="text" class="form-control tags" value="" placeholder="Your Friend's email Id"/>
+                                            </div>
+
+                                            <div class="form-group ">
+                                                <button type="submit" class="btn btn-primary col-md-4 joinnow2">Add Friend</button>
+                                                <button type="submit" class="btn btn-primary col-md-4 joinnow pull-right">Cancel</button>
+                                            </div> 
+                                        </form>
+                                         {#third form end#}
+                                    </div> <!--class-inner ends-->
+                                </div> 
+                            {#My invite friends listings end#}
+                                <!--/*row ends*/-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    <script>
+    $(document).ready(function() {
+        // alert('ok');
+        $(".inviteradiocls").click(function() {
+            $("#alertId").hide('slow');
+            if ($(this).attr("value") == 1) {
+
+                $('#withsecret').show('slow');
+            }
+            else
+            {
+                $('#withsecret').hide('slow');
+            }
+
+            if ($(this).attr("value") == 2) {
+                $('#withoutsecret').show('slow');
+            }
+            else
+            {
+                $('#withoutsecret').hide('slow');
+            }
+
+            if ($(this).attr("value") == 3) {
+                $('#onlyemail').show('slow');
+            }
+            else
+            {
+                $('#onlyemail').hide('slow');
+            }
+
+        });
+    });
+    
+    function allfriendlist() {
+        $.ajax({
+            url: $('#allfriendlisting').val(),
+            data: '',
+            type: 'POST',
+            success: function(response) {
+                $('#tab1default2').html(response);
+            },
+            error: function() {
+                //$(e).text('Error...');
+            }
+
+        });
+    }
+     function invitewithsecret()
+    {
+        //alert(id);
+
+        var path = "{{path('invitewithsecret')}}";
+
+        var secretcode = $('#securityCodeid').val();
+        var avatarname = $('#myavatarid').val();
+        var type = 'invitewithsecret'
+        if (secretcode == '' || avatarname == '')
+        {
+            return false;
+        }
+
+        var form_data = {
+            secretcode: secretcode,
+            avatarname: avatarname,
+            type: type
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                //alert(response.msg);
+
+                if (response.status != 0) {
+                    $("#withsecret").hide('slow');
+                    if (response.msg == 'request_sent') {
+                        $("#tab3default4").append('<div class="col-md-12 class-inner"><p class="collection-text noresultfound" id="alertId">A request has been sent to ' + avatarname + '.</p></div>');
+                    } else if (response.msg == 'already_sent') {
+                        $("#tab3default4").append('<div class="col-md-12 class-inner"><p class="collection-text noresultfound" id="alertId">A request has already been sent to ' + avatarname + '.</p></div>');
+                    } else if (response.msg == 'already_friend') {
+                        $("#tab3default4").append('<div class="col-md-12 class-inner"><p class="collection-text noresultfound" id="alertId">' + avatarname + ' is already in your friend list.</p></div>');
+                    }
+
+                }
+                else
+                {
+                    $("#withsecret").hide('slow');
+                    $("#tab3default4").append('<div class="col-md-12 class-inner"><p class="collection-text noresultfound" id="alertId">' + avatarname + ' is not found.</p></div>');
+
+                }
+                $('#securityCodeid').val('');
+                $('#myavatarid').val('');
+            }
+        });
+    }
+    </script>
+    
+    <script type="text/javascript">
+		function onAddTag(tag) {
+			alert("Added an email id: " + tag);
+		}
+		function onRemoveTag(tag) {
+			alert("Removed an email id: " + tag);
+		}
+		
+		function onChangeTag(input,tag) {
+			alert("Changed an email id: " + tag);
+		}  
+		
+		var j =$.noConflict();
+		j(function() {	   
+			j('#tags_1').tagsInput({width:'auto'});
+		});
+	</script>

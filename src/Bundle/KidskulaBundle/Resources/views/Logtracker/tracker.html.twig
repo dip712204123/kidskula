@@ -1,0 +1,23 @@
+{% block content %} 
+    
+<script type="text/javascript">
+        var jq = $.noConflict();
+        
+        jq( document ).ready(function() {
+        setInterval(function() {
+            var path = "{{path('student-club-log')}}";					
+            var form_data = {
+                    section:'club'
+            };
+            jq.ajax({
+                    type: "POST",
+                    url: path,
+                    data: form_data,
+                    success: function(response) {
+                             //alert(response);
+                    }
+                });
+            }, 1000);
+        });
+    </script>
+{% endblock  %}

@@ -1,0 +1,267 @@
+{% extends 'BundleParentBundle:Layout:social_base.html.twig' %}
+ {% block content %} 
+<div class="container">
+    <div class="row student-social-dashboard">
+        <div class="col-md-12 leftpart"> 
+            <!--student-social-myfriends ends-->
+
+            <div class="row student-social-games"> 
+                <h2>{{allclubDetails.title}} 
+				
+				<span class="btn-group btn-group-primary pull-right" >
+	  <button type="button" class="btn btn-primary btn-md set-btn">Settings</button>
+	  <button type="button" class="btn btn-primary btn-md dropdown-toggle set-btn" data-toggle="dropdown">
+		  <span class="caret"></span></button>
+	  <ul class="dropdown-menu" style="margin-top:35px;">
+       {% if findmymembership is not empty %}
+		  <li><a class="club-join-btn md-trigger" data-modal="unsubmodal-{{allclubDetails.id}}" href="#">Unfollow Club</a></li>
+	  {% endif %}
+      </ul>
+  </span>
+				
+				
+				
+				
+
+                    <span class="btn btn-warning pull-right followed">Followed By : {{countfollower}}</span>
+                    <span class="pull-right arti-add">
+                     {% if findmymembership is not empty %}
+                        <button class="btn btn-success md-trigger" data-modal="modal-1" type="button">Add Article
+                           <i class="glyphicon glyphicon-plus"></i>
+                        </button> 
+                        {% else %}
+                         <a href="javascript:void(0)" class="md-trigger" data-modal="modal-{{allclubDetails.id}}"><button class="btn btn-success" type="button">Join Club
+                           <i class="glyphicon glyphicon-plus"></i>
+                        </button> </a>
+                        {% endif %}
+                    </span>
+                </h2>
+                 {#JOIN CLUB POPUP STARTS HERE#}
+                       <div class="md-modal md-effect-1" id="modal-{{allclubDetails.id}}">
+                        <div class="md-content">
+                            <h3>Join This Club Now  <span class="md-close pull-right" style="cursor: pointer;">X</button> </span></h3>
+                           
+                          <div class="joinclub-pop">
+						  
+				<div id="returnmsg{{allclubDetails.id}}" class="col-md-12 pop-msg"></div>
+						  
+                                <p><input type="checkbox" name="chkbox" id="chkbox{{allclubDetails.id}}"> I understand the terms and will abide by "GOOD MANNERS" rules of the club</p>
+                                
+                                <a href="javascript:void(0);" onclick="clubmember({{allclubDetails.id}})">
+				<button id="agreebtn{{allclubDetails.id}}" class="btn btn-warning">Agree</button></a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                {#JOIN CLUB POPUP CLOSES HERE#}
+                <div class="md-modal md-effect-1" id="modal">
+                    <div class="md-content">
+                        <h3>Add Your Article <span class="md-close pull-right" style="cursor: pointer;">X</button> </span></h3>
+                        <div class="article-form-main">
+
+                            <form role="form" action="{{path('myarticle-add')}}" class="article-form-inner" method="post" enctype="multipart/form-data">
+                            {{ form_row(form._token) }}
+                                <div class="required-field-block">
+                                    {#<input type="text" placeholder="Article Title" class="form-control">#}
+                                     {{ form_widget(form.title) }}
+                                     {{ form_errors(form.title) }}
+                                    <div class="required-icon">
+                                        <div class="text">*</div>
+                                        <input type="hidden" name="clubid" value="{{allclubDetails.id}}"/>
+                                    </div>
+                                </div>
+
+                                <div class="required-field-block">
+                                    {#<textarea rows="3" class="form-control" placeholder="Article Description"></textarea>#}
+                                    {{ form_widget(form.description) }}
+                                     {{ form_errors(form.description) }}
+                                    <div class="required-icon">
+                                        <div class="text">*</div>
+                                    </div>
+                                </div>
+                                {#<input name="" type="file" />#}
+                                {{ form_widget(form.file) }}
+                                {{ form_errors(form.file) }}
+                                <button class="btn btn-lg btn-warning pull-right" type="submit">Post Article</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+				
+
+
+
+                <div class="student-social-clubdetail-inner">
+                    <div class="row clubdetailtop">
+                        <p class="col-md-3 pull-left"> <img class="img-circle yolo-bor2"  src="{{asset('upload/clubimages/')}}{{ allclubDetails.path }}" alt=""></p>
+                        <p class="col-md-9 pull-right">
+                         {{allclubDetails.description|raw}}
+                        </p>
+                    </div> <!--clubdetailtop ends-->
+					{#************** Lower portion not for unjoined members***********************#}
+                    {% if findmymembership is not empty %}
+					 <div class="row recent_article_panel"> 
+                     <h2>Recent Article </h2>
+                     <div class="row">
+					 <div class="col-md-8 recent_article_list">
+                     <div class="odd-even"> 
+                     {% for recentArticles in clubArticles %}
+					  <div class="alert alert-warning-alt alert-dismissable">
+                        <span class="glyphicon glyphicon-certificate"></span>
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">
+                        ×</button>The new article named <a href="{{path('recentarticlelisting', { 'id': clubid , 'status': 'recent-articles','articleid':recentArticles.id})}}"><strong>{{recentArticles.title}}</strong></a> has been added on {{recentArticles.createDate|date("F jS \\a\\t g:i a ")}}
+                     </div>
+                     {% endfor %}
+					</div>
+					  
+					 </div>
+					 
+					 <div  class="col-md-4 articleinfo-btns">
+					 	<ul>
+							<li>
+                            <a href="{{path('articlelisting', { 'id': clubid , 'status': 'my-articles' })}}">
+                            <button class="btn btn-success btn-md btn3d" type="button"><span class="glyphicon glyphicon-ok"></span> My Articles</button> 
+                           	</a>
+                            </li>
+						
+                            <li>                    
+							<a href="{{path('articlelisting', { 'id': clubid , 'status': 'myfriend-articles' })}}">
+							<button class="btn btn-warning btn-md btn3d" type="button"><span class="glyphicon glyphicon-ok"></span> 
+							Friend's Articles
+							</button> 
+							</a>                            
+							</li>
+                            
+							<li>
+                            <a href="{{path('articlelisting', { 'id': clubid , 'status': 'most-commented-articles' })}}">
+                            <button class="btn btn-warning btn-md btn3d" type="button"><span class="glyphicon glyphicon-ok"></span> Most Commented Articles</button>
+                            </a>
+                            </li>
+                            
+							{#<li>
+                            <a href="{{path('articlelisting', { 'id': clubid , 'status': 'recent-articles' })}}">
+                            <button class="btn btn-success btn-md btn3d" type="button"><span class="glyphicon glyphicon-ok"></span> Recent Articles</button> 
+                            </a>
+                            </li>#}
+						</ul>
+					 </div> <!--articleinfo-btns ends-->
+					 </div>
+                    
+                     </div> <!--recent_article_panel ends-->
+                     {% endif %}
+                  {# upper portion not for unjoined members#}
+                </div> <!--student-social-clubdetail-inner ends-->
+            </div> <!--student-social-games ends-->
+
+        </div> <!--leftpart ends-->
+
+    </div> <!--student-social-dashboard ends-->
+</div>
+
+{#POPUP STARTS HERE#}
+                       <div class="md-modal md-effect-1" id="unsubmodal-{{allclubDetails.id}}">
+                        <div class="md-content">
+                            <h3>Leave This Club Now  <span class="md-close pull-right" style="cursor: pointer;">X</button> </span></h3>
+                           
+                          <div class="joinclub-pop">
+						  
+				<div id="returnmsg{{allclubDetails.id}}" class="col-md-12 pop-msg"></div>
+						  
+                                <p><input type="checkbox" name="unjoichkbox" id="unjoichkbox{{allclubDetails.id}}"> I understand the terms and conditions of the club</p>
+                                
+                                <a href="javascript:void(0);" onclick="unjoichkbox({{allclubDetails.id}})">
+				<button id="agreebtn{{allclubDetails.id}}" class="btn btn-warning">Agree</button></a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                       {#POPUP CLOSES HERE#}
+                       
+<script>
+
+    function unjoichkbox(id)
+    {
+       
+       if(!$('#unjoichkbox' + id).is(":checked"))
+       {
+           return false;
+       }
+        var clubid = id;
+        var path = "{{path('myclub-membership')}}";
+        
+            var form_data = {
+                clubid: clubid,
+                variable: 'unjoin'
+            };
+	   $("#agreebtn"+id).html("Loading...");
+            $.ajax({
+                type: "POST",
+                url: path,
+                data: form_data,
+                success: function(response) {
+                    //alert(response.msg);
+
+                    if (response.status == 1) {
+                       $("#returnmsg"+id).html(response.msg);
+                       setTimeout(function() {
+                       //location.reload();
+                       window.location.href = "{{path('myclub_list')}}";
+                        }, 1000); 
+                    }
+                    else
+                    {
+                        return false;
+
+                    }
+
+                }
+            });
+
+    }
+    
+    function clubmember(id)
+    {
+       
+       if(!$('#chkbox' + id).is(":checked"))
+       {
+           return false;
+       }
+        var clubid = id;
+        var path = "{{path('myclub-membership')}}";
+        
+            var form_data = {
+                clubid: clubid,
+                variable: 'join'
+            };
+	   $("#agreebtn"+id).html("Loading...");
+            $.ajax({
+                type: "POST",
+                url: path,
+                data: form_data,
+                success: function(response) {
+                    //alert(response.msg);
+
+                    if (response.status == 1) {
+                       $("#returnmsg"+id).html(response.msg);
+                       setTimeout(function() {
+                       location.reload();
+                        }, 1000); 
+                    }
+                    else
+                    {
+                        return false;
+
+                    }
+
+                }
+            });
+
+    }
+    
+    
+</script>
+
+{% endblock %}
+
+

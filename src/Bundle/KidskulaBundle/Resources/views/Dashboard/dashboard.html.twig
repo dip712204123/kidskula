@@ -1,0 +1,37 @@
+{% extends 'BundleKidskulaBundle:Layout:base.html.twig' %}
+{% block content %}
+ <div class="landingheading-top"> 
+Friends in your neighborhood
+</div>   
+<div class="container">
+<div class="row text1"> Vivamus nec ligula elit. <a href="#">KIDSKULA</a> neque id tortor porta commodo. Nulla sagittis varius leo, a ultricies purus pellentesque at.  </div>
+<div class="row landing-inner">
+{#    {{ dump(entities)}}#}
+{% if entities is not empty %} 
+    
+    {% for entity in entities  %}   
+    <div class="col-md-2 friendlist-home">
+    <img class="img-circle red-bor2" src="{{asset('bundles/KidskulaBundle/assets')}}/images/profilepic1.jpg" alt=""><br>
+    {{entity.firstName}} {{entity.lastName}}<br>
+    
+   {# <a href="{{path('friend_home', { 'username': entity.username })}}"><button class="btn btn-lg btn-success landing-frndbtn" type="button">Send request</button></a>#}
+    <a href="{{path('friend_home', {'username':entity.username}) }}"><button class="btn btn-lg btn-success landing-frndbtn" type="button">View Profile</button></a>
+    
+    </div>
+    {% endfor %}
+    
+{% else %}
+    <div class="col-md-12 friendlist-home" >
+    <img  src="{{asset('bundles/KidskulaBundle/assets')}}/images/error.png" alt="" height="25">
+    Oops..No friends found !!!
+    </div>   
+{% endif  %}
+
+</div> <!--row ends-->
+</div> 
+<!--container ends-->
+
+<!--Javascript Starts-->
+
+<!--Javascript ends-->
+{% endblock %}

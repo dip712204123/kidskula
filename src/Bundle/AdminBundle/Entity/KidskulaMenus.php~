@@ -1,0 +1,73 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaMenus
+ *
+ * @ORM\Table(name="kidskula_menus", indexes={@ORM\Index(name="fk_kidskula_menus_kidskula_site_blocks1_idx", columns={"kidskula_site_blocks_id"}), @ORM\Index(name="fk_kidskula_menus_kidskula_modules1_idx", columns={"kidskula_modules_modules_id"})})
+ * @ORM\Entity
+ */
+class KidskulaMenus
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="bigint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="routes", type="string", length=45, nullable=true)
+     */
+    private $routes;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ordering", type="integer", nullable=true)
+     */
+    private $ordering;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="status", type="boolean", nullable=true)
+     */
+    private $status;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime", nullable=true)
+     */
+    private $created;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaModules
+     *
+     * @ORM\OneToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaModules")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="kidskula_modules_modules_id", referencedColumnName="modules_id", unique=true)
+     * })
+     */
+    private $kidskulaModulesModules;
+
+    /**
+     * @var \Bundle\AdminBundle\Entity\KidskulaSiteBlocks
+     *
+     * @ORM\OneToOne(targetEntity="Bundle\AdminBundle\Entity\KidskulaSiteBlocks")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="kidskula_site_blocks_id", referencedColumnName="id", unique=true)
+     * })
+     */
+    private $kidskulaSiteBlocks;
+
+
+}

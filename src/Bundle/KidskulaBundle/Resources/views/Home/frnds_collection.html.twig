@@ -1,0 +1,31 @@
+   <div class="row collection-panel">
+       <h2>{{personal.firstName}}'s Collections <span class="totalcollection">{{totalcollection}}</span> {% if totalfriend !='0' %}<span class="viewcollection"><a href="{{path('mycollection_trade', { 'id': friendId })}}" title="Exchange Collections"><span style="color:#000;" class="glyphicon glyphicon-transfer change-ico"></span>{% endif %}</h2>
+                <div class="mt40">
+                    
+                    {% if collectionarray is empty %}
+                        <div class="col-md-12 col-sm-9 noresultfound">
+                            {{personal.firstName}} has not rewarded any collection item
+                        </div>
+                         
+                     {% else %}
+                        
+                         {% for collectionID in collectionarray  %}
+                        <article class="col-xs-4 col-sm-4 col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    {% set getcollectionimage = getcollectionimage(collectionID.collectionId) %}
+                                    <a href="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" title="Nature Portfolio" class="zoom" data-title="Amazing Nature" data-footer="The beauty of nature" data-type="image" data-target=".pop-up-2" data-toggle="modal">
+                                        <img src="{{asset('upload/collections/')}}{{ getcollectionimage|raw }}" alt="My collection" {% if collectionID.status == '2' %}class="collection-green-border"{% else %}class="collection-ass-border" {% endif %} />
+                                        <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+                                    </a>
+                                </div>
+
+                            </div>
+                            <p class="collection-text">  <a href="{{path('mycollection')}}">{#Max frnds#}</a></p>
+                        </article>
+                        {% endfor %}
+                        {% endif %}
+
+                </div> <!--mt40 ends-->
+
+            </div> <!--collection-panel ends-->

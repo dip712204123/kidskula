@@ -1,0 +1,26 @@
+club_article_list:
+    pattern:  /
+    defaults: { _controller: BundleAdminBundle:Article:index }
+club_article_status:
+    pattern:  /{id}/status
+    defaults: { _controller: "BundleAdminBundle:Article:status" }
+club_article_add:
+    pattern:  /add
+    defaults: { _controller: BundleAdminBundle:Article:add }
+article_page_form_create:
+    pattern:  /article_page_form_create
+    defaults: { _controller: "BundleAdminBundle:Article:create" }
+    requirements: { _method: post }
+article_page_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BundleAdminBundle:Article:edit" }
+article_page_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BundleAdminBundle:Article:update" }
+    requirements: { _method: post|put }
+article_page_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BundleAdminBundle:Article:delete" }
+article_page_show:
+    pattern:  /{id}/details
+    defaults: { _controller: "BundleAdminBundle:Article:show" }

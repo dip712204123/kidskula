@@ -1,0 +1,15 @@
+sendmessage:
+    pattern:  /sendmessage
+    defaults: { _controller: BundleKidskulaBundle:Home:sendmessage }
+
+messagedetails:
+    pattern:  /messagedetails-{messageid}-{replyid}
+    defaults: { _controller: BundleKidskulaBundle:Home:messagedetails }
+    
+replymessage:
+    pattern:  /replymessage-{messageid}
+    defaults: { _controller: BundleKidskulaBundle:Home:replymessage }
+    
+messagelist:
+    pattern:  /messagelist
+    defaults: { _controller: BundleKidskulaBundle:Home:messagelist }

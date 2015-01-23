@@ -1,0 +1,28 @@
+contact_question:
+    pattern:  /
+    defaults: { _controller: "BundleAdminBundle:ContactQuestion:index" }
+    
+contact_question_status:
+    pattern:  /{id}/contact_question_status
+    defaults: { _controller: "BundleAdminBundle:ContactQuestion:status" } 
+   
+contact_question_new:
+   pattern:  /new
+   defaults: { _controller: "BundleAdminBundle:ContactQuestion:new" }  
+   
+contact_question_form_create:
+    pattern:  /newcontactquestion_form_create
+    defaults: { _controller: "BundleAdminBundle:ContactQuestion:create" }
+    requirements: { _method: post }   
+ 
+contact_question_edit:
+    pattern:  /{id}/contact_question_edit
+    defaults: { _controller: "BundleAdminBundle:ContactQuestion:edit" }
+
+contact_question_update:
+    pattern:  /{id}/contact_question_update
+    defaults: { _controller: "BundleAdminBundle:ContactQuestion:update" }
+    
+contact_question_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BundleAdminBundle:ContactQuestion:delete" }

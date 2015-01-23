@@ -1,0 +1,129 @@
+{% extends 'BundleKidskulaBundle:Layout:base.html.twig' %}
+ {% block content %} 
+<div class="landingheading-top"> 
+    Contact Us
+</div>
+<div class="container">
+        {% block flash %}
+
+    <div class="col-md-12">  
+<div class="row" style="padding-top: 10px;">	
+   {% for flashSuccessMessage in app.session.flashbag.get('success') %} 
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ flashSuccessMessage }}
+        </div>
+            {% endfor %}
+            {% for flashErrorMessage in app.session.flashbag.get('error') %}  
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ flashErrorMessage }}
+        </div>
+            {% endfor %} 
+    </div>
+</div>
+        {% endblock %}
+    <div class="row contact-main">
+        <div class="col-md-8 leftpart"> 
+            <h2>Contact Us </h2>
+            <p class="con-main-text">
+                To provide feedback, please click <a href="#">Here</a><br>
+                If you are looking for commonly asked question, please look at the frequently asked
+                question <a href="#">Here</a>.<br>
+                Are you a registered user? If yes, please login and contact us so that we can respond to you quickly. If you are not registered user, please complete the form below.
+            </p>
+            <form class="form-horizontal landinglogin-frm" role="form" method='post' action="{{path('mycontacts')}}">
+                <fieldset>
+                    <!-- Form Name -->
+                      <div class="form-group">
+
+                        <div class="col-sm-12">
+                             {{ form_widget(form.usertype) }}
+                             {{ form_errors(form.usertype) }}
+              
+                        </div>
+                    </div>
+                      <div class="form-group">
+
+                        <div class="col-sm-12">
+                            {{ form_widget(form.question_regarding) }}
+                            {{ form_errors(form.question_regarding) }}
+              
+                        </div>
+                    </div>
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            {{ form_widget(form.firstName) }}
+			    {{ form_errors(form.firstName) }}
+                        </div>
+
+
+                        <div class="col-sm-6" >
+                           {{ form_widget(form.lastName) }}
+			   {{ form_errors(form.lastName) }}
+                        </div>
+                    </div>
+                  
+
+                    <!-- Text input-->
+       
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            {{ form_widget(form.senderemail) }}
+			    {{ form_errors(form.senderemail) }}
+                            <p class="reg-info-text"> 
+                            {{ form_widget(form.contactmebymail) }}
+			    {{ form_errors(form.contactmebymail) }} It is okay to contact me by email. 
+                            </p>
+                        </div>
+                        
+                    </div>
+
+                  <div class="form-group">
+                        <div class="col-sm-12">
+                            {{ form_widget(form.comment) }}
+			    {{ form_errors(form.comment) }}
+                           
+                        </div>
+                         {{ form_widget(form._token) }}
+                    </div>
+                  
+
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12"> <button type="submit" class="btn btn-primary col-md-12 searchfriendbtn">Click here to submit your comments</button></div>
+                        
+                       {# <div class="col-xs-12 col-md-12"><a class="btn btn-success btn-block btn-lg contactdbtn" href="#">Click here to submit your comments</a></div>#}
+                    </div>
+                    <br><br>
+                </fieldset>
+            </form>
+        </div> <!--leftpart ends here-->
+        <div class="col-md-4 rightpart"> 
+            <div class="quickcontact-panel"> 
+                <h2>Quick Contact </h2>
+                <div class="inner">
+                    <p> You could also reach us via <a href="#">Email</a>, <a href="#">Phone</a> or <a href="#">Fax</a></p>
+                    <div class="row con-icotabs">
+                        <div class="col-md-2 pull-left"><img src="{{asset('bundles/KidskulaBundle/assets')}}/images/con_ph_ico.png" alt=""> </div>
+                        <div class="col-md-8 pull-right">+1-408-555-1212 </div>
+                    </div> <!--con-icotabs ends-->
+
+                    <div class="row con-icotabs">
+                        <div class="col-md-2 pull-left"><img src="{{asset('bundles/KidskulaBundle/assets')}}/images/con_mail_ico.png" alt=""> </div>
+                        <div class="col-md-8 pull-right">info@KidsKula.com </div>
+                    </div> <!--con-icotabs ends-->
+
+                    <div class="row con-icotabs">
+                        <div class="col-md-2 pull-left"><img src="{{asset('bundles/KidskulaBundle/assets')}}/images/con_print_ico.png" alt=""> </div>
+                        <div class="col-md-8 pull-right">+1-408-555-1212 </div>
+                    </div> <!--con-icotabs ends-->
+
+                </div> <!--inner ends here-->
+            </div> <!--quickcontact-panel ends-->
+        </div> <!--rightpart ends here-->
+    </div> <!--contact-main ends--> 
+</div> <!--container ends-->
+
+{% endblock%}

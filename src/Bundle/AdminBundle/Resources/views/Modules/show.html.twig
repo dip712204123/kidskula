@@ -1,0 +1,129 @@
+{% extends 'BundleAdminBundle:layout:base.html.twig' %}
+{% block content %}
+<div class="container-fluid">
+    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title">
+        Message Details
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{path('bundle_admin_dashboard')}}">Home</a> 
+            <i class="icon-angle-right"></i>
+        </li>
+        <li>
+           
+            <a href="{{path('contact_us')}}">Contact Messages</a> 
+            <i class="icon-angle-right"></i>
+        </li>
+        <li><a href="{{path('contact_us')}}">Message Details</a></li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB-->
+
+    <div class="row-fluid">
+        <div class="span12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="tools">
+                        <a href="{{path('contact_us')}}" class="btn icn-only"  title="Back">
+                            <i class="m-icon-swapleft"></i></a>									
+                    </div>
+                </div>                            
+
+                <div class="portlet-body form">
+                    <form class="form-horizontal">
+                    	{% for flashSuccessMessage in app.session.flashbag.get('success_message') %}                
+                        <div class="alert alert-success">
+                            <button class="close" data-dismiss="alert"></button>
+                                {{ flashSuccessMessage }}
+                        </div>
+                        {% endfor %}
+
+                        {% for flashErrorMessage in app.session.flashbag.get('error_message') %}                
+                        <div class="alert alert-error">
+                            <button class="close" data-dismiss="alert"></button>
+                                {{ flashErrorMessage }}
+                        </div>
+                        {% endfor %}
+                    </form>
+                    <!-- BEGIN FORM-->
+                    <form name="" class="form-horizontal"  method="POST" action="">
+                   
+                        <div i>
+                            <div class="control-group">
+                                <label  class="control-label required">Sender email</label>
+                                  
+                                <div class="controls ">
+                                    <input type="text"  class="span6 m-wrap required" value="{{ entities.senderemail }}" readonly /> 
+                                </div>
+                                        
+                            </div>
+                            <div class="control-group">
+                                <label  class="control-label required">Regarding</label>
+                                  
+                                <div class="controls ">
+                                    {# <input type="text"  class="span6 m-wrap required" value="{{ entities.title }}" readonly /> #} 
+                                    
+                                    <input type="text"  class="span6 m-wrap required" value="{% if entities.questionregarding %}{{ entities.questionregarding }}
+                                        {% else %}{{ entities.questionid }}{% endif %}" readonly/>
+                                </div>
+                                        
+                            </div>
+                            
+                            <div class="control-group">
+                                <label  class="control-label required">User Type</label>                                  
+                                <div class="controls ">
+                                     <input type="text"  class="span6 m-wrap required" value="{{ entities.registeredas }}" readonly />
+                                </div>
+                                        
+                            </div>
+                            
+                            <div class="control-group">
+                                <label  class="control-label"  for="bundle_adminbundle_kidskulastaticmenus_configure_description">Description
+                                </label>
+                                <div class="controls ">
+                                    <textarea  rows="6" class="span12  m-wrap" readonly >{{ entities.comment }}</textarea>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label  class="control-label required">Send Date</label>
+                                  
+                                <div class="controls ">
+                                   <input type="text"  class="span6 m-wrap required" value="{{ entities.getDate|date("F jS \\a\\t g:ia") }}" readonly />
+                                </div>
+                                        
+                            </div>
+                          
+                     </div>
+                       </form>
+                </div>
+                    
+                    <!-- END FORM-->
+                </div>
+            </div>
+            <!-- END VALIDATION STATES-->
+        </div>
+    </div>
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/data-tables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/data-tables/DT_bootstrap.js"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
+   
+    <script type="text/javascript" src="{{asset('bundles/BundleAdmin/assets')}}/admin/scripts/common.js"></script>
+    <script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/table-managed.js"></script>
+
+    <script src="{{asset('bundles/BundleAdmin/assets')}}/scripts/form-validation.js"></script> 
+    <!-- END PAGE LEVEL STYLES -->    
+    
+    <!-- END JAVASCRIPTS -->
+
+</div>                
+
+{% endblock content %}
+
+

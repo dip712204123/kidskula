@@ -1,0 +1,10 @@
+bundle_common:
+    path:     /
+    defaults: { _controller: BundleCommonBundle:Index:index }
+    
+bundle_common_webservice:
+    resource: "@BundleCommonBundle/Resources/config/routing/webservice.yml"
+    prefix:   /webservice  
+
+    
+    

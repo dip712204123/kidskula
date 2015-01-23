@@ -1,0 +1,4 @@
+services:
+#    bundle_kidskula.example:
+#        class: Bundle\KidskulaBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

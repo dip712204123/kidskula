@@ -1,0 +1,485 @@
+{% extends 'BundleKidskulaBundle:Layout:social_base.html.twig' %}
+ {% block content %} 
+{#<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>#}
+<div class="container">
+    <div class="row studentprofile_seetings_main">
+        <div class="col-md-8 leftpart"> 
+
+            <div class="membership_tab">
+                <h2>My Membership </h2>
+
+
+                <div class="col-md-12">  
+                    <div class="row" style="padding-top: 10px;">	
+                    {% for flashSuccessMessage in app.session.flashbag.get('success_image') %} 
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        {{ flashSuccessMessage }}
+                        </div>
+                    {% endfor %}
+                    {% for flashErrorMessage in app.session.flashbag.get('error_image') %}  
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        {{ flashErrorMessage }}
+                        </div>
+                    {% endfor %} 
+                    </div>
+                </div>
+
+                <div class="toppanel row">
+                    <div class="col-md-8 membershiptext">
+                        <ul>
+                            <li>Membership Type: <span>FREE</span></li>
+                            <li>Membership Code: <span>{{entities.securityCode}}</span> </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4"><button type="button" class="btn btn-lg btn-success changecembership_btn" onclick='changemembership();'>Change Membership</button> </div><br>
+                    <div id='membership' class='membershipclass' style='display: none;'>This section is in process</div>
+                </div> <!--toppanel ends-->
+
+                <!--  popup image -->
+                <div class="modal fade pop-up-1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                                <h4 class="modal-title" id="myLargeModalLabel-1">Set your profile picture. </h4>
+                            </div>
+                            <div class="modal-body">
+                               {#profile image change start#} 
+
+                                <form id="form"  method="POST" action="{{ path('profilechangepicture') }}" enctype="multipart/form-data">{# {{ form_enctype(upload_picture) }}#}
+                                    <p></p>
+
+                                    <div class="jc-demo-box">
+                         {%  if userprofile.path is defined and userprofile.path is not null  %}
+                                        <!--<img src="{{asset('upload/profilepicture/resizedimages/')}}{{userprofile.path}}" id="target" alt="[Jcrop Example]" />-->
+                                        <img src="{{asset('')~userprofile.uploadImagePath~userprofile.profileImagePath~userprofile.profileResizeImagePath~userprofile.path}}" id="target" alt="[Jcrop Example]" />                           
+                          {% else %}
+                                        <img src="{{asset('bundles/BundleAdmin/assets')}}/img/admin_profile_no_image.gif" id="target" alt="[Jcrop Example]" />
+                          {% endif %}   
+                                    </div>
+                                    <div class="space10"></div>
+                                    <p class="lead separator top">Adjust your profile picture</p>
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="input-append">
+                                            <span class="btn btn-file">
+                             {{form_widget(profile_pic)}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>                                                    
+                                    <div class="space10"></div>                                                   
+                                    <div class="submit-btn">
+                                        <button type="submit" class="btn green">
+                                            <i class="icon-upload-alt"></i>
+                                            Upload Picture
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <div class="jc-demo-box">  
+                     {%  if userprofile.path is defined and userprofile.path is not null  %}       
+
+                                    <div id="preview-pane">
+
+                                        <div class="preview-container"> 
+                          {% if userprofile.profileCroppedImage is defined and userprofile.profileCroppedImage is not null %}
+
+                       {#  <img src="{{asset('upload/profilepicture/cropedimages/')}}{{userprofile.profileCroppedImage}}" class="jcrop-preview" alt="Preview" /> #}                  
+                       <img src="{{asset('')~userprofile.uploadImagePath~userprofile.profileImagePath~userprofile.profileResizeImagePath~userprofile.profileCroppedImage}}" class="jcrop-preview" alt="Preview" />
+                           {% else %}
+
+ <!--<img src="{{asset('upload/profilepicture/resizedimages/')}}{{userprofile.path}}" class="jcrop-preview" alt="Preview" />  -->
+                                            <img src="{{asset('')~userprofile.uploadImagePath~userprofile.profileImagePath~userprofile.profileResizeImagePath~userprofile.path}}" class="jcrop-preview" alt="Preview" />                           
+                           {% endif %}
+
+                                        </div>
+                                        <form id="crop-form" action="{{ path('profilecroppicture') }}" method="post">
+
+                                            <input id="x" type="hidden" name="x" value="{% if param.x is defined and param.x is not null %} {{param.x}} {% else %} 60 {% endif %}">
+                                            <input id="y" type="hidden" name="y" value="{% if param.y is defined and param.y is not null %} {{param.y}} {% else %} 70 {% endif %}">
+                                            <input id="x2" type="hidden" name="x2" value="{% if param.x2 is defined and param.x2 is not null %} {{param.x2}} {% else %} 0 {% endif %}">
+                                            <input id="y2" type="hidden" name="y2" value="{% if param.y2 is defined and param.y2 is not null %} {{param.y2}} {% else %} 0 {% endif %}">
+                                            <input type="hidden" id="img_width" name="img_width" value="{% if param.img_width is defined and param.img_width is not null %} {{param.img_width}} {% else %} 240 {% endif %}" />
+                                            <input type="hidden" id="img_height" name="img_height" value="{% if param.img_height is defined and param.img_height is not null %} {{param.img_height}} {% else %} 130 {% endif %}" /> 
+
+                                            <button id="crop-button" class="btn green" value="Save">Save</button>
+                                        </form>  
+
+                                    </div>   
+                                                      {% endif %}                                                 
+                                </div> 
+
+
+                            {#profile image change stop#} 
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal mixer image -->
+                <!--  popup image -->
+
+                <div class="midpanel row">
+                    <div class="col-md-8 membershippic">
+                      {%  if userprofile.profileCroppedImage is defined and userprofile.profileCroppedImage is not null  %}                            	
+                               
+                        <img src="{{asset('')~userprofile.uploadImagePath~userprofile.profileImagePath~userprofile.profileCropImagePath~userprofile.profileCroppedImage}}" class="img-circle" width="150" height="150" alt=""/>
+                      
+                      {% elseif userprofile.path is defined and userprofile.path is not null%}
+                        <img src="{{asset('upload/profilepicture/')}}{{userprofile.path}}" class="img-circle" alt="" width="150" height="150" />
+                      {% else %}
+                        <!--<img src="{{asset('bundles/BundleAdmin/assets')}}/img/profile/profile-img.png" alt="" />-->
+                        <img src="{{asset('bundles/BundleAdmin/assets')}}/img/admin_profile_no_image.gif" class="img-circle" alt="" width="150" height="150" />
+                        {% endif %} </div>
+                    <div class="col-md-4"><button type="button" data-toggle="modal" data-target=".pop-up-1" class="btn btn-lg btn-success changecembership_btn">Change Profile Image</button> </div>
+                </div> <!--midpanel ends-->
+
+
+
+                <div class="bottompanel row">
+                    <h3>Choose your avatar <a href="javascript:void(0)" style="position:relative;">What's This <div class="tool-tip top">To choose your avatar,please click on these avatar image and set your avatar name</div></a></h3>
+
+
+
+                    <div class="inner">
+                        {% if allAvatar is empty %}
+                        <div class="col-md-12 noresultfound ">
+                            There are no avatars right now
+                        </div>
+                                         {% else %}
+                        <div class='col-md-12'>
+                            <div class="carousel slide media-carousel" id="media">
+                                <div class="carousel-inner">
+                                    {% for avatar in allAvatar  %}
+                                        {% if loop.index==1 %}
+                                        <div class="item  active">
+                                            <div id="dot-nav" class="row">
+                                        {% endif %}
+                                              
+                                        
+                                          <div class="col-md-3">
+                                                <a class="thumbnail" href="javascript:void(0);">
+                                                    {#<img  data-toggle="modal" data-target="#lightbox" class="img-circle awesome-tooltip" title="About" alt="" src="http://placehold.it/150x150">#}
+
+                                                    <img data-toggle="modal" data-target="#lightbox" onclick="avatarset({{avatar.id}});" class="img-circle awesome-tooltip" src="{{asset('upload/avatar/')}}{{avatar.path}}"  width="50" height="50" alt=""> 
+                                            {% if entities.avatarid==avatar.path %}
+                                                    Selected
+                                            {% endif %}
+                                                </a>
+
+                                            </div> 
+                                                {% if loop.last %}
+                                                    </div>
+                                                </div>
+                                        
+                                                {% elseif loop.index!=1 and  loop.index%4==0  %}
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="row">
+                                        {% endif %} 
+         
+                                    
+                                    {% endfor %}
+                                </div>
+                                <a data-slide="prev" href="#media" class="left carousel-control"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                                <a data-slide="next" href="#media" class="right carousel-control"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                            </div>                          
+                        </div>
+
+                        <div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h3> Set Your Avatar Name </h3>
+                                        <form class="avatar-set">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                <span class="glyphicon glyphicon-remove" style="font-size:11px; color:#fff; line-height:17px;"></span>
+                                            </button>
+                                            <input name="avatarname" id="avatarname" type="text">
+                                            <input name="" onclick="avtarsave();" id="avtarbtnId" type="button" value="save">
+                                            <input type="hidden" id="hiidenavtarId" value="">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+{% endif %}
+                    </div> 
+
+                    <!--inner ends-->
+                </div> <!--bottompanel ends-->
+
+
+
+            </div> <!--membership_tab ends-->
+
+{% block flash %}
+
+            <div class="col-md-12">  
+                <div class="row" style="padding-top: 10px;">	
+   {% for flashSuccessMessage in app.session.flashbag.get('success') %} 
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ flashSuccessMessage }}
+                    </div>
+            {% endfor %}
+            {% for flashErrorMessage in app.session.flashbag.get('error') %}  
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ flashErrorMessage }}
+                    </div>
+            {% endfor %} 
+                </div>
+            </div>
+        {% endblock %}
+
+            <form id="form" class="studentprofile_settings_frm" method="post" action="{{path('profilesetting')}}">
+                <h2>Profile Settings </h2>
+                <p class="reg-info-text"><em><strong>My primary email address</strong></em></p>
+                <div class="form-group">
+
+                            {{ form_widget(form.recovemail) }}
+			    {{ form_errors(form.recovemail) }}
+
+                </div>
+                <p class="reg-info-text"><em><strong>My parent's email address</strong></em></p>
+                <div class="form-group">
+                    {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-sm-6"><p class="reg-info-text"><em><strong>My first name</strong></em></p>
+                            {{ form_widget(form.firstName) }}
+			    {{ form_errors(form.firstName) }}
+                    </div>
+
+
+                    <div class="col-sm-6" > <p class="reg-info-text"><em><strong>My last name</strong></em></p>
+                           {{ form_widget(form.lastName) }}
+			   {{ form_errors(form.lastName) }}
+                    </div>
+                </div>
+                {# <div class="form-group">
+                     
+                     {{ form_widget(form.schoolName) }}
+                     {{ form_errors(form.schoolName) }}
+                   </div>#}
+                <p class="reg-info-text"><em><strong>My grade</strong></em></p>
+                <div class="form-group">
+                        {{ form_widget(form.gradeId, {value: gradeId } ) }}
+
+                        {{ form_errors(form.gradeId) }}
+
+                    <!--styled-select ends-->
+                </div>
+                <p class="reg-info-text"><em><strong>My country name</strong></em></p>
+                <div class="form-group">
+                        {{ form_widget(form.country, {value: country } ) }}
+
+                        {{ form_errors(form.country) }}
+
+                    <!--styled-select ends-->
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                        <p class="reg-info-text"><em><strong>My state name</strong></em></p>
+                        <div class="form-group">                        
+						 {{ form_widget(form.userState) }}
+						 {{ form_errors(form.userState) }}
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                        <p class="reg-info-text"><em><strong>My city name</strong></em></p>
+                        <div class="form-group">
+						 {{ form_widget(form.city) }}
+						 {{ form_errors(form.city) }}
+
+                        </div>
+                    </div>	
+
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                        <p class="reg-info-text"><em><strong>My zip name</strong></em></p>    
+                        <div class="form-group">                       
+						   {{ form_widget(form.zip) }}
+						   {{ form_errors(form.zip) }}
+                        </div>
+                    </div>
+                </div>
+
+
+
+            {{ form_widget(form._token) }}
+
+
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-12"> <button type="submit" class="btn btn-primary col-md-12 searchfriendbtn">Save my profile settings</button></div>
+                </div>
+
+            </form> <!--studentprofile_settings_frm ends-->
+        </div> <!--leftpart ends here-->
+        <div class="col-md-4 rightpart"> 
+            <div class="privacy-panel"> 
+                <h2>Privacy & Other Settings </h2>
+                <div class="inner">
+                    {#<div class="row setting-option">
+                        <h3 class="col-md-12">Who Can see my images : </h3>
+                        <div class="col-xs-6 col-sm-4"><input name="" type="checkbox" value=""> <span> Friends</span></div>
+                        <div class="col-xs-6 col-sm-4"><input name="" type="checkbox" value=""> <span> Anyone</span></div>
+                        <div class="col-xs-6 col-sm-4"><input name="" type="checkbox" value=""> <span> Only Me</span></div>
+                    </div>#} <!--setting-option ends-->
+
+                    <div class="row setting-option">
+                        <h3 class="col-md-12">Who Can see my Post : </h3>
+                        <div class="col-xs-6 col-sm-4"><input name="check_list[]" {% if '1' in visibleto.visibletowhom %} checked {% endif %} value="1" type="checkbox" > <span> Friends</span></div>
+                        <div class="col-xs-6 col-sm-4"><input name="check_list[]" {% if '2' in visibleto.visibletowhom %} checked {% endif %} value="2" type="checkbox" > <span> Parents</span></div>
+                        <div class="col-xs-6 col-sm-4"><input name="check_list[]"{% if '0' in visibleto.visibletowhom %} checked {% endif %} value="0" type="checkbox"  > <span> Only me</span></div>
+                    </div> <!--setting-option ends-->
+
+                   {# <div class="row setting-option">
+                        <h3 class="col-md-12">Frequency of Lesson: </h3>
+                        <div class="col-xs-6 col-sm-4"><input name="" type="checkbox" value=""> <span> Daily</span></div>
+                        <div class="col-xs-6 col-sm-4"><input name="" type="checkbox" value=""> <span> Weekly</span></div>
+                    </div> #}<!--setting-option ends-->
+
+                   {# <div class="row setting-option">
+                        <div class="col-xs-12 col-sm-12"><input name="" type="checkbox" value=""> <span> Show games categories</span></div>
+                    </div>#} <!--setting-option ends-->
+
+                   {# <div class="row setting-option">
+                        <div class="col-xs-12 col-sm-12"><input name="" type="checkbox" value=""> <span> Allow Subjects</span></div>
+                    </div>#} <!--setting-option ends-->
+
+                    <div class="row setting-option">
+                        <div class="col-xs-12 col-sm-12 redtext"><input name="" id="deactivate" {% if activation =='0' %} checked {% endif %} type="checkbox" value=""> <span> Hide My Account</span></div>
+                        <div class="col-xs-12 col-sm-12 smltext">This is a general setting, where you can hide or deactive your profile and your profile will be invisible. </div>
+                    </div> <!--setting-option ends-->
+
+                    <div class="row setting-option">
+                        <div class="col-xs-12 col-md-12">
+                            <input class="btn btn-success btn-block btn-lg savesettings_btn" id="save_value" onclick="proSettings();" name="" value="Save my privacy settings" type="submit"> 
+                        </div>
+                    </div>
+                    <div class="succ_alert" id="statmsg"></div>
+                </div> <!--inner ends here-->
+            </div> <!--privacy-panel ends-->
+        </div> <!--rightpart ends here-->
+    </div> <!--studentprofile_seetings_main ends--> 
+</div> 
+<!--container ends-->
+{%  if userprofile.path is defined and userprofile.path is not null  %}        
+<link href="{{asset('bundles/BundleAdmin/assets')}}/plugins/jcrop/css/jquery.Jcrop.css" rel="stylesheet"/>    
+<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/jcrop/js/jquery.min.js"></script>
+<script src="{{asset('bundles/BundleAdmin/assets')}}/plugins/jcrop/js/jquery.Jcrop.js"></script>
+<script src="{{asset('bundles/BundleAdmin/assets')}}/custom/js/image_crop.js"></script>
+    {% endif %}
+<link href="{{asset('bundles/BundleAdmin/assets')}}/custom/css/image_crop.css" rel="stylesheet"/>
+<script>
+                                function changemembership()
+                                {
+                                    $("#membership").show('slow');
+                                    $("#membership").fadeOut(5000);
+                                }
+
+                                function proSettings()
+                                {
+                                    var val = [];
+                                    $(':checkbox:checked').each(function(i) {
+                                        val[i] = $(this).val();
+                                    });
+                                    //alert(val);
+                                    if ($('#deactivate').is(":checked"))
+                                    {
+                                        var deactivate = '0';
+                                    }
+                                    else
+                                    {
+                                        var deactivate = '1';
+                                    }
+                                    var path = "{{path('profilesidesetting')}}";
+                                    // alert(deactivate);
+                                    var form_data = {
+                                        visible: val,
+                                        deactivate: deactivate
+
+                                    };
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: path,
+                                        data: form_data,
+                                        success: function(response) {
+                                            //alert(response.status);
+
+                                            if (response.status != 0) {
+                                                $("#statmsg").show();
+                                                $("#statmsg").html(response.msg);
+                                                $("#statmsg").fadeOut(5000);
+                                            }
+                                            else
+                                            {
+                                                $("#statmsg").show();
+                                                $("#statmsg").html('Not saved');
+                                                $("#statmsg").fadeOut("slow");
+
+                                            }
+
+                                        }
+                                    });
+                                }
+
+                                function avatarset(id)
+                                {
+                                    $("#hiidenavtarId").val(id);
+
+                                }
+
+                                function avtarsave()
+                                {
+
+                                    var textval = $('#avatarname').val();
+                                    var path = "{{path('profileavatar')}}";
+                                    var hiidenavtarId = $('#hiidenavtarId').val();
+
+                                    var form_data = {
+                                        textval: textval,
+                                        avatarid: hiidenavtarId
+
+                                    };
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: path,
+                                        data: form_data,
+                                        success: function(response) {
+                                            //alert(response.status);
+
+                                            if (response.status != 0) {
+                                                $('#lightbox').hide('slow');
+                                                setTimeout(function() {
+                                                    window.location.reload();
+                                                }, 500);
+                                            }
+                                            else
+                                            {
+                                                $('#lightbox').hide('slow');
+
+                                                setTimeout(function() {
+                                                    window.location.reload();
+                                                }, 500);
+                                            }
+
+                                        }
+                                    });
+                                }
+
+
+</script>
+
+{% endblock  %}

@@ -1,0 +1,32 @@
+<?php
+
+namespace Bundle\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * KidskulaSiteBlocks
+ *
+ * @ORM\Table(name="kidskula_site_blocks")
+ * @ORM\Entity
+ */
+class KidskulaSiteBlocks
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="block_name", type="string", length=45, nullable=true)
+     */
+    private $blockName;
+
+
+}

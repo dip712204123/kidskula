@@ -1,0 +1,9 @@
+parent-home:
+    pattern:  /
+    defaults: { _controller: BundleParentBundle:Home:index }
+frndrequestcheck:
+    pattern:  /frndrequestcheck
+    defaults: { _controller: BundleParentBundle:Home:frndrequestcheck }
+allowfriend:
+    pattern:  /allowfriend
+    defaults: { _controller: BundleParentBundle:Home:allowfriend }

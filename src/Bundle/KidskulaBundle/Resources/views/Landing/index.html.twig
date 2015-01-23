@@ -1,0 +1,152 @@
+{% extends 'BundleKidskulaBundle:Layout:base.html.twig' %}
+{% block content %}
+    
+<div class="landingheading-top"> 
+Find Friends in your neighborhood
+</div>
+				
+<div class="container">
+<div class="row landing-inner">
+<div class="col-md-6 leftpart">
+<p> Vivamus nec ligula elit. <a href="#">KIDSKULA</a> neque id tortor porta commodo. Nulla sagittis varius leo, a ultricies purus pellentesque at. 
+<br>
+Cras eu lectus ac lorem pharetra iaculis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpi.
+</p>
+<p><img style="margin:0 auto" class="img-responsive" src="{{asset('bundles/KidskulaBundle/assets')}}/images/landing-botomimg.png" alt=""> </p>
+
+</div> <!--leftpart ends-->
+<div class="col-md-6 rightpart"> 
+<form class="form-horizontal landinglogin-frm" role="form" method='post' action="{{path('frnd_search_index')}}">
+        <fieldset>
+          <!-- Form Name -->
+          <!-- Text input-->
+          <div class="form-group">
+            <div class="col-sm-6">
+              <input type="text" name="firstname" placeholder="First Name" class="form-control" required>
+            </div>
+         
+          
+            <div class="col-sm-6" >
+              <input type="text" name="lastname" placeholder="Last Name" class="form-control" required>
+            </div>
+          </div>
+          <div class="form-group">
+          
+            <div class="col-sm-12">
+                 <select class="form-control sml-frm" name="selectgrade">
+                     <option value="">Select Grade</option> 
+                     {% for entity in entities  %}
+                    
+                    <option value="{{ entity.id }}">{{ entity.grade }}</option> 
+                    {% endfor %}
+                </select>
+              {#<input type="text" placeholder="Select Grade" class="form-control sml-frm" required>#}
+            </div>
+          </div>
+
+          <!-- Text input-->
+        {# School Search option#}
+           <div class="form-group">
+            <div class="col-sm-12">
+              <input type="text" name="schoolname" id="schoolname" placeholder="Enter School Name" class="form-control "  onkeyup="getautosuggest();">
+              {#<img src="{{asset('bundles/KidskulaBundle/assets')}}/images/loading.gif" id="loading">#}
+             </div>
+            <div id="ajax_response"></div>  
+          </div>
+        
+          {# School Search option end#}
+          <!-- Text input-->
+          <div class="form-group">
+            <div class="col-sm-4">
+              <select class="form-control sml-frm" name="country">
+                    <option value="">Select Country</option> 
+                     {% for country in countries  %}
+                    <option value="{{country.id }}">{{country.country_name }}</option> 
+                    
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-sm-4">
+              <input type="text" placeholder="State" class="form-control sml-frm" name="state" >
+            </div>
+			
+            <div class="col-sm-4">
+              <input type="text" placeholder="City" class="form-control sml-frm" name="city" >
+            </div>
+          </div>
+
+
+
+
+          <div class="form-group">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary col-md-12 searchfriendbtn">Search Friends</button>
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+</div> <!--rightpart ends-->
+</div> <!--row ends-->
+</div>
+
+{% block customScript %}
+<script>
+   
+function getautosuggest()
+{
+                $(document).click(function(){
+		$("#ajax_response").fadeOut('slow');
+	        });
+                var schoolName = $('#schoolname').val();
+         	var path= "{{path('bundle_search_data')}}";
+          
+                //alert(schoolName.length);
+               if(schoolName!='')	
+                {//alert(event.keyCode);
+               
+                                var form_data = {
+                                 schoolname: schoolName
+
+                                };
+                
+				 $.ajax({
+				   type: "POST",
+				   url: path,
+				   data: form_data,
+				   success: function(msg){	
+					if(msg != 0)
+					  $("#ajax_response").fadeIn("slow").html(msg);
+					else
+					{
+					  $("#ajax_response").fadeIn("slow");	
+					  $("#ajax_response").html('<div style="text-align:left;">No Matches Found</div>');
+					}
+					
+				   }
+				 });
+		
+               
+                }
+                 else
+		$("#ajax_response").fadeOut("slow");
+      
+      $("#ajax_response").mouseover(function(){
+		$(this).find("li a:first-child").mouseover(function () {
+			  $(this).addClass("selected");
+		});
+		$(this).find("li a:first-child").mouseout(function () {
+			  $(this).removeClass("selected");
+		});
+		$(this).find("li a:first-child").click(function () {
+			  $("#schoolname").val($(this).text());
+			  $("#ajax_response").fadeOut("slow");
+		});
+	});
+	
+ }
+
+</script>
+{% endblock  %}
+{% endblock %}

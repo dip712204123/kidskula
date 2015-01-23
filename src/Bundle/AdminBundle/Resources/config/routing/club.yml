@@ -1,0 +1,23 @@
+club_page_list:
+    pattern:  /
+    defaults: { _controller: BundleAdminBundle:Club:index }
+club_page_add:
+    pattern:  /add
+    defaults: { _controller: BundleAdminBundle:Club:new }
+club_page_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BundleAdminBundle:Club:edit" }
+club_page_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BundleAdminBundle:Club:update" }
+    requirements: { _method: post|put }
+club_page_status:
+    pattern:  /{id}/status
+    defaults: { _controller: "BundleAdminBundle:Club:status" }
+     
+club_page_form_create:
+    pattern:  /club_page_form_create
+    defaults: { _controller: "BundleAdminBundle:Club:create" }
+    requirements: { _method: post }
+    
+    

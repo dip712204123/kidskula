@@ -1,0 +1,3 @@
+notificationSeen:
+    pattern:  /notificationSeen
+    defaults: { _controller: BundleKidskulaBundle:Notification:notificationSeen }

@@ -1,0 +1,213 @@
+{% extends 'BundleParentBundle:Layout:base.html.twig' %}
+{% block content %}
+<div class="landingheading-top"> 
+	Parent Registration
+</div>   
+<div class="container">
+
+	<div class="row" style="padding-top: 10px;">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">			
+            {% for flashSuccessMessage in app.session.flashbag.get('success_message') %} 
+                 <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ flashSuccessMessage }}
+                </div>
+            {% endfor %}
+            {% for flashErrorMessage in app.session.flashbag.get('error_message') %}  
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ flashErrorMessage }}
+                </div>
+            {% endfor %} 
+         </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">   
+          		<div class="alert alert-danger" role="alert" id="error_msg_div" style="display:none">
+                </div>
+                {% if form_errors(form.firstName) is not empty or form_errors(form.lastName) is not empty or form_errors(form.email.first) is not empty or form_errors(form.email.second) is not empty or form_errors(form.country) is not empty or form_errors(form.user_state) is not empty or form_errors(form.city) is not empty or form_errors(form.zip) is not empty or form_errors(form.year) is not empty or form_errors(form.month) is not empty or form_errors(form.day) is not empty or form_errors(form.securityCode) is not empty or form_errors(form.username) is not empty or form_errors(form.password.first) is not empty or form_errors(form.password.second) is not empty %}
+                    <div class="alert alert-danger" role="alert">                    
+                        
+                        {{ form_errors(form.firstName) }}
+                        {{ form_errors(form.lastName) }}
+                        {{ form_errors(form.email.first) }}
+                        {{ form_errors(form.email.second) }}
+                        {{ form_errors(form.country) }}
+                        {{ form_errors(form.user_state) }}
+                        {{ form_errors(form.city) }}
+                        {{ form_errors(form.zip) }}
+                        {{ form_errors(form.year) }}	
+                        {{ form_errors(form.month) }}
+                        {{ form_errors(form.day) }}
+                        {{ form_errors(form.securityCode) }}
+                        {{ form_errors(form.username) }}
+                        {{ form_errors(form.password.first) }}	
+                        {{ form_errors(form.password.second) }}                                   
+                    </div>
+                {% endif %}
+            <form role="form" class="registrationform-main"  name="registration_form" method="post" action="{{ path('parent_registration') }}" id="registration_form"  onsubmit="return check_user_with_password();">
+                <h2 class="reg-frm-space">Sign Me Up<!--<small><input name="" type="radio" value="">As Student</small>--></h2>                
+                {{ form_row(form._token) }}
+                
+                
+                
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                    	<p class="reg-info-text"><em><strong>Enter your firstname</strong></em></p>
+                        <div class="form-group">                         
+							 {{ form_widget(form.firstName) }}							 						
+						</div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                    	<p class="reg-info-text"><em><strong>Enter your lastname</strong></em></p>
+                        <div class="form-group">
+                           {{ form_widget(form.lastName) }}
+						</div>
+                    </div>
+                </div>
+                <p class="reg-info-text"><em><strong>Enter your email address. </strong></em></p>
+                <div class="form-group">
+                   {{ form_widget(form.email.first) }}
+				   {# <p class="reg-info-text">Enter your email address. Kids must enter their parent's email id.. </p> #}
+                </div>
+                
+                <p class="reg-info-text"><em><strong>Retype email address</strong></em></p>
+                <div class="form-group">
+                    {{ form_widget(form.email.second) }}
+			   </div>
+                
+                <p class="reg-info-text"><em><strong>Enter your country</strong></em></p>
+                <div class="form-group">
+                   {{ form_widget(form.country) }}
+                </div>
+                
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                    	<p class="reg-info-text"><em><strong>Enter your state</strong></em></p>
+                        <div class="form-group">                        
+						 {{ form_widget(form.user_state) }}
+						</div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                    	<p class="reg-info-text"><em><strong>Enter your city</strong></em></p>
+                        <div class="form-group">
+						 {{ form_widget(form.city) }}
+						</div>
+                    </div>				
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                    	<p class="reg-info-text"><em><strong>Enter your zipcode</strong></em></p>
+                        <div class="form-group">                           
+						   {{ form_widget(form.zip) }}
+						</div>
+                    </div>
+                </div>			
+                
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                    	<p class="reg-info-text"><em><strong>DOB year</strong></em></p>
+                        <div class="form-group">                        
+			               {{form_widget(form.year)}}						   
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                    	<p class="reg-info-text"><em><strong>DOB month</strong></em></p>
+                        <div class="form-group">
+                           {{form_widget(form.month)}}	
+                        </div>
+                    </div>				
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                    	<p class="reg-info-text"><em><strong>DOB day (*Not Mandatory)</strong></em></p>
+                        <div class="form-group">
+                            {{form_widget(form.day)}}	
+                        </div>
+                    </div>				
+                </div>
+                
+                
+                
+                {#<p class="reg-info-text"><em><strong>Enter reference code</strong></em></p>
+                <div class="form-group">
+                     {{form_widget(form.securityCode)}}	
+					 {{ form_errors(form.securityCode) }}					
+					<p class="reg-info-text">Enter the code to get additional points!
+    The code is normally given to you as Reference Code by someone who referred you to this web site. This field will be automatically filled if you clicked on a link and got here.</p>
+                </div>#}
+                
+                {{form_widget(form.securityCode)}}	
+                
+                {# {{form_widget(form.referenceCode)}} #}	
+                <input type="hidden" name="auth" id="auth" value="{% if auth is defined and auth is not empty %} {{auth}} {% endif %}"/>
+    			<input type="hidden" name="reference_code" id="reference_code" value="{% if reference_code is defined and reference_code is not empty %} {{reference_code}} {% endif %}"/>
+    			
+                <p class="reg-info-text"><em><strong>Enter username</strong></em></p>
+                <div class="form-group">
+                   {{form_widget(form.username)}} 
+				</div>			
+                
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                    	<p class="reg-info-text"><em><strong>Enter password</strong></em></p>
+                        <div class="form-group">
+                            {{ form_widget(form.password.first) }}	
+                            <p class="reg-info-text">Username and password must be different.</p>				
+						</div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                    	<p class="reg-info-text"><em><strong>Enter confirm password</strong></em></p>
+                        <div class="form-group">
+                          {{ form_widget(form.password.second) }}
+						</div>
+                    </div>
+                </div>
+                <div class="reg-frm-space"> </div>
+                
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                    	<button type="submit" class="btn btn-success btn-block btn-lg searchfriendbtn">Sign Up</button>
+                    </div>
+                </div>
+			
+            </form>
+        </div>
+    </div>
+</div>
+ 
+<!--container ends-->
+
+{% block customScript %} 
+{#<script src="{{asset('bundles/KidskulaBundle/assets')}}/js/validate/jquery.validate.js"></script>
+<script>
+function validateregisterForm()
+{
+	$("#register_form").validate({
+		submitHandler: function(form) {}
+	});
+}
+</script>#}
+
+<script>
+function check_user_with_password()
+{
+	var error_msg = '';
+	if($('#bundle_adminbundle_kidskulastaticmenus_username').val() == $('#bundle_adminbundle_kidskulastaticmenus_password_first').val())
+	{
+		error_msg = 'The username and password fields must not match.';
+	}
+	
+	if(error_msg != '')
+	{
+		$('#error_msg_div').slideDown('slow');
+		$('#error_msg_div').html(error_msg);
+		$('html, body').animate({
+            scrollTop: $('#error_msg_div').offset().top
+        }, 1000);
+		return false;
+	}
+	else
+		return true;
+}
+</script>
+{% endblock %} 
+
+{% endblock %}

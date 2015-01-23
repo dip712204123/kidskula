@@ -1,0 +1,86 @@
+bundle_kidskula_homepage:
+    path:     /find-friends
+    defaults: { _controller: BundleKidskulaBundle:Landing:index }
+bundle_search_data:
+    path:  /getsuggestdata
+    defaults: { _controller: BundleKidskulaBundle:Landing:autosuggest }
+   
+frnd_search_index:
+    path:  /search_friends
+    defaults: { _controller: BundleKidskulaBundle:Landing:frndsearch }
+    
+frnd_addfriend:
+    resource: "@BundleKidskulaBundle/Resources/config/routing/addfriend.yml"
+    prefix:   /student_addfriend
+    
+fornt_dashboard:
+    resource: "@BundleKidskulaBundle/Resources/config/routing/dashboard.yml"
+    prefix:   /user_dashboard
+    
+fornt_static_pages:
+    resource: "@BundleKidskulaBundle/Resources/config/routing/staticpages.yml"
+    prefix:   /pages
+    
+fornt_home:
+    resource: "@BundleKidskulaBundle/Resources/config/routing/home.yml"
+    prefix:   /home
+    
+fornt_profile:
+    resource: "@BundleKidskulaBundle/Resources/config/routing/profile.yml"
+    prefix:   /profile
+    
+fornt_contact:
+    resource: "@BundleKidskulaBundle/Resources/config/routing/contact.yml"
+    prefix:   /contact   
+front_collection:
+    resource: "@BundleKidskulaBundle/Resources/config/routing/mycollection.yml"
+    prefix:   /collection
+front_club:
+    resource: "@BundleKidskulaBundle/Resources/config/routing/myclub.yml"
+    prefix:   /club
+front_notification:
+    resource: "@BundleKidskulaBundle/Resources/config/routing/notification.yml"
+    prefix:   /front_notification
+fornt_login:
+    path:     /login
+    defaults: { _controller: BundleKidskulaBundle:Login:index } 
+    
+fornt_logout:
+    path:     /loggedout
+    defaults: { _controller: BundleKidskulaBundle:Login:logout } 
+
+    
+fornt_forgotpassword:
+    path:     /forgotpassword
+    defaults: { _controller: BundleKidskulaBundle:Login:forgotpassword } 
+#    requirements: { _method: post }
+
+fornt_student_activation:
+    pattern:  /{token}/student_activation
+    defaults: { _controller: "BundleKidskulaBundle:Registration:student_activation" }
+    
+fornt_forgot_passowrd_link:
+    pattern:  /{token}/reset-password
+    defaults: { _controller: "BundleKidskulaBundle:Login:reset" }
+
+fornt_registration:
+    path:     /registration
+    defaults: { _controller: BundleKidskulaBundle:Registration:index }
+    
+fornt_auth_registration:
+    path:     /auth_registration/{auth}/
+    defaults: { _controller: BundleKidskulaBundle:Registration:index }   
+    
+fornt_student_activation:
+    pattern:  /{token}/student_activation
+    defaults: { _controller: "BundleKidskulaBundle:Registration:student_activation" }
+
+setsession:
+    path:  /loading
+    defaults: { _controller: BundleKidskulaBundle:Login:setsession }
+    
+messaging:
+    resource: "@BundleKidskulaBundle/Resources/config/routing/messaging.yml"
+    prefix:   /
+    
+

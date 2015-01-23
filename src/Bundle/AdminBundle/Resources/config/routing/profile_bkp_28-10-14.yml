@@ -1,0 +1,10 @@
+profile_details:
+    pattern:  /
+    defaults: { _controller: BundleAdminBundle:Profile:index }
+profile_details_edit:
+    pattern:  /edit
+    defaults: { _controller: BundleAdminBundle:Profile:edit }
+profile_changepass:
+    pattern:  /changepassword
+    defaults: { _controller: "BundleAdminBundle:Profile:changepass" }
+    

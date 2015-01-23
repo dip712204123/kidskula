@@ -1,0 +1,343 @@
+{% block homepageScript %} 
+<script>
+   
+
+
+
+    function statusChange()
+    {
+        $(document).ready(function() {
+
+            $('#statusdiv').toggle('slow');
+        })
+    }
+
+ {#for status submit button click#}
+    function getProfileSuggest()
+    {
+
+        var newstatus = $('#status').val();
+        var path = "{{path('profilestatus')}}";
+
+        //alert(path);
+        if (newstatus != '')
+        {
+
+            var form_data = {
+                newstatus: newstatus
+
+            };
+
+            $.ajax({
+                type: "POST",
+                url: path,
+                data: form_data,
+                success: function(response) {
+                    //alert(response.msg);
+
+                    if (response.status != 0) {
+
+                        $("#statmsg").html(response.msg);
+                        $("#statusdiv").fadeOut("slow");
+                    }
+                    else
+                    {
+                        $("#statusdiv").fadeOut("slow");
+
+                    }
+
+                }
+            });
+
+
+        }
+
+
+    }
+
+    function acceptrequest(id)
+    {
+        //alert(id);
+
+
+        var path = "{{path('parent_acceptfriend')}}";
+
+        var friendId = id;
+        //alert (friendId);
+
+        var form_data = {
+            friendId: friendId
+
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                // alert(response.msg);
+
+                if (response.status != 0) {
+                    $("#frndli" + friendId).hide('slow');
+                    if (response.lastrequest == 'yes')
+                    {
+                        $("#emptyfrndlist").show('slow');
+                        allfriendlist();
+                    }
+                }
+                else
+                {
+                    return false;
+
+
+                }
+
+            }
+        });
+    }
+
+    function rejectrequest(id)
+    {
+        //alert(id);
+
+
+        var path = "{{path('parent_rejectfriend')}}";
+
+        var friendId = id;
+        //alert (friendId);
+
+        var form_data = {
+            friendId: friendId
+
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                // alert(response.msg);
+
+                if (response.status != 0) {
+                    $("#frndli" + friendId).hide('slow');
+                    {#$("#addfrienddiv").html(response.msg);#}
+                    if (response.lastrequest == 'yes')
+                    {
+                        $("#emptyfrndlist").show('slow');
+                    }
+
+                }
+                else
+                {
+                    return false;
+
+
+                }
+
+            }
+        });
+    }
+
+   
+{#For friend request listing#}
+    function frndreqstnotification() {
+        $.ajax({
+            url: $('#frndreqstnotificationUrl').val(),
+            data: '',
+            type: 'POST',
+            success: function(response) {
+                $('#contact-list').html(response);
+            },
+            error: function() {
+                //$(e).text('Error...');
+            }
+
+        });
+    }
+
+    
+
+   // setInterval(function() {
+    //    frndreqstnotification();
+    //    allfriendlist();
+   // }, 6000);
+    
+     {# For counting and listing points #}
+    function mycollection_point_count() {
+        var path = "{{path('mycollection_point_count')}}";
+        $.ajax({
+            url: path,
+            data: '',
+            type: 'POST',
+            success: function(response) {
+                if (response.status == 1) {
+                $("#mypoint").html(response.msg);
+                }
+            },
+            
+
+        });
+    }
+     {# For listing collections #}
+    function mycollection_home_listing() {
+		$.ajax({
+            url: $('#updatehomecollection').val(),
+            data: '',
+            type: 'POST',
+            success: function(response) {
+				//alert(response);
+                //$('#collectlistid').html(response);
+            },
+			complete: function(response) {
+				
+            },
+            error: function() {
+                //$(e).text('Error...');
+            }
+
+        });
+        $.ajax({
+			url: $('#homecollection').val(),
+			data: '',
+			type: 'POST',
+			success: function(response) {
+				//alert(response);
+				$('#collectlist').html(response);
+			},
+			error: function() {
+				//$(e).text('Error...');
+			}
+
+		});
+    }
+    
+    function friendRequestCheckForDivShow()
+    {
+        var path = "{{path('friendRequestCheckForDivShow')}}";
+        $.ajax({
+			url: path,
+			data: '',
+			type: 'POST',
+			success: function(response) {
+				//alert(response);
+				if (response.status == 1) {
+                    $('#friendRequestCheckForDivShow').show('slow');
+                }
+                else
+                {
+                    $('#friendRequestCheckForDivShow').hide('slow');
+                    $('#friendRequestCheckForDivShow').css("display","none");
+                    
+
+                }
+			},
+			error: function() {
+				//$(e).text('Error...');
+			}
+
+		});
+    }
+    
+   // setInterval(function() {
+       // mycollection_point_count();
+      //  mycollection_home_listing();
+      //  friendRequestCheckForDivShow();
+   // },20000);
+    {#fucntion for avatar title change#}
+
+    function editavatar()
+    {
+        $(document).ready(function() {
+          {#$('#avtarSpanId').toggle('slow'); #}
+            $('#avtarDuplicateSpanId').toggle('slow');
+
+        });
+    }
+    function saveAvatarName()
+    {
+        var textval = $('#setavatarname').val();
+        var path = "{{path('setavatarname')}}";
+
+        var form_data = {
+            textval: textval
+
+
+        };
+
+        $.ajax({
+            type: "POST",
+            url: path,
+            data: form_data,
+            success: function(response) {
+                //alert(response.status);
+
+                if (response.status != 0) {
+                    $('#avtarDuplicateSpanId').hide('slow');
+                    $("#avtarstatmsg").html(response.msg);
+
+                }
+                else
+                {
+                    $('#avtarDuplicateSpanId').hide('slow');
+                    $("#avtarstatmsg").html('Not saved');
+
+                }
+
+            }
+        });
+    }
+    
+    function childnetworkFunc(id){
+    
+    //alert(id);
+    $('#kidsnetwork'+id).toggle();
+    $('#request-list'+id).html('<ul style="margin-left:10px; padding-left:10px">loading...</ul>');
+    var form_data = {
+            childId: id
+
+        };
+     $.ajax({
+            url: $('#frndreqstnotification'+id).val(),
+            data: form_data,
+            type: 'POST',
+            success: function(response) {//alert(response);
+                $('#request-list'+id).html(response);
+            },
+            error: function() {
+                //$(e).text('Error...');
+            }
+
+        });
+    
+}
+function agreefunc(id,mychildis,status,childId,sender,receiver)
+{ //alert(id);
+  $("#request"+id).html('Processing...');
+  //var sender   =  $("#senderhiddenVal"+id).val();
+  //var receiver =$("#rcverhiddenVal"+id).val();
+  //alert(sender);alert(receiver);
+  var form_data = {
+            id: id,
+            mychildis:mychildis,
+            status:status,
+            childId:childId,
+            sender:sender,
+            receiver:receiver
+        };
+  var path = "{{path('allowfriend')}}";
+        $.ajax({
+            url: path,
+            data: form_data,
+            type: 'POST',
+            success: function(response) {//alert(response);
+                if (response.status == 1) {
+                $("#request"+id).html('Ok Done');
+                }
+            },
+            
+
+        });   
+}
+
+</script>
+{% endblock %}

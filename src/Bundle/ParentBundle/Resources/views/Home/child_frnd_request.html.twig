@@ -1,0 +1,38 @@
+<ul style="margin-left:10px; padding-left:10px">
+{% if fetchStudentrqst is not empty %}
+
+{% for allrequests in fetchStudentrqst %}
+
+{% set receiver= getUsers(allrequests.receiverId) %}
+{% set sender= allrequests.firstName %}
+
+{% if allrequests.receiverId == childID %}
+{% set mychildis= '1' %}       {#***** 1 for receiver ****  #}
+{% set ParentApproval= allrequests.recieverParentApproval %}
+{% else %}
+{% set mychildis = '0' %}      {#***** 0 for sender ***** #}
+{% set ParentApproval= allrequests.senderParentApproval %}
+{% endif %}
+
+{% if ParentApproval==2 or ParentApproval==0 %}
+No more friend requests..!!!
+{% else %}
+<li style="margin: 0px 5px 5px 0px; list-style:circle; border-bottom: 1px dashed #fff; padding-bottom: 10px;"> 
+<span style="font-weight: normal;" id="request{{allrequests.id}}">
+{{sender}} sent a friend request to {{receiver.firstName}}.
+They can only become friend when you approve the request. 
+{#Angela's parents have already approved the request#}
+<div style="margin-top:6px">
+<a href="javascript:void(0)" onclick="agreefunc({{allrequests.id}},{{mychildis}},'agree',{{childID}},'{{sender}}','{{receiver.firstName}}')"><span style="padding: 3px !important;" class="label label-success">Accept</span></a>
+<a href="javascript:void(0)" onclick="agreefunc({{allrequests.id}},{{mychildis}},'no',{{childID}},'{{sender}}','{{receiver.firstName}}')"><span style="padding: 3px !important;" class="label label-warning">Reject </span></a>
+</div>
+</span>
+</li>
+{% endif %}
+{#{% if allrequests.sender.id== childID %}{% endif %}#}
+
+{% endfor %}
+{% else %}
+No more friend requests..!!!
+{% endif %}
+</ul>

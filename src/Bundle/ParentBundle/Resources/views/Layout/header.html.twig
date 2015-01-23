@@ -1,0 +1,36 @@
+{% block header %} 
+<div role="navigation" class="navbar navbar-inverse landing-head">
+      <div class="container">
+        <div class="navbar-header">
+          <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="{{path('bundle_kidskula_homepage')}}"><img class="img-responsive" src="{{asset('bundles/ParentBundle/assets')}}/images/logo-sml.png" alt=""></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <form role="form" class="navbar-form navbar-right navabar-landing">
+              {% if not app.user %}
+          	{% if app.request.attributes.get('_route') != 'fornt_registration' %}
+            <a href="{{ path('parent_registration') }}"><button class="btn btn-lg btn-primary landing-registerbtn" type="button">Register</button></a>           
+            {% endif %}
+           
+            {% if app.request.attributes.get('_route') != 'kidskula_bundle_parents' %}          
+              <a href="{{path('kidskula_bundle_parents')}}"><button class="btn btn-lg btn-success landing-loginbtn" type="button">Login</button></a>
+            {% endif %} 
+              {% else %}
+              <a href="{{path('home')}}"><button class="btn btn-lg btn-success landing-loginbtn" type="button">Home</button></a>
+            {% endif %}
+                <a href="{{path('mycontacts')}}" {% if app.request.attributes.get('_route') == 'mycontacts' %}class="active" {%endif%}><button class="btn btn-lg btn-success landing-loginbtn" type="button">Contact Us</button></a>
+            {% if app.user %}
+                 <a href="{{path('parent_logout')}}"><button class="btn btn-lg btn-success landing-loginbtn" type="button">Log out</button></a>
+      
+ 	
+            {% endif %}
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+</div>  
+{% endblock %} {#{{my_twig_get_username()}}#}

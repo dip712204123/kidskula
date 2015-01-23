@@ -1,0 +1,39 @@
+parent_addfriend:
+    pattern:  /
+    defaults: { _controller: BundleParentBundle:Addfriend:addfriend } 
+    
+parent_cancelfriend:
+    pattern:  /cancel
+    defaults: { _controller: BundleParentBundle:Addfriend:cancelfriend } 
+    
+parent_acceptfriend:
+    pattern:  /accept
+    defaults: { _controller: BundleParentBundle:Addfriend:acceptfriend }
+    
+parent_rejectfriend:
+    pattern:  /reject
+    defaults: { _controller: BundleParentBundle:Addfriend:rejectfriend }
+    
+parent_unfriend:
+    pattern:  /unfriend
+    defaults: { _controller: BundleParentBundle:Addfriend:unfriend }
+    
+parent_intervalrequestcheck:
+    pattern:  /intervalrequestcheck
+    defaults: { _controller: BundleParentBundle:Addfriend:intervalrequestcheck }
+    
+parent_invitewithsecret:
+    pattern:  /invitewithsecret
+    defaults: { _controller: BundleParentBundle:Addfriend:invitefrnds }  
+
+parent_invitewithoutsecret:
+    pattern:  /search
+    defaults: { _controller: BundleParentBundle:Addfriend:findfrnds}
+    
+parent_invitenewfriends:
+    pattern:  /invite_friends
+    defaults: { _controller: BundleParentBundle:Addfriend:invitenewfriends}
+    
+parent_friendRequestCheckForDivShow:
+    pattern:  /friendRequestCheckForDivShow
+    defaults: { _controller: BundleParentBundle:Addfriend:friendrequestcheck}   
